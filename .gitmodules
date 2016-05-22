@@ -1,0 +1,3 @@
+[submodule "ConfuserEx"]
+	path = ConfuserEx
+	url = https://github.com/yck1509/ConfuserEx.git
