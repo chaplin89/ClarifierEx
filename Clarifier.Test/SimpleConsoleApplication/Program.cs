@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SimpleConsoleApplication
+namespace Clarifier.Test.SimpleConsoleApplication
 {
     class Program
     {

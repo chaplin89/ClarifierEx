@@ -7,11 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clarifier.CLI", "Clarifier.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clarifier.Core", "Clarifier.Core\Clarifier.Core.csproj", "{49C5E059-FA32-440F-B4C7-E69E32296AC0}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{C5B2D5AB-1AC0-42B4-812F-57E97A8A0866}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clarifier.Test", "Clarifier.Test", "{C5B2D5AB-1AC0-42B4-812F-57E97A8A0866}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleConsoleApplication", "Clarifier.Test\SimpleConsoleApplication\SimpleConsoleApplication.csproj", "{9DE45910-AB12-45DC-A8C9-0A51F412913E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestGenerator", "TestGenerator\TestGenerator.csproj", "{5742BACA-691D-4D49-8B92-C3C62C40B430}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestGenerator", "Clarifier.Test\TestGenerator\TestGenerator.csproj", "{5742BACA-691D-4D49-8B92-C3C62C40B430}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

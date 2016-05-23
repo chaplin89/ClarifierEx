@@ -5,8 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Confuser.Core.Project;
 
-namespace TestGenerator
+namespace Clarifier.Test.TestGenerator
 {
+    class ModuleDescriptor
+    {
+
+    }
+
     class Program
     {
         static private Dictionary<string,List<string>> registeredApplications = new Dictionary<string, List<string>>
@@ -22,15 +27,19 @@ namespace TestGenerator
 
         static void Main(string[] args)
         {
-            foreach(var v in registeredApplications)
+            ConfuserProject module = new ConfuserProject();
+            foreach (var v in registeredApplications)
             {
-                ProjectModule module = new ProjectModule() { Path = v.Key };
+                ProjectModule project = new ProjectModule();
+
                 Rule moduleRule = new Rule();
                 SettingItem<Confuser.Core.Protection> setting = new SettingItem<Confuser.Core.Protection>();
 
                 moduleRule.Add(setting);
-                module.Rules.Add(moduleRule);
+                project.Rules.Add(moduleRule);
+                module.Add(project);
             }
+
         }
     }
 }

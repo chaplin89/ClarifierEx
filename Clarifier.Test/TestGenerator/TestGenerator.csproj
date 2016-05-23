@@ -7,7 +7,7 @@
     <ProjectGuid>{5742BACA-691D-4D49-8B92-C3C62C40B430}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TestGenerator</RootNamespace>
+    <RootNamespace>Clarifier.Test.TestGenerator</RootNamespace>
     <AssemblyName>TestGenerator</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -33,8 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Confuser.Core">
-      <HintPath>..\Debug\bin\Confuser.Core.dll</HintPath>
+    <Reference Include="Confuser.Core, Version=0.6.0.64, Culture=neutral, PublicKeyToken=5fbc98a9d8494c64, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Confuser.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -53,6 +54,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>SET ConfuserInstallationDir=$(SolutionDir)..\ConfuserEx
+
+copy /Y "%25ConfuserInstallationDir%25\Debug\Bin\Confuser.Core.dll" ".\"
+copy /Y "%25ConfuserInstallationDir%25\Debug\Bin\Confuser.Runtime.dll" ".\"
+copy /Y "%25ConfuserInstallationDir%25\Debug\Bin\dnlib.dll" ".\"</PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

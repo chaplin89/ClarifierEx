@@ -7,7 +7,7 @@
     <ProjectGuid>{9DE45910-AB12-45DC-A8C9-0A51F412913E}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SimpleConsoleApplication</RootNamespace>
+    <RootNamespace>Clarifier.Test.SimpleConsoleApplication</RootNamespace>
     <AssemblyName>SimpleConsoleApplication</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -51,9 +51,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>SET ConfuserInstallationDir=..\ConfuserEx
+    <PreBuildEvent>SET ConfuserInstallationDir=$(SolutionDir)..\ConfuserEx
 
-$(ProjectDir)%25ConfuserInstallationDir%25\Debug\Bin\Confuser.CLI.exe</PreBuildEvent>
+%25ConfuserInstallationDir%25\Debug\Bin\Confuser.CLI.exe</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
