@@ -3,8 +3,6 @@ using dnlib.DotNet.Emit;
 using System.Collections.Generic;
 using System;
 using System.Reflection;
-using System.Linq;
-using Confuser.Core.Helpers;
 using System.IO;
 
 namespace Clarifier.Core
@@ -16,11 +14,9 @@ namespace Clarifier.Core
             bool returnValue = true;
             foreach (var v in blacklist)
             {
-                Finder srv = new Finder();
-
                 MethodDef blacklistMethod = blacklistModule.Find(v.Key, true).FindMethod(v.Value);
 
-                foreach (var currentMethodToRemove in srv.GetSimilarMethods(targetModule, blacklistMethod, true, 0.70))
+                foreach (var currentMethodToRemove in BodyComparison.GetSimilarMethods(targetModule, blacklistMethod, true, 0.70))
                 {
                     foreach (var currentType in AllTypesHelper.Types(targetModule.Types))
                     {
@@ -45,7 +41,6 @@ namespace Clarifier.Core
             bool returnValue = true;
             foreach (var v in toReplace)
             {
-                Finder finder = new Finder();
                 ModuleDefMD tempModule = ModuleDefMD.Load(@"..\Obfuscated\ConsoleTest.exe");
                 ModuleDefMD moduleToInject = ModuleDefMD.Load(@".\ConsoleTest.exe");
 
@@ -82,7 +77,7 @@ namespace Clarifier.Core
 
                 MethodDef blacklistMethod = confuserRuntimeModule.Find(v.Key, true).FindMethod(v.Value);
 
-                foreach (var currentMethodToReplace in finder.GetSimilarMethods(targetModule, blacklistMethod, true, 0.70))
+                foreach (var currentMethodToReplace in BodyComparison.GetSimilarMethods(targetModule, blacklistMethod, true, 0.70))
                 {
                     Assembly axx = Assembly.Load(targetModule.Assembly.FullName);
                     Type[] wtf = axx.GetTypes();//.Where(x => x.FullName == currentMethodToReplace.DeclaringType.ReflectionFullName).ToArray();

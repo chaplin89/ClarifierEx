@@ -57,8 +57,8 @@
       <Project>{49c5e059-fa32-440f-b4c7-e69e32296ac0}</Project>
       <Name>Clarifier.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\dnlib\src\dnlib.csproj">
-      <Project>{FDFC1237-143F-4919-8318-4926901F4639}</Project>
+    <ProjectReference Include="..\ConfuserEx\dnlib\src\dnlib.csproj">
+      <Project>{fdfc1237-143f-4919-8318-4926901f4639}</Project>
       <Name>dnlib</Name>
     </ProjectReference>
   </ItemGroup>

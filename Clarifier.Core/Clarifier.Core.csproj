@@ -45,11 +45,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Confuser.Core\Confuser.Core.csproj">
+    <ProjectReference Include="..\ConfuserEx\Confuser.Core\Confuser.Core.csproj">
       <Project>{beb67a6e-4c54-4de5-8c6b-2c12f44a7b92}</Project>
       <Name>Confuser.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Confuser.Runtime\Confuser.Runtime.csproj">
+    <ProjectReference Include="..\ConfuserEx\Confuser.Runtime\Confuser.Runtime.csproj">
       <Project>{a45c184f-f98f-4258-a928-bff437034791}</Project>
       <Name>Confuser.Runtime</Name>
     </ProjectReference>
