@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Confuser.Core.Project;
+using System.Xml;
 
 namespace Clarifier.Test.TestGenerator
 {
@@ -40,6 +41,9 @@ namespace Clarifier.Test.TestGenerator
                 module.Add(project);
             }
 
+            XmlDocument document = module.Save();
+            XmlWriter xmlWrite = XmlWriter.Create(@".\OutputConfuserProject.crproj");
+            document.WriteContentTo(xmlWrite);
         }
     }
 }
