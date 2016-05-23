@@ -44,11 +44,11 @@ namespace Clarifier.CLI
 
             List<KeyValuePair<string, string>> toReplace = new List<KeyValuePair<string, string>>
             {
-                new KeyValuePair<string, string>("Confuser.Runtime.Constant","Get")
-                //new KeyValuePair<string, string>("Confuser.Runtime.Constant","Initialize")
+                new KeyValuePair<string, string>("Confuser.Runtime.Constant","Get"),
+                new KeyValuePair<string, string>("Confuser.Runtime.Constant","Initialize")
             };
 
-            surgeon.AmputateMethods(confuserRuntimeModule, blacklist, targetModule);
+            surgeon.RemoveReferences(confuserRuntimeModule, blacklist, targetModule);
             surgeon.ReplaceWithResult(confuserRuntimeModule, toReplace, targetModule);
 
             File.Delete(@"..\Obfuscated\Unobfuscated.exe");

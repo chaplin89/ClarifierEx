@@ -9,7 +9,7 @@ namespace Clarifier.Core
 {
     public class PlasticSurgeon
     {
-        public bool AmputateMethods(ModuleDef blacklistModule, List<KeyValuePair<string, string>> blacklist, ModuleDef targetModule)
+        public bool RemoveReferences(ModuleDef blacklistModule, List<KeyValuePair<string, string>> blacklist, ModuleDef targetModule)
         {
             bool returnValue = true;
             foreach (var v in blacklist)
@@ -24,13 +24,13 @@ namespace Clarifier.Core
                         {
                             if (currentMethod != currentMethodToRemove)
                             {
-                                returnValue |= AmputateMethod(currentMethod, currentMethodToRemove);
+                                returnValue |= RemoveRefence(currentMethod, currentMethodToRemove);
                             }
                         }
 
                     }
 
-                    Lobotomy(currentMethodToRemove);
+                    NullifyMethod(currentMethodToRemove);
                 }
             }
             return returnValue;
@@ -41,46 +41,12 @@ namespace Clarifier.Core
             bool returnValue = true;
             foreach (var v in toReplace)
             {
-                ModuleDefMD tempModule = ModuleDefMD.Load(@"..\Obfuscated\ConsoleTest.exe");
-                ModuleDefMD moduleToInject = ModuleDefMD.Load(@".\ConsoleTest.exe");
-
-                tempModule.Types[0].Name = "Vaffanculooo";
-
-                tempModule.Write("TestDLL.dll");
-
-//                 ModuleDefMD mscorlibDef = ModuleDefMD.Load(typeof(object).Module);
-//                 ModuleRefUser mscorlibRef = new ModuleRefUser(mscorlibDef);
-// 
-//                 TypeRefUser objectTypeRef = new TypeRefUser(mscorlibDef, typeof(object).FullName);
-//                 objectTypeRef.ResolutionScope = mscorlibRef;
-// 
-//                 IEnumerable<IDnlibDef> td = InjectHelper.Inject(targetModule.GlobalType, moduleToInject.Find("ConsoleTest.Program",true), moduleToInject);
-
-                MemoryStream st = new MemoryStream();
-                tempModule.Write(st);
-                //moduleToInject.Write(@".\TestNewAssembly.dll");
-
-                Assembly tempAssembly = Assembly.Load(st.GetBuffer());
-
-                try
-                {
-                    object obj = tempAssembly.CreateInstance("ConsoleTest.Program");
-
-
-
-                }
-                catch (Exception ex)
-                {
-                    
-                }
-
-
                 MethodDef blacklistMethod = confuserRuntimeModule.Find(v.Key, true).FindMethod(v.Value);
 
                 foreach (var currentMethodToReplace in BodyComparison.GetSimilarMethods(targetModule, blacklistMethod, true, 0.70))
                 {
                     Assembly axx = Assembly.Load(targetModule.Assembly.FullName);
-                    Type[] wtf = axx.GetTypes();//.Where(x => x.FullName == currentMethodToReplace.DeclaringType.ReflectionFullName).ToArray();
+                    Type[] wtf = axx.GetTypes();
 
                     foreach (var currentType in AllTypesHelper.Types(targetModule.Types))
                     {
@@ -104,7 +70,7 @@ namespace Clarifier.Core
             }
         }
 
-        public bool AmputateMethod(MethodDef methodToInspect, MethodDef methodToLookFor)
+        public bool RemoveRefence(MethodDef methodToInspect, MethodDef methodToLookFor)
         {
             bool cantPurge = false;
 
@@ -135,7 +101,7 @@ namespace Clarifier.Core
             return cantPurge;
         }
 
-        public void Lobotomy(MethodDef method)
+        public void NullifyMethod(MethodDef method)
         {
             if (method.ReturnType.FullName == "System.Void")
             {
