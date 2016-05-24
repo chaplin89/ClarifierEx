@@ -1,15 +1,12 @@
 ﻿using dnlib.DotNet;
 using dnlib.DotNet.Emit;
 using System.Collections.Generic;
-using System;
-using System.Reflection;
-using System.IO;
 
 namespace Clarifier.Core
 {
-    public class PlasticSurgeon
+    static public class PlasticSurgeon
     {
-        public bool RemoveReferences(ModuleDef blacklistModule, List<KeyValuePair<string, string>> blacklist, ModuleDef targetModule)
+        static public bool RemoveReferences(ModuleDef blacklistModule, List<KeyValuePair<string, string>> blacklist, ModuleDef targetModule)
         {
             bool returnValue = true;
             foreach (var v in blacklist)
@@ -36,18 +33,14 @@ namespace Clarifier.Core
             return returnValue;
         }
 
-        public void ReplaceWithResult(ModuleDefMD confuserRuntimeModule, List<KeyValuePair<string, string>> toReplace, ModuleDefMD targetModule)
+        static public void ReplaceWithResult(ModuleDefMD confuserRuntimeModule, List<KeyValuePair<string, string>> toReplace, ModuleDefMD targetModule)
         {
-            bool returnValue = true;
             foreach (var v in toReplace)
             {
                 MethodDef blacklistMethod = confuserRuntimeModule.Find(v.Key, true).FindMethod(v.Value);
-
+                
                 foreach (var currentMethodToReplace in BodyComparison.GetSimilarMethods(targetModule, blacklistMethod, true, 0.70))
                 {
-                    Assembly axx = Assembly.Load(targetModule.Assembly.FullName);
-                    Type[] wtf = axx.GetTypes();
-
                     foreach (var currentType in AllTypesHelper.Types(targetModule.Types))
                     {
                         foreach (var currentMethod in currentType.Methods)
@@ -57,10 +50,13 @@ namespace Clarifier.Core
 
                             for (var i = 0; i < currentMethod.Body.Instructions.Count; ++i)
                             {
+                                if (currentMethod.Body.Instructions[i].Operand == null)
+                                    continue;
+
                                 if (currentMethod.Body.Instructions[i].Operand is MethodDef && currentMethod.Body.Instructions[i].Operand == currentMethodToReplace)
                                 {
                                     if (currentMethodToReplace.Body.Instructions[i].OpCode == OpCodes.Call)
-                                    {
+                                    { 
                                     }
                                 }
                             }
@@ -70,7 +66,7 @@ namespace Clarifier.Core
             }
         }
 
-        public bool RemoveRefence(MethodDef methodToInspect, MethodDef methodToLookFor)
+        static public bool RemoveRefence(MethodDef methodToInspect, MethodDef methodToLookFor)
         {
             bool cantPurge = false;
 
@@ -101,7 +97,7 @@ namespace Clarifier.Core
             return cantPurge;
         }
 
-        public void NullifyMethod(MethodDef method)
+        static public void NullifyMethod(MethodDef method)
         {
             if (method.ReturnType.FullName == "System.Void")
             {

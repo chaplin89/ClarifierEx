@@ -13,9 +13,9 @@ namespace Clarifier.CLI
     {
         static void Main(string[] args)
         {
-            ModuleDefMD targetModule = ModuleDefMD.Load(@"..\Obfuscated\ConsoleTest.exe");
+            Debug.Assert(args.Length > 0);
+            ModuleDefMD targetModule = ModuleDefMD.Load(Directory.GetCurrentDirectory() + args[0]);
             ModuleDefMD confuserRuntimeModule = ModuleDefMD.Load(@".\Confuser.Runtime.dll");
-            PlasticSurgeon surgeon = new PlasticSurgeon();
 
 //             MemoryStream sw = new MemoryStream();
 //             AssemblyDefUser newAssembly = new AssemblyDefUser("TempAssembly");
@@ -48,8 +48,8 @@ namespace Clarifier.CLI
                 new KeyValuePair<string, string>("Confuser.Runtime.Constant","Initialize")
             };
 
-            surgeon.RemoveReferences(confuserRuntimeModule, blacklist, targetModule);
-            surgeon.ReplaceWithResult(confuserRuntimeModule, toReplace, targetModule);
+            //PlasticSurgeon.RemoveReferences(confuserRuntimeModule, blacklist, targetModule);
+            PlasticSurgeon.ReplaceWithResult(confuserRuntimeModule, toReplace, targetModule);
 
             File.Delete(@"..\Obfuscated\Unobfuscated.exe");
             targetModule.Write(@"..\Obfuscated\Unobfuscated.exe");

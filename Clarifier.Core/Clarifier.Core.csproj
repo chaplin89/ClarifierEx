@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BodyComparison.cs" />
+    <Compile Include="MethodDefExtension.cs" />
     <Compile Include="PlasticSurgeon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
