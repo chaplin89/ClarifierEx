@@ -6,14 +6,12 @@ namespace Clarifier.Core
 {
     static public class BodyModifier
     {
-        static public bool RemoveReferences(ModuleDef blacklistModule, List<KeyValuePair<string, string>> blacklist, ModuleDef targetModule)
+        static public bool RemoveReferences(List<MethodDef> blacklist, ModuleDef targetModule)
         {
             bool returnValue = true;
             foreach (var v in blacklist)
             {
-                MethodDef blacklistMethod = blacklistModule.Find(v.Key, true).FindMethod(v.Value);
-
-                foreach (var currentMethodToRemove in BodyComparison.GetSimilarMethods(targetModule, blacklistMethod, true, 0.70))
+                foreach (var currentMethodToRemove in BodyComparison.GetSimilarMethods(targetModule, v, true, 0.70))
                 {
                     foreach (var currentType in AllTypesHelper.Types(targetModule.Types))
                     {
@@ -33,13 +31,11 @@ namespace Clarifier.Core
             return returnValue;
         }
 
-        static public void ReplaceWithResult(ModuleDefMD confuserRuntimeModule, List<KeyValuePair<string, string>> toReplace, ModuleDefMD targetModule)
+        static public void FindAndReplaceWithResult(List<MethodDef> toFind, ModuleDefMD targetModule)
         {
-            foreach (var v in toReplace)
+            foreach (var v in toFind)
             {
-                MethodDef blacklistMethod = confuserRuntimeModule.Find(v.Key, true).FindMethod(v.Value);
-                
-                foreach (var currentMethodToReplace in BodyComparison.GetSimilarMethods(targetModule, blacklistMethod, true, 0.70))
+                foreach (var toReplace in BodyComparison.GetSimilarMethods(targetModule, v, true, 0.70))
                 {
                     foreach (var currentType in AllTypesHelper.Types(targetModule.Types))
                     {
@@ -53,9 +49,9 @@ namespace Clarifier.Core
                                 if (currentMethod.Body.Instructions[i].Operand == null)
                                     continue;
 
-                                if (currentMethod.Body.Instructions[i].Operand is MethodDef && currentMethod.Body.Instructions[i].Operand == currentMethodToReplace)
+                                if (currentMethod.Body.Instructions[i].Operand is MethodDef && currentMethod.Body.Instructions[i].Operand == toReplace)
                                 {
-                                    if (currentMethodToReplace.Body.Instructions[i].OpCode == OpCodes.Call)
+                                    if (toReplace.Body.Instructions[i].OpCode == OpCodes.Call)
                                     { 
                                     }
                                 }
