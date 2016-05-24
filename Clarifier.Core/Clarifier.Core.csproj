@@ -30,9 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Confuser.Core, Version=0.6.0.0, Culture=neutral, PublicKeyToken=5fbc98a9d8494c64, processorArchitecture=MSIL">
+    <Reference Include="Confuser.Core, Version=0.6.0.64, Culture=neutral, PublicKeyToken=5fbc98a9d8494c64, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Debug\bin\Confuser.Core.dll</HintPath>
+      <HintPath>..\ConfuserEx\Debug\bin\Confuser.Core.dll</HintPath>
     </Reference>
     <Reference Include="Confuser.Runtime, Version=0.6.0.0, Culture=neutral, PublicKeyToken=5fbc98a9d8494c64, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -53,17 +53,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BodyComparison.cs" />
+    <Compile Include="ClarifierInjectHelper.cs" />
     <Compile Include="MethodDefExtension.cs" />
     <Compile Include="BodyModifier.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>SET ConfuserInstallationDir=..\ConfuserEx
-
-copy /Y "$(ProjectDir)%25ConfuserInstallationDir%25\Debug\Bin\Confuser.Core.dll" ".\"
-copy /Y "$(ProjectDir)%25ConfuserInstallationDir%25\Debug\Bin\Confuser.Runtime.dll" ".\"
-copy /Y "$(ProjectDir)%25ConfuserInstallationDir%25\Debug\Bin\dnlib.dll" ".\"</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

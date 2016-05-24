@@ -17,18 +17,18 @@ namespace Clarifier.CLI
             ModuleDefMD targetModule = ModuleDefMD.Load(Directory.GetCurrentDirectory() + args[0]);
             ModuleDefMD runtimeModule = ModuleDefMD.Load(@".\Confuser.Runtime.dll");
 
-            List<MethodDef> blacklist = new List<KeyValuePair<string, string>>
+            List<MethodDef> blacklist = new List<Tuple<string, string>>
             {
-                new KeyValuePair<string, string>("Confuser.Runtime.AntiDebugSafe","Initialize"),
-                new KeyValuePair<string, string>("Confuser.Runtime.AntiDebugSafe","Worker"),
-                new KeyValuePair<string, string>("Confuser.Runtime.AntiDump","Initialize"),
-            }.Select(x=> runtimeModule.Find(x.Key, true).FindMethod(x.Value)).ToList();
+                new Tuple<string, string>("Confuser.Runtime.AntiDebugSafe","Initialize"),
+                new Tuple<string, string>("Confuser.Runtime.AntiDebugSafe","Worker"),
+                new Tuple<string, string>("Confuser.Runtime.AntiDump","Initialize"),
+            }.Select(x=> runtimeModule.Find(x.Item1, true).FindMethod(x.Item2)).ToList();
 
-            List<MethodDef> toReplace = new List<KeyValuePair<string, string>>
+            List<MethodDef> toReplace = new List<Tuple<string, string>>
             {
-                new KeyValuePair<string, string>("Confuser.Runtime.Constant","Get"),
-                new KeyValuePair<string, string>("Confuser.Runtime.Constant","Initialize")
-            }.Select(x => runtimeModule.Find(x.Key, true).FindMethod(x.Value)).ToList();
+                new Tuple<string, string>("Confuser.Runtime.Constant","Get"),
+                new Tuple<string, string>("Confuser.Runtime.Constant","Initialize")
+            }.Select(x => runtimeModule.Find(x.Item1, true).FindMethod(x.Item2)).ToList();
 
             //BodyModifier.RemoveReferences(blacklist, targetModule);
             BodyModifier.FindAndReplaceWithResult(toReplace, targetModule);

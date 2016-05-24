@@ -36,9 +36,9 @@
     <StartupObject>Clarifier.CLI.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Confuser.Core, Version=0.6.0.0, Culture=neutral, PublicKeyToken=5fbc98a9d8494c64, processorArchitecture=MSIL">
+    <Reference Include="Confuser.Core, Version=0.6.0.64, Culture=neutral, PublicKeyToken=5fbc98a9d8494c64, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Debug\bin\Confuser.Core.dll</HintPath>
+      <HintPath>..\ConfuserEx\Debug\bin\Confuser.Core.dll</HintPath>
     </Reference>
     <Reference Include="Confuser.Runtime, Version=0.6.0.0, Culture=neutral, PublicKeyToken=5fbc98a9d8494c64, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

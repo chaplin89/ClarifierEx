@@ -52,8 +52,8 @@ namespace Clarifier.Test.TestGenerator
             {
                 protections = new List<ProtectionType>
                 {
-                    ProtectionType.AntiDebug,
-                    ProtectionType.AntiDump,
+                    //ProtectionType.AntiDebug,
+                    //ProtectionType.AntiDump,
                     ProtectionType.Constants,
                 }
             }
