@@ -17,21 +17,15 @@ namespace Clarifier.CLI
             ModuleDefMD targetModule = ModuleDefMD.Load(Directory.GetCurrentDirectory() + args[0]);
             ModuleDefMD runtimeModule = ModuleDefMD.Load(@".\Confuser.Runtime.dll");
 
-            List<MethodDef> blacklist = new List<Tuple<string, string>>
-            {
-                new Tuple<string, string>("Confuser.Runtime.AntiDebugSafe","Initialize"),
-                new Tuple<string, string>("Confuser.Runtime.AntiDebugSafe","Worker"),
-                new Tuple<string, string>("Confuser.Runtime.AntiDump","Initialize"),
-            }.Select(x=> runtimeModule.Find(x.Item1, true).FindMethod(x.Item2)).ToList();
-
             List<MethodDef> toReplace = new List<Tuple<string, string>>
             {
-                new Tuple<string, string>("Confuser.Runtime.Constant","Get"),
-                new Tuple<string, string>("Confuser.Runtime.Constant","Initialize")
+                Tuple.Create("Confuser.Runtime.Constant","Get"),
+                //Tuple.Create("Confuser.Runtime.Constant","Initialize")
             }.Select(x => runtimeModule.Find(x.Item1, true).FindMethod(x.Item2)).ToList();
 
-            //BodyModifier.RemoveReferences(blacklist, targetModule);
-            BodyModifier.FindAndReplaceWithResult(toReplace, targetModule);
+            BodyModifier.RemoveReferences(blacklist, targetModule);
+
+
 
             File.Delete(@"..\Obfuscated\Unobfuscated.exe");
             targetModule.Write(@"..\Obfuscated\Unobfuscated.exe");

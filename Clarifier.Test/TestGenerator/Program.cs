@@ -94,7 +94,7 @@ namespace Clarifier.Test.TestGenerator
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Unable to create directory.");
+                Console.WriteLine("Unable to create directory: {0}", ex.ToString());
                 return;
             }
 

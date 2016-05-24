@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{49C5E059-FA32-440F-B4C7-E69E32296AC0}</ProjectGuid>
+    <ProjectGuid>{4D692406-CBC1-4C99-B274-65B96DEA2539}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Clarifier.Core</RootNamespace>
-    <AssemblyName>Clarifier.Core</AssemblyName>
+    <RootNamespace>Clarifier.Identification.Impl</RootNamespace>
+    <AssemblyName>Clarifier.Identification.Impl</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -16,7 +16,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\Debug\bin\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -30,17 +30,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Confuser.Core, Version=0.6.0.64, Culture=neutral, PublicKeyToken=5fbc98a9d8494c64, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Clarifier.Core">
+      <HintPath>..\Debug\bin\Clarifier.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Confuser.Core">
       <HintPath>..\ConfuserEx\Debug\bin\Confuser.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Confuser.Runtime, Version=0.6.0.0, Culture=neutral, PublicKeyToken=5fbc98a9d8494c64, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Debug\bin\Confuser.Runtime.dll</HintPath>
-    </Reference>
-    <Reference Include="dnlib, Version=1.5.0.1500, Culture=neutral, PublicKeyToken=50e96378b6e77999, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Debug\bin\dnlib.dll</HintPath>
+    <Reference Include="dnlib">
+      <HintPath>..\ConfuserEx\Debug\bin\dnlib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -52,18 +49,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BodyComparison.cs" />
-    <Compile Include="ClarifierInjectHelper.cs" />
-    <Compile Include="IProtectionSignatureFinder.cs" />
-    <Compile Include="MethodDefExtension.cs" />
-    <Compile Include="BodyModifier.cs" />
+    <Compile Include="AntiDebugIdentification.cs" />
+    <Compile Include="AntiDumpIdentification.cs" />
+    <Compile Include="BaseStaticProtection.cs" />
+    <Compile Include="ClarifierContext.cs" />
+    <Compile Include="Class1.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="IProtectionIdentificator.cs" />
+    <Compile Include="IProtectionRemover.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
-  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
