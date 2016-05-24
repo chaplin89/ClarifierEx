@@ -48,8 +48,8 @@ namespace Clarifier.CLI
                 new KeyValuePair<string, string>("Confuser.Runtime.Constant","Initialize")
             };
 
-            //PlasticSurgeon.RemoveReferences(confuserRuntimeModule, blacklist, targetModule);
-            PlasticSurgeon.ReplaceWithResult(confuserRuntimeModule, toReplace, targetModule);
+            //BodyModifier.RemoveReferences(confuserRuntimeModule, blacklist, targetModule);
+            BodyModifier.ReplaceWithResult(confuserRuntimeModule, toReplace, targetModule);
 
             File.Delete(@"..\Obfuscated\Unobfuscated.exe");
             targetModule.Write(@"..\Obfuscated\Unobfuscated.exe");

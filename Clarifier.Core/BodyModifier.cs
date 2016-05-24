@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Clarifier.Core
 {
-    static public class PlasticSurgeon
+    static public class BodyModifier
     {
         static public bool RemoveReferences(ModuleDef blacklistModule, List<KeyValuePair<string, string>> blacklist, ModuleDef targetModule)
         {

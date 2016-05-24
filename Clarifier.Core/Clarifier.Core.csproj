@@ -54,7 +54,7 @@
   <ItemGroup>
     <Compile Include="BodyComparison.cs" />
     <Compile Include="MethodDefExtension.cs" />
-    <Compile Include="PlasticSurgeon.cs" />
+    <Compile Include="BodyModifier.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

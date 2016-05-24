@@ -87,9 +87,16 @@ namespace Clarifier.Test.TestGenerator
                 confuserPath = args[4] + "Confuser.CLI.exe";
             }
 
-            Directory.CreateDirectory(inputPath);
-            Directory.CreateDirectory(outputPath);
-            Directory.GetParent(outputProject).Create();
+            try { 
+                Directory.CreateDirectory(inputPath);
+                Directory.CreateDirectory(outputPath);
+                Directory.GetParent(outputProject).Create();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Unable to create directory.");
+                return;
+            }
 
             Debug.Assert(Directory.Exists(inputPath));
             Debug.Assert(Directory.Exists(outputPath));
