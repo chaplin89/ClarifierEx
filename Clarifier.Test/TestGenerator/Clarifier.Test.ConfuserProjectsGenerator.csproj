@@ -55,11 +55,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>SET ConfuserInstallationDir=$(SolutionDir)..\ConfuserEx
-
-copy /Y "%25ConfuserInstallationDir%25\Debug\Bin\Confuser.Core.dll" ".\"
-copy /Y "%25ConfuserInstallationDir%25\Debug\Bin\Confuser.Runtime.dll" ".\"
-copy /Y "%25ConfuserInstallationDir%25\Debug\Bin\dnlib.dll" ".\"</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PostBuildEvent>

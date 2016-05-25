@@ -4,6 +4,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clarifier.CLI", "Clarifier.CLI\Clarifier.CLI.csproj", "{E5F6BFF9-949D-459E-B650-335E81BB096F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4D692406-CBC1-4C99-B274-65B96DEA2539} = {4D692406-CBC1-4C99-B274-65B96DEA2539}
+		{914878AC-4A12-4BB3-A4A0-68B1F74132A7} = {914878AC-4A12-4BB3-A4A0-68B1F74132A7}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clarifier.Core", "Clarifier.Core\Clarifier.Core.csproj", "{49C5E059-FA32-440F-B4C7-E69E32296AC0}"
 EndProject
@@ -12,6 +16,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clarifier.Test.SimpleConsoleApplication", "Clarifier.Test\SimpleConsoleApplication\Clarifier.Test.SimpleConsoleApplication.csproj", "{9DE45910-AB12-45DC-A8C9-0A51F412913E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clarifier.Test.ConfuserProjectsGenerator", "Clarifier.Test\TestGenerator\Clarifier.Test.ConfuserProjectsGenerator.csproj", "{5742BACA-691D-4D49-8B92-C3C62C40B430}"
+	ProjectSection(ProjectDependencies) = postProject
+		{49C5E059-FA32-440F-B4C7-E69E32296AC0} = {49C5E059-FA32-440F-B4C7-E69E32296AC0}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Protection", "Protection", "{F08BCB45-09E4-4D4B-9767-03212CDB2C2C}"
 EndProject

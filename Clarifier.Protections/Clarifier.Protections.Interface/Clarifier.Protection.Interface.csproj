@@ -30,6 +30,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Confuser.Core">
+      <HintPath>..\..\Debug\bin\Confuser.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Confuser.Runtime">
+      <HintPath>..\..\Debug\bin\Confuser.Runtime.dll</HintPath>
+    </Reference>
     <Reference Include="dnlib">
       <HintPath>..\..\Debug\bin\dnlib.dll</HintPath>
     </Reference>

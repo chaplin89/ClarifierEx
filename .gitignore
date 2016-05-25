@@ -6,3 +6,4 @@
 [Dd]ebug/
 [Rr]elease/
 /packages
+/$(ConfigurationName)/bin

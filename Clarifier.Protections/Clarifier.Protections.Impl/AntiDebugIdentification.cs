@@ -9,9 +9,9 @@ using System.IO;
 
 namespace Clarifier.Identification.Impl
 {
-    class AntiDebugIdentification : BasicStaticProtection
+    public class AntiDebugIdentification : BasicStaticProtection
     {
-        AntiDebugIdentification()
+        public AntiDebugIdentification()
         {
             blacklist = new List<Tuple<string, string>>
             {

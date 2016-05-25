@@ -30,11 +30,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Clarifier.Core">
-      <HintPath>..\..\Debug\bin\Clarifier.Core.dll</HintPath>
+    <Reference Include="Confuser.Core">
+      <HintPath>..\..\Debug\bin\Confuser.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Clarifier.Identification.Interface">
-      <HintPath>..\Clarifier.Protections.Interface\bin\Debug\Clarifier.Identification.Interface.dll</HintPath>
+    <Reference Include="Confuser.Runtime">
+      <HintPath>..\..\Debug\bin\Confuser.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="dnlib">
       <HintPath>..\..\Debug\bin\dnlib.dll</HintPath>
@@ -55,6 +55,16 @@
     <Compile Include="ClarifierContext.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Clarifier.Core\Clarifier.Core.csproj">
+      <Project>{49c5e059-fa32-440f-b4c7-e69e32296ac0}</Project>
+      <Name>Clarifier.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Clarifier.Protections.Interface\Clarifier.Protection.Interface.csproj">
+      <Project>{914878ac-4a12-4bb3-a4a0-68b1f74132a7}</Project>
+      <Name>Clarifier.Protection.Interface</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

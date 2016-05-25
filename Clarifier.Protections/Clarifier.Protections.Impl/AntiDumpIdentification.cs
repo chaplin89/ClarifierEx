@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Clarifier.Identification.Impl
 {
-    class AntiDumpIdentification : BasicStaticProtection
+    public class AntiDumpIdentification : BasicStaticProtection
     {
         public AntiDumpIdentification()
         {

@@ -41,6 +41,7 @@ namespace Clarifier.Identification.Impl
             }
             catch (Exception ex)
             {
+                GC.KeepAlive(ex);
                 return false;
             }
             return true;

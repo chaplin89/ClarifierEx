@@ -18,7 +18,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\Debug\bin\</OutputPath>
+    <OutputPath>..\%24%28ConfigurationName%29\bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -27,7 +27,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\%24%28ConfigurationName%29\bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -36,24 +36,13 @@
     <StartupObject>Clarifier.CLI.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Clarifier.Identification.Impl, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Clarifier.Protections\Clarifier.Protections.Impl\bin\Debug\Clarifier.Identification.Impl.dll</HintPath>
+    <Reference Include="Confuser.Core">
+      <HintPath>..\Debug\bin\Confuser.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Clarifier.Identification.Interface, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Clarifier.Protections\Clarifier.Protections.Interface\bin\Debug\Clarifier.Identification.Interface.dll</HintPath>
-    </Reference>
-    <Reference Include="Confuser.Core, Version=0.6.0.64, Culture=neutral, PublicKeyToken=5fbc98a9d8494c64, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\ConfuserEx\Debug\bin\Confuser.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Confuser.Runtime, Version=0.6.0.0, Culture=neutral, PublicKeyToken=5fbc98a9d8494c64, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Confuser.Runtime">
       <HintPath>..\Debug\bin\Confuser.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="dnlib, Version=1.5.0.1500, Culture=neutral, PublicKeyToken=50e96378b6e77999, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="dnlib">
       <HintPath>..\Debug\bin\dnlib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -76,6 +65,14 @@
     <ProjectReference Include="..\Clarifier.Core\Clarifier.Core.csproj">
       <Project>{49c5e059-fa32-440f-b4c7-e69e32296ac0}</Project>
       <Name>Clarifier.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Clarifier.Protections\Clarifier.Protections.Impl\Clarifier.Protection.Impl.csproj">
+      <Project>{4d692406-cbc1-4c99-b274-65b96dea2539}</Project>
+      <Name>Clarifier.Protection.Impl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Clarifier.Protections\Clarifier.Protections.Interface\Clarifier.Protection.Interface.csproj">
+      <Project>{914878ac-4a12-4bb3-a4a0-68b1f74132a7}</Project>
+      <Name>Clarifier.Protection.Interface</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

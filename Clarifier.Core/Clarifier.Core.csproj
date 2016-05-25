@@ -16,23 +16,24 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\Debug\bin\</OutputPath>
+    <OutputPath>..\%24%28ConfigurationName%29\bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\%24%28ConfigurationName%29\bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Confuser.Core, Version=0.6.0.64, Culture=neutral, PublicKeyToken=5fbc98a9d8494c64, processorArchitecture=MSIL">
+    <Reference Include="Confuser.Core, Version=0.6.0.0, Culture=neutral, PublicKeyToken=5fbc98a9d8494c64, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\ConfuserEx\Debug\bin\Confuser.Core.dll</HintPath>
+      <HintPath>..\Debug\bin\Confuser.Core.dll</HintPath>
     </Reference>
     <Reference Include="Confuser.Runtime, Version=0.6.0.0, Culture=neutral, PublicKeyToken=5fbc98a9d8494c64, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -61,8 +62,12 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
+    <PreBuildEvent>ECHO off
+SET ConfuserInstallationDir=$(SolutionDir)ConfuserEx
+REM "Copying files from ConfuserEx..."
+copy /Y "%25ConfuserInstallationDir%25\$(ConfigurationName)\Bin\Confuser.Core.dll" ".\"
+copy /Y "%25ConfuserInstallationDir%25\$(ConfigurationName)\Bin\Confuser.Runtime.dll" ".\"
+copy /Y "%25ConfuserInstallationDir%25\$(ConfigurationName)\Bin\dnlib.dll" ".\"</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

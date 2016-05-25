@@ -18,9 +18,20 @@ namespace Clarifier.CLI
             ModuleDefMD targetModule = ModuleDefMD.Load(Directory.GetCurrentDirectory() + args[0]);
             ModuleDefMD runtimeModule = ModuleDefMD.Load(@".\Confuser.Runtime.dll");
 
+            ClarifierContext ctx = new ClarifierContext() { CurrentModule = targetModule };
+
+            AntiDumpIdentification antiDump = new AntiDumpIdentification();
+            AntiDebugIdentification antiDebug = new AntiDebugIdentification();
+
+            antiDump.Initialize(ctx);
+            antiDump.PerformIdentification(ctx);
+            antiDump.PerformRemoval(ctx);
+
+            antiDebug.Initialize(ctx);
+            antiDebug.PerformIdentification(ctx);
+            antiDebug.PerformRemoval(ctx);
+
             Constants wtf = new Constants();
-            ClarifierContext ctx = new ClarifierContext();
-            ctx.CurrentModule = targetModule;
             wtf.Initialize(ctx);
             wtf.PerformIdentification(ctx);
             wtf.PerformRemoval(ctx);
