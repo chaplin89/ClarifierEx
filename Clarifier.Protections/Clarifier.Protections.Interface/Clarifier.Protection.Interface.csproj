@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4D692406-CBC1-4C99-B274-65B96DEA2539}</ProjectGuid>
+    <ProjectGuid>{914878AC-4A12-4BB3-A4A0-68B1F74132A7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Clarifier.Identification.Impl</RootNamespace>
-    <AssemblyName>Clarifier.Identification.Impl</AssemblyName>
+    <RootNamespace>Clarifier.Identification.Interface</RootNamespace>
+    <AssemblyName>Clarifier.Identification.Interface</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,14 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Clarifier.Core">
-      <HintPath>..\Debug\bin\Clarifier.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Confuser.Core">
-      <HintPath>..\ConfuserEx\Debug\bin\Confuser.Core.dll</HintPath>
-    </Reference>
     <Reference Include="dnlib">
-      <HintPath>..\ConfuserEx\Debug\bin\dnlib.dll</HintPath>
+      <HintPath>..\..\Debug\bin\dnlib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -49,12 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AntiDebugIdentification.cs" />
-    <Compile Include="AntiDumpIdentification.cs" />
-    <Compile Include="BaseStaticProtection.cs" />
-    <Compile Include="ClarifierContext.cs" />
-    <Compile Include="Class1.cs" />
-    <Compile Include="Constants.cs" />
+    <Compile Include="IClarifierContext.cs" />
     <Compile Include="IProtectionIdentificator.cs" />
     <Compile Include="IProtectionRemover.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

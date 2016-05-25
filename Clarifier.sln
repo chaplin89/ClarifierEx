@@ -13,9 +13,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clarifier.Test.SimpleConsol
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clarifier.Test.ConfuserProjectsGenerator", "Clarifier.Test\TestGenerator\Clarifier.Test.ConfuserProjectsGenerator.csproj", "{5742BACA-691D-4D49-8B92-C3C62C40B430}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clarifier.Identification.Interface", "Clarifier.Identification.Interface\Clarifier.Identification.Interface.csproj", "{914878AC-4A12-4BB3-A4A0-68B1F74132A7}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Protection", "Protection", "{F08BCB45-09E4-4D4B-9767-03212CDB2C2C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clarifier.Identification.Impl", "Clarifier.Identification.Impl\Clarifier.Identification.Impl.csproj", "{4D692406-CBC1-4C99-B274-65B96DEA2539}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clarifier.Protection.Impl", "Clarifier.Protections\Clarifier.Protections.Impl\Clarifier.Protection.Impl.csproj", "{4D692406-CBC1-4C99-B274-65B96DEA2539}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clarifier.Protection.Interface", "Clarifier.Protections\Clarifier.Protections.Interface\Clarifier.Protection.Interface.csproj", "{914878AC-4A12-4BB3-A4A0-68B1F74132A7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,14 +59,6 @@ Global
 		{5742BACA-691D-4D49-8B92-C3C62C40B430}.Release_ThreadSafe|Any CPU.Build.0 = Release|Any CPU
 		{5742BACA-691D-4D49-8B92-C3C62C40B430}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5742BACA-691D-4D49-8B92-C3C62C40B430}.Release|Any CPU.Build.0 = Release|Any CPU
-		{914878AC-4A12-4BB3-A4A0-68B1F74132A7}.Debug_ThreadSafe|Any CPU.ActiveCfg = Debug|Any CPU
-		{914878AC-4A12-4BB3-A4A0-68B1F74132A7}.Debug_ThreadSafe|Any CPU.Build.0 = Debug|Any CPU
-		{914878AC-4A12-4BB3-A4A0-68B1F74132A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{914878AC-4A12-4BB3-A4A0-68B1F74132A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{914878AC-4A12-4BB3-A4A0-68B1F74132A7}.Release_ThreadSafe|Any CPU.ActiveCfg = Release|Any CPU
-		{914878AC-4A12-4BB3-A4A0-68B1F74132A7}.Release_ThreadSafe|Any CPU.Build.0 = Release|Any CPU
-		{914878AC-4A12-4BB3-A4A0-68B1F74132A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{914878AC-4A12-4BB3-A4A0-68B1F74132A7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4D692406-CBC1-4C99-B274-65B96DEA2539}.Debug_ThreadSafe|Any CPU.ActiveCfg = Debug|Any CPU
 		{4D692406-CBC1-4C99-B274-65B96DEA2539}.Debug_ThreadSafe|Any CPU.Build.0 = Debug|Any CPU
 		{4D692406-CBC1-4C99-B274-65B96DEA2539}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -73,6 +67,14 @@ Global
 		{4D692406-CBC1-4C99-B274-65B96DEA2539}.Release_ThreadSafe|Any CPU.Build.0 = Release|Any CPU
 		{4D692406-CBC1-4C99-B274-65B96DEA2539}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D692406-CBC1-4C99-B274-65B96DEA2539}.Release|Any CPU.Build.0 = Release|Any CPU
+		{914878AC-4A12-4BB3-A4A0-68B1F74132A7}.Debug_ThreadSafe|Any CPU.ActiveCfg = Debug|Any CPU
+		{914878AC-4A12-4BB3-A4A0-68B1F74132A7}.Debug_ThreadSafe|Any CPU.Build.0 = Debug|Any CPU
+		{914878AC-4A12-4BB3-A4A0-68B1F74132A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{914878AC-4A12-4BB3-A4A0-68B1F74132A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{914878AC-4A12-4BB3-A4A0-68B1F74132A7}.Release_ThreadSafe|Any CPU.ActiveCfg = Release|Any CPU
+		{914878AC-4A12-4BB3-A4A0-68B1F74132A7}.Release_ThreadSafe|Any CPU.Build.0 = Release|Any CPU
+		{914878AC-4A12-4BB3-A4A0-68B1F74132A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{914878AC-4A12-4BB3-A4A0-68B1F74132A7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -80,5 +82,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{9DE45910-AB12-45DC-A8C9-0A51F412913E} = {C5B2D5AB-1AC0-42B4-812F-57E97A8A0866}
 		{5742BACA-691D-4D49-8B92-C3C62C40B430} = {C5B2D5AB-1AC0-42B4-812F-57E97A8A0866}
+		{4D692406-CBC1-4C99-B274-65B96DEA2539} = {F08BCB45-09E4-4D4B-9767-03212CDB2C2C}
+		{914878AC-4A12-4BB3-A4A0-68B1F74132A7} = {F08BCB45-09E4-4D4B-9767-03212CDB2C2C}
 	EndGlobalSection
 EndGlobal

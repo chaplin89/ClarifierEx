@@ -9,6 +9,13 @@ namespace Clarifier.Core
 {
     static public class BodyComparison
     {
+        public enum ComparisonMode
+        {
+            PreferFirst,
+            PreferSecond,
+            Mean
+        }
+
         /// <summary>
         /// Simple comparison of two methods with fuzzy logic,
         /// used as fall back when a match is not found with boolean logic.
@@ -22,7 +29,7 @@ namespace Clarifier.Core
         /// <param name="md1">First method to compare</param>
         /// <param name="md2">Second method to compare</param>
         /// <returns>True if the methods are matching, false otherwise</returns>
-        static public bool FuzzyMethodsComparison(MethodDef md1, MethodDef md2, double threshold)
+        static public bool FuzzyMethodsComparison(MethodDef md1, MethodDef md2, double threshold, ComparisonMode mode)
         {
             Contract.Ensures(md1.HasBody);
 
@@ -106,10 +113,20 @@ namespace Clarifier.Core
                 }
             }
 
-            // Step #3: A value between 0,1 that indicate how match the two method are matching is computed
-            double computedThreshold = (double)matchedFirstMethod.Where(x => x).Count() / md1.Body.Instructions.Count;
+            // Step #3: A value between 0,1 that indicate how much the two method are matching
+            double computedThresholdFirst = 0.0;
+            double computedThresholdSecond = 0.0;
+            if (mode == ComparisonMode.PreferFirst || mode == ComparisonMode.Mean)
+                computedThresholdFirst= (double)matchedFirstMethod.Where(x => x).Count() / md1.Body.Instructions.Count;
+            if (mode == ComparisonMode.PreferSecond || mode == ComparisonMode.Mean)
+                computedThresholdSecond = (double)matchedSecondMethod.Where(x => x).Count() / md2.Body.Instructions.Count;
 
-            return computedThreshold > threshold;
+            if (mode == ComparisonMode.PreferFirst)
+                return computedThresholdFirst > threshold;
+            else if (mode == ComparisonMode.PreferSecond)
+                return computedThresholdSecond > threshold;
+            else // (mode == ComparisonMode.Mean)
+                return (computedThresholdFirst+ computedThresholdSecond)/2 > threshold;
         }
 
         /// <summary>
@@ -127,6 +144,9 @@ namespace Clarifier.Core
             {
                 if (md1.Body.Instructions[i].OpCode != md2.Body.Instructions[i].OpCode)
                     return false;
+
+                if (md1.Body.Instructions[i].Operand.GetType() != md2.Body.Instructions[i].Operand.GetType())
+                    return false;
             }
 
             return true;
@@ -140,19 +160,13 @@ namespace Clarifier.Core
         /// <param name="fuzzy">Matching mode</param>
         /// <param name="threshold">Threshold of the fuzzy comparison (ignored if not fuzzy)</param>
         /// <returns>Returns all the method that matches.</returns>
-        static public IEnumerable<MethodDef> GetSimilarMethods(ModuleDef module, MethodDef methodToMatch, bool fuzzy = false, double threshold = 0.0)
+        static public IEnumerable<MethodDef> GetSimilarMethods(ModuleDef module, MethodDef methodToMatch, bool fuzzy = false, double threshold = 0.0, ComparisonMode mode = ComparisonMode.PreferFirst)
         {
             foreach (var v in AllTypesHelper.Types(module.Types))
             {
-                IEnumerable<MethodDef> methodsInCurrentType;
-                methodsInCurrentType = FindMethod(v, methodToMatch, fuzzy, threshold);
-                if (methodsInCurrentType != null)
-                {
-                    foreach (var vv in methodsInCurrentType)
-                        yield return vv;
-                }
+                foreach (var vv in FindMethod(v, methodToMatch, fuzzy, threshold))
+                    yield return vv;
             }
-            yield break;
         }
 
         /// <summary>
@@ -163,22 +177,17 @@ namespace Clarifier.Core
         /// <param name="fuzzy">Matching mode</param>
         /// <param name="threshold">Threshold of the fuzzy comparison (ignored if not fuzzy)</param>
         /// <returns>Returns all the method that matches.</returns>
-        static public IEnumerable<MethodDef> FindMethod(TypeDef type, MethodDef methodToMatch, bool fuzzy = false, double threshold = 0.0)
+        static public IEnumerable<MethodDef> FindMethod(TypeDef type, MethodDef methodToMatch, bool fuzzy = false, double threshold = 0.0, ComparisonMode mode = ComparisonMode.PreferFirst)
         {
             foreach (var v in type.Methods)
             {
                 if (fuzzy)
-                {
-                    if (FuzzyMethodsComparison(methodToMatch, v, threshold))
+                    if (FuzzyMethodsComparison(methodToMatch, v, threshold, mode))
                         yield return v;
-                }
                 else
-                {
                     if (BooleanMethodsComparison(v, methodToMatch))
                         yield return v;
-                }
             }
-            yield break;
         }
     }
 }

@@ -6,6 +6,7 @@ using System.IO;
 using System.Reflection;
 using System;
 using System.Diagnostics;
+using Clarifier.Identification.Impl;
 
 namespace Clarifier.CLI
 {
@@ -17,14 +18,12 @@ namespace Clarifier.CLI
             ModuleDefMD targetModule = ModuleDefMD.Load(Directory.GetCurrentDirectory() + args[0]);
             ModuleDefMD runtimeModule = ModuleDefMD.Load(@".\Confuser.Runtime.dll");
 
-            List<MethodDef> toReplace = new List<Tuple<string, string>>
-            {
-                Tuple.Create("Confuser.Runtime.Constant","Get"),
-                //Tuple.Create("Confuser.Runtime.Constant","Initialize")
-            }.Select(x => runtimeModule.Find(x.Item1, true).FindMethod(x.Item2)).ToList();
-
-            BodyModifier.RemoveReferences(blacklist, targetModule);
-
+            Constants wtf = new Constants();
+            ClarifierContext ctx = new ClarifierContext();
+            ctx.CurrentModule = targetModule;
+            wtf.Initialize(ctx);
+            wtf.PerformIdentification(ctx);
+            wtf.PerformRemoval(ctx);
 
 
             File.Delete(@"..\Obfuscated\Unobfuscated.exe");

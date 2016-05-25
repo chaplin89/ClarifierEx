@@ -36,6 +36,14 @@
     <StartupObject>Clarifier.CLI.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Clarifier.Identification.Impl, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Clarifier.Protections\Clarifier.Protections.Impl\bin\Debug\Clarifier.Identification.Impl.dll</HintPath>
+    </Reference>
+    <Reference Include="Clarifier.Identification.Interface, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Clarifier.Protections\Clarifier.Protections.Interface\bin\Debug\Clarifier.Identification.Interface.dll</HintPath>
+    </Reference>
     <Reference Include="Confuser.Core, Version=0.6.0.64, Culture=neutral, PublicKeyToken=5fbc98a9d8494c64, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ConfuserEx\Debug\bin\Confuser.Core.dll</HintPath>

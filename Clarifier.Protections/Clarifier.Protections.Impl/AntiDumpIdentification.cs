@@ -17,17 +17,17 @@ namespace Clarifier.Identification.Impl
             };
         }
 
-        public override bool Initialize(ClarifierContext ctx)
+        public override bool Initialize(IClarifierContext ctx)
         {
             return base.Initialize(ctx);
         }
 
-        public override double PerformIdentification(ClarifierContext ctx)
+        public override double PerformIdentification(IClarifierContext ctx)
         {
             return base.PerformIdentification(ctx);            
         }
 
-        public override bool PerformRemoval(ClarifierContext ctx)
+        public override bool PerformRemoval(IClarifierContext ctx)
         {
             return base.PerformRemoval(ctx);
         }

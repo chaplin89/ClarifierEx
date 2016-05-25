@@ -15,7 +15,7 @@ namespace Clarifier.Identification.Impl
     /// So this class is capable of either found these methods (even if they
     /// are slightly modified) and remove all the refences inside the assembly.
     /// </summary>
-    abstract class BasicStaticProtection : IProtectionIdentificator, IProtectionRemover
+    public abstract class BasicStaticProtection : IProtectionIdentificator, IProtectionRemover
     {
         protected string sourceModule = @".\Confuser.Runtime.dll";
 
@@ -28,7 +28,7 @@ namespace Clarifier.Identification.Impl
         {
         }
 
-        public virtual bool Initialize(ClarifierContext ctx)
+        public virtual bool Initialize(IClarifierContext ctx)
         {
             if (!File.Exists(sourceModule))
                 return false;
@@ -45,7 +45,8 @@ namespace Clarifier.Identification.Impl
             }
             return true;
         }
-        public virtual bool PerformRemoval(ClarifierContext ctx)
+
+        public virtual bool PerformRemoval(IClarifierContext ctx)
         {
             bool returnValue = true;
 
@@ -67,7 +68,7 @@ namespace Clarifier.Identification.Impl
             return returnValue;
         }
 
-        public virtual double PerformIdentification(ClarifierContext ctx)
+        public virtual double PerformIdentification(IClarifierContext ctx)
         {
             double step = 1.0 / blacklist.Count;
             double returnValue = 0.0;
