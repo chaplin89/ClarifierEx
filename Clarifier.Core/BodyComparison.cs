@@ -28,6 +28,8 @@ namespace Clarifier.Core
         /// </summary>
         /// <param name="md1">First method to compare</param>
         /// <param name="md2">Second method to compare</param>
+        /// <param name="threshold">Threshold above which methods are considered equals</param>
+        /// <param name="mode">Tell how to do the comparison</param>
         /// <returns>True if the methods are matching, false otherwise</returns>
         static public bool FuzzyMethodsComparison(MethodDef md1, MethodDef md2, double threshold, ComparisonMode mode)
         {
@@ -56,12 +58,11 @@ namespace Clarifier.Core
 
             // Step #2:
             // For each instruction X of the first method, start a comparison between the instructions that follows X
-            // and the instructions from the second method that follow an instruction with the same opcode of X (if any).
+            // in the first method and the instructions that follow an instruction with the same opcode of X (if any)
+            // in the second method.
             //
             // In order to do this, the previous created dictionary is used.
-            // From this step, the maximum range of instruction that match is taken.
-            // When a range is chosen, if the length of this range is > of thresholdToCommit, the range is used to populate
-            // a list of boolean (matchedFirstMethod and matchedSecondMethod).
+            // The maximum range of instruction that match is taken.
             for (var currentFirstIndex = 0; currentFirstIndex < md1.Body.Instructions.Count; ++currentFirstIndex)
             {
                 Instruction currentInstruction = md1.Body.Instructions[currentFirstIndex];
@@ -102,6 +103,9 @@ namespace Clarifier.Core
                     }
                 }
 
+                // Step #2.1
+                // When a range is chosen, if the length of this range is > of thresholdToCommit, the range is used to populate
+                // a list of boolean (matchedFirstMethod and matchedSecondMethod).
                 if (maxMatching > thresholdToCommit)
                 {
                     foreach (var currentRange in rangeFirst)
@@ -113,7 +117,11 @@ namespace Clarifier.Core
                 }
             }
 
-            // Step #3: A value between 0,1 that indicate how much the two method are matching
+            // Step #3: A value between 0,1 that indicate how much the two methods are matching
+            // Depending on the mode parameter, the return value can indicate:
+            // 1) What percentage of the first method overlap to the second (ComparisonMode.PreferFirst)
+            // 2) What percentage of the second method overlap to the first (ComparisonMode.PreferSecond)
+            // 3) The mean of the previous two values
             double computedThresholdFirst = 0.0;
             double computedThresholdSecond = 0.0;
             if (mode == ComparisonMode.PreferFirst || mode == ComparisonMode.Mean)
@@ -126,7 +134,7 @@ namespace Clarifier.Core
             else if (mode == ComparisonMode.PreferSecond)
                 return computedThresholdSecond > threshold;
             else // (mode == ComparisonMode.Mean)
-                return (computedThresholdFirst+ computedThresholdSecond)/2 > threshold;
+                return (computedThresholdFirst + computedThresholdSecond)/2 > threshold;
         }
 
         /// <summary>

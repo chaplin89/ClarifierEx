@@ -16,7 +16,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\%24%28ConfigurationName%29\bin\</OutputPath>
+    <OutputPath>..\Debug\bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -63,11 +63,17 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>ECHO off
+
 SET ConfuserInstallationDir=$(SolutionDir)ConfuserEx
+
 REM "Copying files from ConfuserEx..."
-copy /Y "%25ConfuserInstallationDir%25\$(ConfigurationName)\Bin\Confuser.Core.dll" ".\"
-copy /Y "%25ConfuserInstallationDir%25\$(ConfigurationName)\Bin\Confuser.Runtime.dll" ".\"
-copy /Y "%25ConfuserInstallationDir%25\$(ConfigurationName)\Bin\dnlib.dll" ".\"</PreBuildEvent>
+
+
+copy /Y "%25ConfuserInstallationDir%25\Debug\Bin\Confuser.Core.dll" ".\"
+
+copy /Y "%25ConfuserInstallationDir%25\Debug\Bin\Confuser.Runtime.dll" ".\"
+
+copy /Y "%25ConfuserInstallationDir%25\Debug\Bin\dnlib.dll" ".\"</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

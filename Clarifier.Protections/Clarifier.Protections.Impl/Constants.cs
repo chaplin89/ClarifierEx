@@ -82,6 +82,14 @@ namespace Clarifier.Identification.Impl
                             int inputParameters = methodToInvoke.GetParameters().Count();
                             object[] parameters = new object[inputParameters];
                             int j = i;
+
+                            if (methodToInvoke.IsGenericMethod)
+                            {
+                                MethodSpec genericMethod = (MethodSpec)targetMethod;
+                                Type[] genericTypes = genericMethod.GenericInstMethodSig.GenericArguments.Select(x => Type.GetType(x.ReflectionFullName)).ToArray();
+                                methodToInvoke = methodToInvoke.MakeGenericMethod(genericTypes);
+                            }
+
                             for (; j > i - inputParameters; j--)
                             {
                                 Type targetType = methodToInvoke.GetParameters()[parameters.Length - (i - j)-1].ParameterType;
@@ -102,20 +110,40 @@ namespace Clarifier.Identification.Impl
                                 {
                                     parameters[parameters.Length - (i - j)-1] = operand;
                                 }
-                                currentMethod.Body.Instructions.RemoveAt(j - 1);
-                            }
-                            i = j;
-
-                            if (methodToInvoke.IsGenericMethod)
-                            {
                                 MethodSpec genericMethod = (MethodSpec)targetMethod;
-                                Type[] genericTypes = genericMethod.GenericInstMethodSig.GenericArguments.Select(x => Type.GetType(x.ReflectionFullName)).ToArray();
-                                methodToInvoke = methodToInvoke.MakeGenericMethod(genericTypes);
+
+                                if (methodToInvoke.ReturnType == typeof(string))
+                                    currentMethod.Body.Instructions.RemoveAt(j - 1);
+                                else
+                                {
+                                   // Debugger.Break();
+
+                                }
                             }
+                            if (methodToInvoke.ReturnType == typeof(string))
+                                i = j;
+
                             //methodToInvoke.ReturnType;
                             //object returnedObject = Activator.CreateInstance();
                             object returnedObject = methodToInvoke.Invoke(null, parameters);
 
+                            if (returnedObject.GetType() == typeof(string))
+                            {
+                                currentMethod.Body.Instructions[i] = new Instruction(OpCodes.Ldstr, returnedObject);
+                            }
+                            else if (returnedObject.GetType().IsArray)
+                            {
+                                Random rnd = new Random();
+                                dnlib.DotNet.FieldAttributes fa =   dnlib.DotNet.FieldAttributes.HasFieldRVA | 
+                                                                    dnlib.DotNet.FieldAttributes.InitOnly |
+                                                                    dnlib.DotNet.FieldAttributes.Static |
+                                                                    dnlib.DotNet.FieldAttributes.SpecialName;
+
+
+                                FieldDef fieldToAdd =new FieldDefUser(string.Format("NewField{0}", rnd.Next()),null, fa);
+                                currentMethod.Body.Instructions[i] = new Instruction(OpCodes.Ldtoken, fieldToAdd.Rid);
+                                
+                            }
                             //Put the field here
                             //currentMethod.Body.Instructions[i] = ;
                         }
@@ -123,20 +151,6 @@ namespace Clarifier.Identification.Impl
                 }
             }
 
-            foreach (var v in mapNewMethodsToName)
-            {
-                if (v.Value.IsGenericMethod)
-                {
-                }
-
-                try
-                {
-                    object wtfff = mapNewMethodsToName[v.Key].MakeGenericMethod(typeof(string)).Invoke(null, new object[] { 226098525u });
-                }
-                catch
-                {
-                }
-            }
             return true;
             //             BodyModifier.FindAndReplaceWithResult(toReplace, targetModule, mapMethodsToName, dummyInstance);
             //             foreach (var v in identifiedMethods)
