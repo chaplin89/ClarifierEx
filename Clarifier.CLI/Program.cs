@@ -36,9 +36,9 @@ namespace Clarifier.CLI
             wtf.PerformIdentification(ctx);
             wtf.PerformRemoval(ctx);
 
-
-            File.Delete(@"..\Obfuscated\Unobfuscated.exe");
-            targetModule.Write(@"..\Obfuscated\Unobfuscated.exe");
+            targetModule.Write(@".\Unobfuscated.exe");
+            //File.Delete(@"..\Obfuscated\Unobfuscated.exe");
+           
 
         }
     }
