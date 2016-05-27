@@ -144,11 +144,10 @@ namespace Clarifier.Identification.Impl
                                                                     dnlib.DotNet.FieldAttributes.InitOnly |
                                                                     dnlib.DotNet.FieldAttributes.Static |
                                                                     dnlib.DotNet.FieldAttributes.SpecialName;
-
+                                
 
                                 FieldDef fieldToAdd =new FieldDefUser(string.Format("NewField{0}", rnd.Next()),null, fa);
-                                currentMethod.Body.Instructions[i] = new Instruction(OpCodes.Ldtoken, fieldToAdd.Rid);
-                                
+                                currentMethod.Body.Instructions[i] = new Instruction(OpCodes.Ldtoken, Create(returnedObject, ctx));
                             }
                             //Put the field here
                             //currentMethod.Body.Instructions[i] = ;
