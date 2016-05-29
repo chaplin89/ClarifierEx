@@ -1,35 +1,27 @@
-﻿using Clarifier.Core;
-using dnlib.DotNet;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-
+﻿
 namespace Clarifier.Identification.Impl
 {
-    public class AntiDumpIdentification : BasicStaticProtection
+    public class AntiDumpIdentification
     {
+        private BasicStaticProtection staticProtectionsManager = new BasicStaticProtection();
         public AntiDumpIdentification()
         {
-            blacklist = new List<Tuple<string, string>>
-            {
-                Tuple.Create("Confuser.Runtime.AntiDump","Initialize"),
-            };
         }
 
-        public override bool Initialize(IClarifierContext ctx)
+        public bool Initialize(IClarifierContext ctx)
         {
-            return base.Initialize(ctx);
+            staticProtectionsManager.AddPatternMatchingMethod("Confuser.Runtime.AntiDump", "Initialize");
+            return staticProtectionsManager.LoadTypes();
         }
 
-        public override double PerformIdentification(IClarifierContext ctx)
+        public double PerformIdentification(IClarifierContext ctx)
         {
-            return base.PerformIdentification(ctx);            
+            return staticProtectionsManager.MapSourceInDestination(ctx.CurrentModule);            
         }
 
-        public override bool PerformRemoval(IClarifierContext ctx)
+        public bool PerformRemoval(IClarifierContext ctx)
         {
-            return base.PerformRemoval(ctx);
+            return staticProtectionsManager.PerformRemoval(ctx.CurrentModule);
         }
     }
 }

@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="AntiDebugIdentification.cs" />
     <Compile Include="AntiDumpIdentification.cs" />
+    <Compile Include="AntiTamper.cs" />
     <Compile Include="BaseStaticProtection.cs" />
     <Compile Include="ClarifierContext.cs" />
     <Compile Include="Constants.cs" />

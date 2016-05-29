@@ -23,6 +23,15 @@ namespace Clarifier.CLI
             AntiDumpIdentification antiDump = new AntiDumpIdentification();
             AntiDebugIdentification antiDebug = new AntiDebugIdentification();
             Constants constants = new Constants();
+            AntiTamper antiTamper = new AntiTamper();
+
+
+            antiTamper.Initialize();
+            antiTamper.PerformIdentification(ctx);
+            antiTamper.PerformRemoval(ctx);
+
+            targetModule.NativeWrite(@".\Unobfuscated.exe");
+            return;
 
             antiDump.Initialize(ctx);
             antiDump.PerformIdentification(ctx);
@@ -36,8 +45,7 @@ namespace Clarifier.CLI
             constants.PerformIdentification(ctx);
             constants.PerformRemoval(ctx);
 
-            targetModule.Write(@".\Unobfuscated.exe");
-            File.Delete(@"..\Obfuscated\Unobfuscated.exe");
+            //File.Delete(@"..\Obfuscated\Unobfuscated.exe");
         }
     }
 }
