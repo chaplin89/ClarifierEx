@@ -42,9 +42,6 @@
     <Reference Include="Confuser.Runtime">
       <HintPath>..\Debug\bin\Confuser.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="dnlib">
-      <HintPath>..\Debug\bin\dnlib.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -73,6 +70,10 @@
     <ProjectReference Include="..\Clarifier.Protections\Clarifier.Protections.Interface\Clarifier.Protection.Interface.csproj">
       <Project>{914878ac-4a12-4bb3-a4a0-68b1f74132a7}</Project>
       <Name>Clarifier.Protection.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ConfuserEx\dnlib\src\dnlib.csproj">
+      <Project>{fdfc1237-143f-4919-8318-4926901f4639}</Project>
+      <Name>dnlib</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

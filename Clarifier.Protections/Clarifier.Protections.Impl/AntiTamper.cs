@@ -19,7 +19,6 @@ namespace Clarifier.Identification.Impl
             {
                 foreach (var vv in v.matchingMethods)
                 {
-                    Debugger.Break();
                     var typeRef = ctx.CurrentModule.UpdateRowId(new TypeRefUser(ctx.CurrentModule, "System.Diagnostics", "Debugger", ctx.CurrentModule.CorLibTypes.AssemblyRef));
                     var classSignature = new ClassSig(typeRef);
 
@@ -37,7 +36,7 @@ namespace Clarifier.Identification.Impl
 
         public  void Initialize()
         {
-            staticProtectionsManager.AddPatternMatchingMethod("Confuser.Runtime.AntiTamperNormal", "Initialize"); ;
+            staticProtectionsManager.AddPatternMatchingMethod("Confuser.Runtime.AntiTamperNormal", "Initialize");
             staticProtectionsManager.LoadTypes();
         }
     }

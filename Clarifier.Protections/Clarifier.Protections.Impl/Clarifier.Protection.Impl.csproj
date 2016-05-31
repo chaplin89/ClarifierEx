@@ -55,6 +55,7 @@
     <Compile Include="BaseStaticProtection.cs" />
     <Compile Include="ClarifierContext.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Inliner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

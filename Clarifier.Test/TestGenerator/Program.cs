@@ -54,7 +54,7 @@ namespace Clarifier.Test.TestGenerator
                 {
                     //ProtectionType.AntiDebug,
                     //ProtectionType.AntiDump,
-                    ProtectionType.AntiTamper,
+                    ProtectionType.ReferenceProxy,
                 }
             }
         };

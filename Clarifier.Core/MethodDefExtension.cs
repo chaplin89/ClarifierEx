@@ -16,5 +16,14 @@ namespace Clarifier.Core
             foreach (var v in method.Body.Instructions)
                 yield return v;
         }
+
+        public static IEnumerable<MethodDef> GetMethods(this ModuleDef module)
+        {
+            foreach(var type in AllTypesHelper.Types(module.Types))
+            {
+                foreach (var method in type.Methods)
+                    yield return method;
+            }
+        }
     }
 }

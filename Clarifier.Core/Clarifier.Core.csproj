@@ -55,7 +55,6 @@
   <ItemGroup>
     <Compile Include="BodyComparison.cs" />
     <Compile Include="ClarifierInjectHelper.cs" />
-    <Compile Include="IProtectionSignatureFinder.cs" />
     <Compile Include="MethodDefExtension.cs" />
     <Compile Include="BodyModifier.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

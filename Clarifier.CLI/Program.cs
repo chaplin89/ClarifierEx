@@ -7,9 +7,22 @@ using System.Reflection;
 using System;
 using System.Diagnostics;
 using Clarifier.Identification.Impl;
+using dnlib.DotNet.Writer;
 
 namespace Clarifier.CLI
 {
+
+    class WriteListener : IModuleWriterListener
+    {
+        public void OnWriterEvent(ModuleWriterBase writer, ModuleWriterEvent evt)
+        {
+            switch(evt)
+            {
+                
+            }
+        }
+    }
+
     class Program
     {
         static void Main(string[] args)
@@ -17,8 +30,15 @@ namespace Clarifier.CLI
             Debug.Assert(args.Length > 0);
             ModuleDefMD targetModule = ModuleDefMD.Load(Directory.GetCurrentDirectory() + args[0]);
             ModuleDefMD runtimeModule = ModuleDefMD.Load(@".\Confuser.Runtime.dll");
-
+            NativeModuleWriterOptions options = new NativeModuleWriterOptions(targetModule);
             ClarifierContext ctx = new ClarifierContext() { CurrentModule = targetModule };
+
+            Inliner inl = new Inliner();
+
+            inl.PerformIdentification(ctx);
+            inl.PerformRemoval(ctx);
+            targetModule.Write(@".\Unobfuscated.exe");
+            return;
 
             AntiDumpIdentification antiDump = new AntiDumpIdentification();
             AntiDebugIdentification antiDebug = new AntiDebugIdentification();
@@ -29,9 +49,7 @@ namespace Clarifier.CLI
             antiTamper.Initialize();
             antiTamper.PerformIdentification(ctx);
             antiTamper.PerformRemoval(ctx);
-
-            targetModule.NativeWrite(@".\Unobfuscated.exe");
-            return;
+            //NativeModuleWriterOptions options = new NativeModuleWriterOptions(targetModule);
 
             antiDump.Initialize(ctx);
             antiDump.PerformIdentification(ctx);
