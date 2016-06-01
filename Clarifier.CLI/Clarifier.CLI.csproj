@@ -76,10 +76,7 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="BeforeBuild">
-    <Message Text="Begin ConfuserEx compilation." />
-    <MSBuild Projects="..\ConfuserEx\Confuser.CLI\Confuser.CLI.csproj" Targets="Build" Properties="Configuration=Debug" />
-    <Message Text="End ConfuserEx compilation." />
-    <Error Condition="!Exists('$(SolutionDir)\ConfuserEx\Confuser2.sln')" Text="ConfuserEx project not found." />
+  <Target Name="AfterBuild">
+    <Exec WorkingDirectory="$(SolutionDir)\$(ConfigurationName)\bin\Test\" Command="TestGenerator.exe $(SolutionDir)\ConfuserEx\Release\bin" Timeout="60000" Condition=" '$(OS)' == 'Windows_NT' " />
   </Target>
 </Project>
