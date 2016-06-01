@@ -1,7 +1,6 @@
 ﻿using dnlib.DotNet;
 using System.Diagnostics;
 using Clarifier.Identification.Impl;
-using System.IO;
 
 namespace Clarifier.CLI
 {
@@ -24,23 +23,29 @@ namespace Clarifier.CLI
             inliner.PerformIdentification(ctx);
             inliner.PerformRemoval(ctx);
 
-//             antiTamper.Initialize();
-//             antiTamper.PerformIdentification(ctx);
-//             antiTamper.PerformRemoval(ctx);
-// 
-//             antiDump.Initialize(ctx);
-//             antiDump.PerformIdentification(ctx);
-//             antiDump.PerformRemoval(ctx);
-// 
-//             antiDebug.Initialize(ctx);
-//             antiDebug.PerformIdentification(ctx);
-//             antiDebug.PerformRemoval(ctx);
-// 
-//             constants.Initialize(ctx);
-//             constants.PerformIdentification(ctx);
-//             constants.PerformRemoval(ctx);
+            //             antiTamper.Initialize();
+            //             antiTamper.PerformIdentification(ctx);
+            //             antiTamper.PerformRemoval(ctx);
+            // 
+            //             antiDump.Initialize(ctx);
+            //             antiDump.PerformIdentification(ctx);
+            //             antiDump.PerformRemoval(ctx);
+            // 
+            //             antiDebug.Initialize(ctx);
+            //             antiDebug.PerformIdentification(ctx);
+            //             antiDebug.PerformRemoval(ctx);
+            // 
+            //             constants.Initialize(ctx);
+            //             constants.PerformIdentification(ctx);
+            //             constants.PerformRemoval(ctx);
 
-            targetModule.Write(@".\Test\Obfuscated\Result.exe");
+            int lastBackslash = args[0].LastIndexOf('\\');
+            int secondLastBackslash = args[0].LastIndexOf('\\', lastBackslash - 1);
+            string targetPath = args[0].Substring(secondLastBackslash+1,lastBackslash-1-secondLastBackslash);
+            string targetExecutable = args[0].Substring(lastBackslash+1, args[0].Length-1-lastBackslash);
+            string destinationFile = args[0].Replace(targetPath, "Deobfuscated");
+
+            targetModule.Write(destinationFile);
             return;
         }
     }

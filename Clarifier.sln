@@ -28,6 +28,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clarifier.Protection.Interf
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dnlib", "ConfuserEx\dnlib\src\dnlib.csproj", "{FDFC1237-143F-4919-8318-4926901F4639}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clarifier.Test.TestRunner", "Clarifier.Test\TestRunner\Clarifier.Test.TestRunner.csproj", "{6E387375-4086-49B9-809B-41E23266695B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug_ThreadSafe|Any CPU = Debug_ThreadSafe|Any CPU
@@ -90,6 +92,14 @@ Global
 		{FDFC1237-143F-4919-8318-4926901F4639}.Release_ThreadSafe|Any CPU.ActiveCfg = Release_ThreadSafe|Any CPU
 		{FDFC1237-143F-4919-8318-4926901F4639}.Release_ThreadSafe|Any CPU.Build.0 = Release_ThreadSafe|Any CPU
 		{FDFC1237-143F-4919-8318-4926901F4639}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E387375-4086-49B9-809B-41E23266695B}.Debug_ThreadSafe|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E387375-4086-49B9-809B-41E23266695B}.Debug_ThreadSafe|Any CPU.Build.0 = Debug|Any CPU
+		{6E387375-4086-49B9-809B-41E23266695B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E387375-4086-49B9-809B-41E23266695B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E387375-4086-49B9-809B-41E23266695B}.Release_ThreadSafe|Any CPU.ActiveCfg = Release|Any CPU
+		{6E387375-4086-49B9-809B-41E23266695B}.Release_ThreadSafe|Any CPU.Build.0 = Release|Any CPU
+		{6E387375-4086-49B9-809B-41E23266695B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E387375-4086-49B9-809B-41E23266695B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -99,5 +109,6 @@ Global
 		{5742BACA-691D-4D49-8B92-C3C62C40B430} = {C5B2D5AB-1AC0-42B4-812F-57E97A8A0866}
 		{4D692406-CBC1-4C99-B274-65B96DEA2539} = {F08BCB45-09E4-4D4B-9767-03212CDB2C2C}
 		{914878AC-4A12-4BB3-A4A0-68B1F74132A7} = {F08BCB45-09E4-4D4B-9767-03212CDB2C2C}
+		{6E387375-4086-49B9-809B-41E23266695B} = {C5B2D5AB-1AC0-42B4-812F-57E97A8A0866}
 	EndGlobalSection
 EndGlobal
