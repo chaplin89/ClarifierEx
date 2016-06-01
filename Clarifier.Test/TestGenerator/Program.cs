@@ -40,11 +40,11 @@ namespace Clarifier.Test.TestGenerator
 
     class Program
     {
-        static private string outputPath = Directory.GetCurrentDirectory() + @"\Obfuscated\";
-        static private string inputPath = Directory.GetCurrentDirectory() + @"\Unobfuscated\";
-        static private string outputProject = Directory.GetCurrentDirectory() + @"\OutputConfuserProject.crproj";
-        static private bool invokeObfuscator = true;
-        static private string confuserPath = Directory.GetCurrentDirectory() + @"\..\..\..\ConfuserEx\Debug\Bin\Confuser.CLI.exe";
+        static string outputPath = Path.Combine(Directory.GetCurrentDirectory(),"Obfuscated");
+        static string inputPath = Path.Combine(Directory.GetCurrentDirectory(),"Unobfuscated");
+        static string outputProject = Path.Combine(Directory.GetCurrentDirectory(),"OutputConfuserProject.crproj");
+        static bool invokeObfuscator = true;
+        static string confuserPath;
 
         static List<ModuleDescriptor> registeredApplications = new List<ModuleDescriptor>()
         {
@@ -76,16 +76,15 @@ namespace Clarifier.Test.TestGenerator
         static void Main(string[] args)
         {
             if (args.Length > 0)
-                inputPath = args[0];
+                confuserPath = Path.Combine(args[0],"Confuser.CLI.exe");
             if (args.Length > 1)
-                outputPath = args[1];
+                inputPath = args[1];
             if (args.Length > 2)
-                outputProject = args[2];
+                outputPath = args[2];
+            if (args.Length > 3)
+                outputProject = args[3];
             if (args.Length > 4)
-            {
-                bool.TryParse(args[3], out invokeObfuscator);
-                confuserPath = args[4] + "Confuser.CLI.exe";
-            }
+                bool.TryParse(args[4], out invokeObfuscator);
 
             try { 
                 Directory.CreateDirectory(inputPath);

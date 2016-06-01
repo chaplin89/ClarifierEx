@@ -16,20 +16,18 @@ namespace Clarifier.Test.SimpleConsoleApplication
     }
     class Program
     {
-
-
         static void Main(string[] args)
         {
-            char[] wttff = { 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a' };
-            int[] testtt = new int[] { 0, 5, 3, 2, 4, 5, 6, 78, 9 };
+            char[] charArrayTest = { 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a' };
+            int[] testArray = { 0, 1, 1, 1, 2, 2, 3, 4 };
+
             Console.WriteLine("This is an obfuscated program! De obfuscate me!");
-            int[] testArray = new int[] { 0, 1, 1, 1, 2, 2, 3, 4};
             testArray[0] = 10;
             testArray[1] = 11;
-            Console.WriteLine("{0}", testArray[0]);
+            Console.WriteLine(testArray[0]);
 
-            GC.KeepAlive(wttff);
-            GC.KeepAlive(testtt);
+            GC.KeepAlive(charArrayTest);
+            GC.KeepAlive(testArray);
         }
     }
 }
