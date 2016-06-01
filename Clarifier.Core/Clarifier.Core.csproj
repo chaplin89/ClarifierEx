@@ -25,23 +25,20 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\%24%28ConfigurationName%29\bin\</OutputPath>
+    <OutputPath>..\Release\bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Confuser.Core, Version=0.6.0.0, Culture=neutral, PublicKeyToken=5fbc98a9d8494c64, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Debug\bin\Confuser.Core.dll</HintPath>
+    <Reference Include="Confuser.Core">
+      <HintPath>..\deps\Confuser.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Confuser.Runtime, Version=0.6.0.0, Culture=neutral, PublicKeyToken=5fbc98a9d8494c64, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Debug\bin\Confuser.Runtime.dll</HintPath>
+    <Reference Include="Confuser.Runtime">
+      <HintPath>..\deps\Confuser.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="dnlib, Version=1.5.0.1500, Culture=neutral, PublicKeyToken=50e96378b6e77999, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Debug\bin\dnlib.dll</HintPath>
+    <Reference Include="dnlib">
+      <HintPath>..\deps\dnlib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -61,24 +58,10 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>ECHO off
-
-SET ConfuserInstallationDir=$(SolutionDir)ConfuserEx
-
-REM "Copying files from ConfuserEx..."
-
-
-copy /Y "%25ConfuserInstallationDir%25\Debug\Bin\Confuser.Core.dll" ".\"
-
-copy /Y "%25ConfuserInstallationDir%25\Debug\Bin\Confuser.Runtime.dll" ".\"
-
-copy /Y "%25ConfuserInstallationDir%25\Debug\Bin\dnlib.dll" ".\"</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
+    <Copy SourceFiles="$(SolutionDir)ConfuserEx\$(ConfigurationName)\bin\Confuser.Core.dll;$(SolutionDir)ConfuserEx\$(ConfigurationName)\bin\Confuser.Runtime.dll;$(SolutionDir)ConfuserEx\$(ConfigurationName)\bin\dnlib.dll" DestinationFolder="$(SolutionDir)deps\" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="true" />
   </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

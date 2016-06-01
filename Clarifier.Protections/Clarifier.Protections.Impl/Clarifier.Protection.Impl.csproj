@@ -16,7 +16,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\Debug\bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -24,20 +24,20 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\Release\bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Confuser.Core">
-      <HintPath>..\..\Debug\bin\Confuser.Core.dll</HintPath>
+      <HintPath>..\..\deps\Confuser.Core.dll</HintPath>
     </Reference>
     <Reference Include="Confuser.Runtime">
-      <HintPath>..\..\Debug\bin\Confuser.Runtime.dll</HintPath>
+      <HintPath>..\..\deps\Confuser.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="dnlib">
-      <HintPath>..\..\Debug\bin\dnlib.dll</HintPath>
+      <HintPath>..\..\deps\dnlib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

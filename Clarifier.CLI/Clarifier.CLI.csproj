@@ -27,7 +27,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\%24%28ConfigurationName%29\bin\</OutputPath>
+    <OutputPath>..\Release\bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -37,10 +37,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Confuser.Core">
-      <HintPath>..\Debug\bin\Confuser.Core.dll</HintPath>
+      <HintPath>..\deps\Confuser.Core.dll</HintPath>
     </Reference>
     <Reference Include="Confuser.Runtime">
-      <HintPath>..\Debug\bin\Confuser.Runtime.dll</HintPath>
+      <HintPath>..\deps\Confuser.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="dnlib">
+      <HintPath>..\deps\dnlib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -71,17 +74,12 @@
       <Project>{914878ac-4a12-4bb3-a4a0-68b1f74132a7}</Project>
       <Name>Clarifier.Protection.Interface</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ConfuserEx\dnlib\src\dnlib.csproj">
-      <Project>{fdfc1237-143f-4919-8318-4926901f4639}</Project>
-      <Name>dnlib</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
+    <Message Text="Begin ConfuserEx compilation." />
+    <MSBuild Projects="..\ConfuserEx\Confuser.CLI\Confuser.CLI.csproj" Targets="Build" Properties="Configuration=Debug" />
+    <Message Text="End ConfuserEx compilation." />
+    <Error Condition="!Exists('$(SolutionDir)\ConfuserEx\Confuser2.sln')" Text="ConfuserEx project not found." />
   </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>
