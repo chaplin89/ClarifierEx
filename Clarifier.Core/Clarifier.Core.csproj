@@ -50,7 +50,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseStaticProtection.cs" />
     <Compile Include="BodyComparison.cs" />
+    <Compile Include="ClarifierContext.cs" />
     <Compile Include="ClarifierInjectHelper.cs" />
     <Compile Include="MethodDefExtension.cs" />
     <Compile Include="BodyModifier.cs" />

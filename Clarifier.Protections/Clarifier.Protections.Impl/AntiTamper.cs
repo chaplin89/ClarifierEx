@@ -1,19 +1,14 @@
-﻿using dnlib.DotNet;
+﻿using Clarifier.Core;
+using dnlib.DotNet;
 using dnlib.DotNet.Emit;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Clarifier.Identification.Impl
+namespace Clarifier.Protection.Impl
 {
     public class AntiTamper
     {
         BasicStaticProtection staticProtectionsManager = new BasicStaticProtection();
 
-        public void PerformRemoval(IClarifierContext ctx)
+        public void PerformRemoval(ClarifierContext ctx)
         {
             foreach(var v in staticProtectionsManager.DestinationMap)
             {
@@ -29,7 +24,7 @@ namespace Clarifier.Identification.Impl
                 }
             }
         }
-        public double PerformIdentification(IClarifierContext ctx)
+        public double PerformIdentification(ClarifierContext ctx)
         {
             return staticProtectionsManager.MapSourceInDestination(ctx.CurrentModule);
         }

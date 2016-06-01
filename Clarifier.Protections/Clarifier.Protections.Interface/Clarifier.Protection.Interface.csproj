@@ -49,10 +49,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IClarifierContext.cs" />
     <Compile Include="IProtectionIdentificator.cs" />
     <Compile Include="IProtectionRemover.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Clarifier.Core\Clarifier.Core.csproj">
+      <Project>{49c5e059-fa32-440f-b4c7-e69e32296ac0}</Project>
+      <Name>Clarifier.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

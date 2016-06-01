@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using dnlib.DotNet;
-using Clarifier.Core;
 using System.IO;
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
 
-namespace Clarifier.Identification.Impl
+namespace Clarifier.Core
 {
     public class PatternMatchingInfo
     {
@@ -26,7 +25,7 @@ namespace Clarifier.Identification.Impl
     /// </summary>
     public class BasicStaticProtection
     {
-        private const string defaultSourceModule = @".\Confuser.Runtime.dll";
+        private const string defaultSourceModule = "Confuser.Runtime.dll";
         private double fuzzyThreshold = 0.70;
         private List<PatternMatchingInfo> sourceMap = new List<PatternMatchingInfo>();
         private List<PatternMatchingInfo> destinationMap = new List<PatternMatchingInfo>();
@@ -78,7 +77,7 @@ namespace Clarifier.Identification.Impl
 
                 for (var i = 0; i < sourceMap.Count; ++i)
                 {
-                    if (module == null ||(module != null && module.Name != sourceMap[i].module))
+                    if (module == null || (module != null && module.Name != sourceMap[i].module))
                     {
                         if (!File.Exists(sourceMap[i].module))
                             return (typesLoadedCorrectly = false);
@@ -112,13 +111,10 @@ namespace Clarifier.Identification.Impl
             {
                 foreach (var currentIdentifiedMethod in identifiedMethods.matchingMethods)
                 {
-                    foreach (var currentType in AllTypesHelper.Types(module.Types))
+                    foreach (var currentMethod in module.GetMethods())
                     {
-                        foreach (var currentMethod in currentType.Methods)
-                        {
-                            if (!identifiedMethods.matchingMethods.Contains(currentMethod))
-                                returnValue |= BodyModifier.RemoveRefence(currentMethod, currentIdentifiedMethod);
-                        }
+                        if (!identifiedMethods.matchingMethods.Contains(currentMethod))
+                            returnValue |= BodyModifier.RemoveRefence(currentMethod, currentIdentifiedMethod);
                     }
                     BodyModifier.NullifyMethod(currentIdentifiedMethod);
                 }

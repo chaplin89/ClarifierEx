@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,20 +9,25 @@ namespace TestRunner
     [TestClass]
     public class OutputCompare
     {
-        const string obfuscatedPath = "Obfuscated";
         const string unobfuscatedPath = "Unobfuscated";
+        const string obfuscatedPath = "Obfuscated";
         const string deobfuscatedPath = "Deobfuscated";
         const string testcasePath = "TestCase";
-        const string deobfuscator = @"..\Clarifier.CLI.exe";
+
+        const string deobfuscatoPath = @"..\Clarifier.CLI.exe";
 
         class TestCase
         {
-            public string applicationName;
             public string standardOutputExpect = null;
             public string standardErrorExpect = null;
             public string standardInput = null;
             public Dictionary<string,byte[]> fileStream = null;
         }
+
+        /// <summary>
+        /// This test ensure that applications are created correctly 
+        /// and they produce an expected output.
+        /// </summary>
         [TestMethod]
         public void RunTests()
         {

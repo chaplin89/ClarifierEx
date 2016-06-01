@@ -1,7 +1,9 @@
-﻿namespace Clarifier.Identification.Impl
+﻿using Clarifier.Core;
+
+namespace Clarifier.Identification.Interface
 {
     public interface IProtectionRemover
     {
-        bool PerformRemoval(IClarifierContext ctx);
+        bool PerformRemoval(ClarifierContext ctx);
     }
 }

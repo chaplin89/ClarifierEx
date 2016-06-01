@@ -1,6 +1,7 @@
-﻿using dnlib.DotNet;
+﻿using Clarifier.Core;
+using Clarifier.Protection.Impl;
+using dnlib.DotNet;
 using System.Diagnostics;
-using Clarifier.Identification.Impl;
 
 namespace Clarifier.CLI
 {
@@ -23,21 +24,21 @@ namespace Clarifier.CLI
             inliner.PerformIdentification(ctx);
             inliner.PerformRemoval(ctx);
 
-            //             antiTamper.Initialize();
-            //             antiTamper.PerformIdentification(ctx);
-            //             antiTamper.PerformRemoval(ctx);
-            // 
-            //             antiDump.Initialize(ctx);
-            //             antiDump.PerformIdentification(ctx);
-            //             antiDump.PerformRemoval(ctx);
-            // 
-            //             antiDebug.Initialize(ctx);
-            //             antiDebug.PerformIdentification(ctx);
-            //             antiDebug.PerformRemoval(ctx);
-            // 
-            //             constants.Initialize(ctx);
-            //             constants.PerformIdentification(ctx);
-            //             constants.PerformRemoval(ctx);
+            //antiTamper.Initialize();
+            //antiTamper.PerformIdentification(ctx);
+            //antiTamper.PerformRemoval(ctx);
+            //
+            antiDump.Initialize(ctx);
+            antiDump.PerformIdentification(ctx);
+            antiDump.PerformRemoval(ctx);
+            
+            antiDebug.Initialize(ctx);
+            antiDebug.PerformIdentification(ctx);
+            antiDebug.PerformRemoval(ctx);
+            
+            constants.Initialize(ctx);
+            constants.PerformIdentification(ctx);
+            constants.PerformRemoval(ctx);
 
             int lastBackslash = args[0].LastIndexOf('\\');
             int secondLastBackslash = args[0].LastIndexOf('\\', lastBackslash - 1);

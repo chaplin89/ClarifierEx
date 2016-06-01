@@ -1,14 +1,17 @@
 ﻿using Clarifier.Core;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Clarifier.Identification.Impl
+namespace Clarifier.Protection.Impl
 {
+    /// <summary>
+    /// This class manage the "reference proxy" protection.
+    /// This protection is based on creating proxy function that should hide
+    /// the real function.
+    /// Approach here is based on replacing all the calls to these proxy methods
+    /// with calls to the real method.
+    /// </summary>
     public class Inliner
     {
         BasicStaticProtection staticProtectionsManager = new BasicStaticProtection();
@@ -38,7 +41,7 @@ namespace Clarifier.Identification.Impl
 
         List<MethodDef> referenceProxyMethods = new List<MethodDef>();
 
-        public void PerformRemoval(IClarifierContext ctx)
+        public void PerformRemoval(ClarifierContext ctx)
         {
             foreach (var method in ctx.CurrentModule.GetMethods())
             {
@@ -57,7 +60,7 @@ namespace Clarifier.Identification.Impl
 //                     types.Methods.Remove(blacklist);
 //             }
         }
-        public double PerformIdentification(IClarifierContext ctx)
+        public double PerformIdentification(ClarifierContext ctx)
         {
             foreach(var types in AllTypesHelper.Types(ctx.CurrentModule.Types))
             {

@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using dnlib.DotNet;
-using Clarifier.Core;
-using System.IO;
+﻿using Clarifier.Core;
 
-namespace Clarifier.Identification.Impl
+namespace Clarifier.Protection.Impl
 {
+    /// <summary>
+    /// Anti-debug is a very simple protection.
+    /// It is based on injecting a function inside the target assembly.
+    /// This function is then called inside the constructor of the GlobalType.
+    /// Removal of this protection is entirely based on pattern-matching.
+    /// </summary>
     public class AntiDebugIdentification
     {
         BasicStaticProtection staticProtectionsManager = new BasicStaticProtection();
@@ -17,7 +16,7 @@ namespace Clarifier.Identification.Impl
         {
         }
 
-        public bool Initialize(IClarifierContext ctx)
+        public bool Initialize(ClarifierContext ctx)
         {
             staticProtectionsManager.AddPatternMatchingMethod("Confuser.Runtime.AntiDebugSafe", "Initialize");
             staticProtectionsManager.AddPatternMatchingMethod("Confuser.Runtime.AntiDebugSafe", "Worker");
@@ -25,12 +24,12 @@ namespace Clarifier.Identification.Impl
             return staticProtectionsManager.LoadTypes();
         }
 
-        public double PerformIdentification(IClarifierContext ctx)
+        public double PerformIdentification(ClarifierContext ctx)
         {
             return staticProtectionsManager.MapSourceInDestination(ctx.CurrentModule);
         }
 
-        public bool PerformRemoval(IClarifierContext ctx)
+        public bool PerformRemoval(ClarifierContext ctx)
         {
             return staticProtectionsManager.PerformRemoval(ctx.CurrentModule);
         }

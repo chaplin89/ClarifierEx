@@ -1,9 +1,10 @@
-﻿
-namespace Clarifier.Identification.Impl
+﻿using Clarifier.Core;
+
+namespace Clarifier.Identification.Interface
 {
     public interface IProtectionIdentificator
     {
-        bool Initialize(IClarifierContext ctx);
-        double PerformIdentification(IClarifierContext ctx);
+        bool Initialize(ClarifierContext ctx);
+        double PerformIdentification(ClarifierContext ctx);
     }
 }
