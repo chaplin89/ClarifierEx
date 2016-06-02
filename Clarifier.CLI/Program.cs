@@ -2,6 +2,7 @@
 using Clarifier.Protection.Impl;
 using dnlib.DotNet;
 using System.Diagnostics;
+using System.IO;
 
 namespace Clarifier.CLI
 {
@@ -27,7 +28,7 @@ namespace Clarifier.CLI
             //antiTamper.Initialize();
             //antiTamper.PerformIdentification(ctx);
             //antiTamper.PerformRemoval(ctx);
-            //
+
             antiDump.Initialize(ctx);
             antiDump.PerformIdentification(ctx);
             antiDump.PerformRemoval(ctx);
@@ -41,11 +42,12 @@ namespace Clarifier.CLI
             constants.PerformRemoval(ctx);
 
             int lastBackslash = args[0].LastIndexOf('\\');
-            int secondLastBackslash = args[0].LastIndexOf('\\', lastBackslash - 1);
-            string targetPath = args[0].Substring(secondLastBackslash+1,lastBackslash-1-secondLastBackslash);
             string targetExecutable = args[0].Substring(lastBackslash+1, args[0].Length-1-lastBackslash);
-            string destinationFile = args[0].Replace(targetPath, "Deobfuscated");
+            string parentDir = Directory.GetParent(Directory.GetParent(args[0]).FullName).FullName;
+            parentDir = Path.Combine(parentDir, "Deobfuscated");
 
+            string destinationFile = Path.Combine(parentDir, targetExecutable);
+            
             targetModule.Write(destinationFile);
             return;
         }
