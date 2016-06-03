@@ -2,6 +2,8 @@
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 
 namespace Clarifier.Protection.Impl
 {
@@ -15,92 +17,60 @@ namespace Clarifier.Protection.Impl
     public class Inliner
     {
         BasicStaticProtection staticProtectionsManager = new BasicStaticProtection();
-        List<OpCode> loadInstructions = new List<OpCode>
-        {
-            OpCodes.Ldarg,
-            OpCodes.Ldarga,
-            OpCodes.Ldarga_S,
-            OpCodes.Ldarg_0,
-            OpCodes.Ldarg_1,
-            OpCodes.Ldarg_2,
-            OpCodes.Ldarg_3,
-            OpCodes.Ldarg_S,
-        };
 
-        List<OpCode> callInstructions = new List<OpCode>
-        {
-                        OpCodes.Call,
-            OpCodes.Calli,
-            OpCodes.Callvirt,
-        };
-
-        List<OpCode> returnInstruction = new List<OpCode>
-        {
-            OpCodes.Ret
-        };
-
-        List<MethodDef> referenceProxyMethods = new List<MethodDef>();
+        Dictionary<MethodDef,List<InstructionGroup>> referenceProxyMethods = new Dictionary<MethodDef, List<InstructionGroup>>();
 
         public void PerformRemoval(ClarifierContext ctx)
         {
             foreach (var method in ctx.CurrentModule.GetMethods())
             {
-                foreach(var instruction in method.GetInstruction())
+                if (referenceProxyMethods.Keys.Contains(method))
+                    continue;
+                foreach (var instruction in method.GetInstructions())
                 {
-                    MethodDef targetMethod = instruction.Operand as MethodDef;
-                    if (instruction.OpCode == OpCodes.Call && referenceProxyMethods.Contains(targetMethod))
+                    if (instruction.OpCode != OpCodes.Call)
+                        continue;
+
+                    MethodDef targetMethod = null;
+                    if (instruction.Operand is MethodDef)
                     {
-                        instruction.Operand = targetMethod.Body.Instructions[targetMethod.Body.Instructions.Count - 2].Operand ;
+                        targetMethod = instruction.Operand as MethodDef;
+                    }
+                    else if (instruction.Operand is MethodSpec)
+                    {
+                        MethodSpec tempMethod = instruction.Operand as MethodSpec;
+                        targetMethod = tempMethod.Method as MethodDef;
+                    }
+                    else if(instruction.Operand is MemberRef)
+                    {
+                        continue;
+                    }
+
+                    Debug.Assert(targetMethod != null);
+
+                    List<InstructionGroup> currentInstructionGroup;
+                    if (referenceProxyMethods.TryGetValue(targetMethod, out currentInstructionGroup))
+                    {
+                        int callIndex = currentInstructionGroup.Where(x => x.Name == "Call").First().FoundInstructions[0];
+                        instruction.Operand = targetMethod.Body.Instructions[callIndex].Operand;
                     }
                 }
             }
-//             foreach(var types in AllTypesHelper.Types(ctx.CurrentModule.Types))
-//             {
-//                 foreach (var blacklist in referenceProxyMethods)
-//                     types.Methods.Remove(blacklist);
-//             }
         }
         public double PerformIdentification(ClarifierContext ctx)
         {
-            foreach(var types in AllTypesHelper.Types(ctx.CurrentModule.Types))
+            foreach (var method in ctx.CurrentModule.GetMethods())
             {
-                foreach(var method in types.Methods)
+                MacroBodyComparison macroBodyComparison = new MacroBodyComparison()
                 {
-                    if (!method.HasBody)
-                        continue;
-                    bool isProxyMethod = true;
+                    InstructionGroups = new MacroContainer().CallMacro
+                };
 
-                    bool containLoad = false;
-                    bool containCall = false;
-                    bool containReturn = false;
+                if (!method.HasBody)
+                    continue;
 
-                    foreach (var instruction in method.Body.Instructions)
-                    {
-                        if (loadInstructions.Contains(instruction.OpCode))
-                        {
-                            containLoad = true;
-                            continue;
-                        }
-                        else if (callInstructions.Contains(instruction.OpCode))
-                        {
-                            containCall = true;
-                            continue;
-                        }
-                        else if (returnInstruction.Contains(instruction.OpCode))
-                        {
-                            containReturn = true;
-                            continue;
-                        }
-
-                        isProxyMethod = false;
-                        break;
-                    }
-                    isProxyMethod = isProxyMethod && containLoad && containCall && containReturn;
-                    if (isProxyMethod)
-                    {
-                        referenceProxyMethods.Add(method);
-                    }
-                }
+                if (macroBodyComparison.PerformComparison(method))
+                    referenceProxyMethods[method] = macroBodyComparison.InstructionGroups;
             }
             if (referenceProxyMethods.Count != 0)
                 return 1.0;
@@ -109,8 +79,6 @@ namespace Clarifier.Protection.Impl
 
         public void Initialize()
         {
-            staticProtectionsManager.AddPatternMatchingMethod("Confuser.Runtime.AntiTamperNormal", "Initialize");
-            staticProtectionsManager.LoadTypes();
         }
     }
 }

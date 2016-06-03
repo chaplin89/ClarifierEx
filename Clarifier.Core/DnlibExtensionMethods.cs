@@ -4,17 +4,16 @@ using System.Collections.Generic;
 
 namespace Clarifier.Core
 {
-    public static class MethodDefExtension
+    public static class DnlibExtensionMethods
     {
-        public static IEnumerable<Instruction> GetInstruction(this MethodDef method)
+        public static IList<Instruction> GetInstructions(this MethodDef method)
         {
             if (!method.HasBody)
-                yield break;
+                return new List<Instruction>();
             if (!method.IsIL)
-                yield break;
+                return new List<Instruction>();
 
-            foreach (var v in method.Body.Instructions)
-                yield return v;
+            return method.Body.Instructions;
         }
 
         public static IEnumerable<MethodDef> GetMethods(this ModuleDef module)
