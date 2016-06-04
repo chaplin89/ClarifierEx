@@ -18,7 +18,10 @@ ConfuserEx is an obfuscator that support the following features:
 ## Supported protections
   - Anti-dump
   - Anti-debug
+
 ## Partially supported protections
+These protection are only supported with standard configuration of ConfuserEx (see wiki):
+
   - Constants obfuscation
   - Reference proxy
 
