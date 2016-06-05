@@ -20,7 +20,7 @@ ConfuserEx is an obfuscator that support the following features:
   - Anti-debug
 
 ## Partially supported protections
-These protection are only supported with standard configuration of ConfuserEx (see wiki):
+These protection are only supported with standard configuration of ConfuserEx (see [wiki](https://github.com/chaplin89/ClarifierEx/wiki/ConfuserEx-settings) ):
 
   - Constants obfuscation
   - Reference proxy
