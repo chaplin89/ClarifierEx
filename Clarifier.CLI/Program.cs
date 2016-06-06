@@ -16,8 +16,8 @@ namespace Clarifier.CLI
 
             ClarifierContext ctx = new ClarifierContext { CurrentModule = targetModule };
 
-            AntiDumpIdentification antiDump = new AntiDumpIdentification();
-            AntiDebugIdentification antiDebug = new AntiDebugIdentification();
+            AntiDump antiDump = new AntiDump();
+            AntiDebug antiDebug = new AntiDebug();
             Constants constants = new Constants();
             AntiTamper antiTamper = new AntiTamper();
             Inliner inliner = new Inliner();

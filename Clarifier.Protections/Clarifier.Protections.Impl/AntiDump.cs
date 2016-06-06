@@ -8,10 +8,10 @@ namespace Clarifier.Protection.Impl
     /// This function is then called inside the constructor of the GlobalType.
     /// Removal of this protection is entirely based on pattern-matching.
     /// </summary>
-    public class AntiDumpIdentification
+    public class AntiDump
     {
         private BasicStaticProtection staticProtectionsManager = new BasicStaticProtection();
-        public AntiDumpIdentification()
+        public AntiDump()
         {
         }
 

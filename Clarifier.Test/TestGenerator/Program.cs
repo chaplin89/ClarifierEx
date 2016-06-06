@@ -1,41 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Confuser.Core.Project;
 using System.Xml;
 using Confuser.Core;
 using System.IO;
 using System.Diagnostics;
+using Newtonsoft.Json;
 
 namespace Clarifier.Test.TestGenerator
 {
     internal class ModuleDescriptor
     {
         public string inputFileName;
-        public List<ProtectionType> protections;
+        public Dictionary<ProtectionType, Dictionary<string, string>> protections;
         public string outputFileName;
         public ModuleDescriptor(string inputFileName)
         {
             this.inputFileName = inputFileName;
             outputFileName = "Obfuscated" + inputFileName;
-            protections = new List<ProtectionType>();
+            protections = new Dictionary<ProtectionType, Dictionary<string, string>>();
         }
-    }
-
-    enum ProtectionType
-    {
-        AntiDebug,
-        AntiILDasm,
-        AntiTamper,
-        Constants,
-        ControlFlow,
-        AntiDump,
-        InvalidMetadata,
-        ReferenceProxy,
-        Resources,
-        Rename
     }
 
     class Program
@@ -50,32 +34,23 @@ namespace Clarifier.Test.TestGenerator
         {
             new ModuleDescriptor("SimpleConsoleApplication.exe")
             {
-                protections = new List<ProtectionType>
+                protections = new Dictionary<ProtectionType, Dictionary<string, string>>
                 {
-                    ProtectionType.Constants,
-                    ProtectionType.AntiDebug,
-                    ProtectionType.AntiDump,
-                    ProtectionType.ReferenceProxy,
+                    {ProtectionType.Constants, new Dictionary<string,string>{ { "mode", "x86" } } },
+                    //{ProtectionType.Rename, new Dictionary<string, string> { { "mode", "debug" } } }
+                    //{ ProtectionType.AntiDebug,null },
+                    //{ ProtectionType.AntiDump, null},
+                    //{ ProtectionType.ReferenceProxy, null},
+                    //{ ProtectionType.ControlFlow, null}
                 }
             }
         };
 
-        static private readonly Dictionary<ProtectionType, string> mapProtectionType = new Dictionary<ProtectionType, string>()
-        {
-            {ProtectionType.AntiDebug, "anti debug" },
-            {ProtectionType.AntiILDasm, "anti ildasm" },
-            {ProtectionType.AntiTamper, "anti tamper" },
-            {ProtectionType.Constants, "constants" },
-            {ProtectionType.ControlFlow, "ctrl flow" },
-            {ProtectionType.AntiDump,"anti dump" },
-            {ProtectionType.InvalidMetadata,"invalid metadata" },
-            {ProtectionType.ReferenceProxy,"ref proxy" },
-            {ProtectionType.Resources,"resources" },
-            {ProtectionType.Rename, "rename" },
-        };
-
         static void Main(string[] args)
         {
+            //This is reserved for the moment that a well structured test will be needed.
+            ConfuserProtection.MapProtectionType = JsonConvert.DeserializeObject<Dictionary<ProtectionType, ProtectionDescription>>(File.ReadAllText("MannaggiaLaMadonna.json"));
+            
             if (args.Length > 0)
                 confuserPath = Path.Combine(args[0],"Confuser.CLI.exe");
             if (args.Length > 1)
@@ -117,8 +92,14 @@ namespace Clarifier.Test.TestGenerator
 
                 foreach (var vv in v.protections)
                 {
-                    string protection = mapProtectionType[vv];
+                    string protection = ConfuserProtection.MapProtectionType[vv.Key].Name;
                     SettingItem<Protection> currentProtection = new SettingItem<Protection>(protection);
+
+                    if (vv.Value != null)
+                    {
+                        foreach (var vvv in vv.Value)
+                            currentProtection.Add(vvv.Key, vvv.Value);
+                    }
                     moduleRule.Add(currentProtection);
                     Console.WriteLine("\tAdded protection: {0}", protection);
                 }

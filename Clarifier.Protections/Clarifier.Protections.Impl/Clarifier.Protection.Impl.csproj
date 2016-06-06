@@ -49,10 +49,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AntiDebugIdentification.cs" />
-    <Compile Include="AntiDumpIdentification.cs" />
+    <Compile Include="AntiDebug.cs" />
+    <Compile Include="AntiDump.cs" />
     <Compile Include="AntiTamper.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="ControlFlow.cs" />
     <Compile Include="Inliner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
