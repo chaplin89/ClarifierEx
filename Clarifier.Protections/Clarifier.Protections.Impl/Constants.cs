@@ -29,7 +29,7 @@ namespace Clarifier.Protection.Impl
 
         public bool Initialize(ClarifierContext ctx)
         {
-            injectHelper = new ClarifierInjectHelper();
+            injectHelper = new ClarifierInjectHelper(ctx);
             staticProtectionsManager.AddPatternMatchingMethod("Confuser.Runtime.Constant", "Get");
             staticProtectionsManager.AddPatternMatchingMethod("Confuser.Runtime.Constant", "Initialize");
             return staticProtectionsManager.LoadTypes();
@@ -37,7 +37,8 @@ namespace Clarifier.Protection.Impl
 
         public bool PerformRemoval(ClarifierContext ctx)
         {
-            object instantiatedObject = ClarifierInjectHelper.CloneAndInstantiateType(ctx.CurrentModule.GlobalType);
+            ClarifierInjectHelper inject = new ClarifierInjectHelper(ctx);
+            object instantiatedObject = inject.CloneAndInstantiateType(ctx.CurrentModule.GlobalType);
             Type dummyType = instantiatedObject.GetType();
 
             Dictionary<string, MethodInfo> mapNewMethodsToName = new Dictionary<string, MethodInfo>();

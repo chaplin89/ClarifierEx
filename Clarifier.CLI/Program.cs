@@ -1,8 +1,11 @@
 ﻿using Clarifier.Core;
 using Clarifier.Protection.Impl;
 using dnlib.DotNet;
+using dnlib.DotNet.Writer;
 using System.Diagnostics;
 using System.IO;
+using System;
+using System.Reflection;
 
 namespace Clarifier.CLI
 {
@@ -14,7 +17,12 @@ namespace Clarifier.CLI
             ModuleDefMD targetModule = ModuleDefMD.Load(args[0]);
             ModuleDefMD runtimeModule = ModuleDefMD.Load("Confuser.Runtime.dll");
 
-            ClarifierContext ctx = new ClarifierContext { CurrentModule = targetModule };
+            Assembly wtf = Assembly.Load(File.ReadAllBytes("crackme.exe"));
+
+            ClarifierContext ctx = new ClarifierContext {
+                CurrentModule = targetModule,
+                WriterListener = new MWListener()
+            };
 
             AntiDump antiDump = new AntiDump();
             AntiDebug antiDebug = new AntiDebug();
@@ -22,20 +30,20 @@ namespace Clarifier.CLI
             AntiTamper antiTamper = new AntiTamper();
             Inliner inliner = new Inliner();
 
-            inliner.PerformIdentification(ctx);
-            inliner.PerformRemoval(ctx);
+//             inliner.PerformIdentification(ctx);
+//             inliner.PerformRemoval(ctx);
 
             //antiTamper.Initialize();
             //antiTamper.PerformIdentification(ctx);
             //antiTamper.PerformRemoval(ctx);
 
-            antiDump.Initialize(ctx);
-            antiDump.PerformIdentification(ctx);
-            antiDump.PerformRemoval(ctx);
-            
-            antiDebug.Initialize(ctx);
-            antiDebug.PerformIdentification(ctx);
-            antiDebug.PerformRemoval(ctx);
+//             antiDump.Initialize(ctx);
+//             antiDump.PerformIdentification(ctx);
+//             antiDump.PerformRemoval(ctx);
+//             
+//             antiDebug.Initialize(ctx);
+//             antiDebug.PerformIdentification(ctx);
+//             antiDebug.PerformRemoval(ctx);
             
             constants.Initialize(ctx);
             constants.PerformIdentification(ctx);

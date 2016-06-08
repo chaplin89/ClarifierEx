@@ -1,5 +1,7 @@
-﻿using dnlib.DotNet;
+﻿using Confuser.Core;
+using dnlib.DotNet;
 using dnlib.DotNet.Emit;
+using dnlib.DotNet.Writer;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -18,6 +20,9 @@ namespace Clarifier.Core
         TypeDef ourType;
         TypeDefOrRefSig valueType;
         int unique = 0;
+        Dictionary<MethodDef, dnlib.DotNet.Writer.MethodBody> code = new Dictionary<MethodDef, dnlib.DotNet.Writer.MethodBody>();
+        ClarifierContext ctx;
+        private bool eventAdded = false;
         #region "Array inject helper"
         public void InjectArray(Array arrayToInject, MethodDef method, ITypeDefOrRef arrayType, int elementSize, int instructionIndex)
         {
@@ -118,6 +123,11 @@ namespace Clarifier.Core
         }
         #endregion
 
+        public ClarifierInjectHelper (ClarifierContext ctx)
+        {
+            this.ctx = ctx;
+        }
+
         #region Cloning services
         /// <summary>
         ///     Clones the specified origin TypeDef.
@@ -155,6 +165,7 @@ namespace Clarifier.Core
 
             foreach (GenericParam genericParam in origin.GenericParameters)
                 ret.GenericParameters.Add(new GenericParamUser(genericParam.Number, genericParam.Flags, "-"));
+
             ret.Access = MethodAttributes.Public;
             return ret;
         }
@@ -171,9 +182,10 @@ namespace Clarifier.Core
             return ret;
         }
 
-        public static object CloneAndInstantiateType(TypeDef typeToInstantiate)
+        public unsafe object CloneAndInstantiateType(TypeDef typeToInstantiate)
         {
             byte[] newAssembly = GetBrandNewAssemblyFromType(typeToInstantiate);
+
             if (Debugger.IsAttached)
             {
                 if (File.Exists("DumpNewAssembly"))
@@ -186,7 +198,7 @@ namespace Clarifier.Core
             return dummyInstance;
         }
 
-        public static byte[] GetBrandNewAssemblyFromType(TypeDef typeToInject)
+        public byte[] GetBrandNewAssemblyFromType(TypeDef typeToInject)
         {
             // First of all, a temporary assembly is created and methods are injected into this assembly.
             // Once this assembly is ready, this try to execute the method in order to replace all the references in
@@ -194,7 +206,7 @@ namespace Clarifier.Core
             // This is probably the weakest part of the deobfuscator but I doubt there's an easier way to do this.
 
             AssemblyDef dummyAssembly = new AssemblyDefUser("DummyAssembly", new System.Version(1, 0, 0, 0), null);
-            ModuleDef dummyModule = new ModuleDefUser("DummyModule") { Kind = ModuleKind.Dll };
+            ModuleDefUser dummyModule = new ModuleDefUser("DummyModule") { Kind = ModuleKind.Dll };
             TypeDef dummyType = new TypeDefUser("DummyNamespace", "DummyType", dummyModule.CorLibTypes.Object.TypeDefOrRef);
             dummyType.Attributes = TypeAttributes.NotPublic | TypeAttributes.AutoLayout |
                                     TypeAttributes.Class | TypeAttributes.AnsiClass;
@@ -222,8 +234,28 @@ namespace Clarifier.Core
             // Save the assembly to a memorystream
             using (MemoryStream stream = new MemoryStream())
             {
-                dummyModule.Write(stream);
+                dummyModule.Write(stream, new ModuleWriterOptions(ctx.CurrentModule,ctx.WriterListener));
                 return stream.ToArray();
+            }
+        }
+
+        void InjectNativeCode(object sender, ModuleWriterEvent e)
+        {
+            var writer = (ModuleWriterBase)sender;
+            if (e == ModuleWriterEvent.MDBeginWriteMethodBodies)
+            {
+                for (var v = 0; v<code.Keys.Count; v++)
+                { 
+                    code[code.Keys.ElementAt(v)] = writer.MethodBodies.Add(code[code.Keys.ElementAt(v)]);
+                }
+            }
+            else if (e  == ModuleWriterEvent.EndCalculateRvasAndFileOffsets)
+            {
+                for (var v = 0; v < code.Keys.Count; v++)
+                {
+                    uint rid = writer.MetaData.GetRid(code.Keys.ElementAt(v));
+                    writer.MetaData.TablesHeap.MethodTable[rid].RVA = (uint)code[code.Keys.ElementAt(v)].RVA;
+                }
             }
         }
 
@@ -282,7 +314,7 @@ namespace Clarifier.Core
         /// </summary>
         /// <param name="methodDef">The origin MethodDef.</param>
         /// <param name="ctx">The injection context.</param>
-        static void CopyMethodDef(MethodDef methodDef, InjectContext ctx)
+        void CopyMethodDef(MethodDef methodDef, InjectContext ctx)
         {
             if (ctx.Filter != null && !ctx.Filter.Contains(methodDef))
                 return;
@@ -297,6 +329,30 @@ namespace Clarifier.Core
 
             foreach (CustomAttribute ca in methodDef.CustomAttributes)
                 newMethodDef.CustomAttributes.Add(new CustomAttribute((ICustomAttributeType)ctx.Importer.Import(ca.Constructor)));
+
+            if (methodDef.CodeType == MethodImplAttributes.Native)
+            {
+                dnlib.PE.RVA methodRVA = methodDef.NativeBody.RVA;
+                List<byte> methodBody = new List<byte>();
+                
+                ModuleDefMD moduleMD = (ModuleDefMD)methodDef.Module;
+                var stream = moduleMD.MetaData.PEImage.CreateStream(moduleMD.MetaData.PEImage.ToFileOffset(methodRVA));
+                byte byteToAdd;
+                do
+                {
+                    byteToAdd = stream.ReadByte();
+                    methodBody.Add(byteToAdd);
+                } while (byteToAdd != 0xc3);
+
+                code[newMethodDef] = new dnlib.DotNet.Writer.MethodBody(methodBody.ToArray());
+                
+                if (!eventAdded)
+                {
+                    this.ctx.WriterListener.OnWriter += InjectNativeCode;
+                    eventAdded = true;
+                }
+                return;
+            }
 
             if (methodDef.HasBody)
             {
@@ -362,7 +418,7 @@ namespace Clarifier.Core
         /// </summary>
         /// <param name="fieldDef">The origin FieldDef.</param>
         /// <param name="ctx">The injection context.</param>
-        static void CopyFieldDef(FieldDef fieldDef, InjectContext ctx)
+        void CopyFieldDef(FieldDef fieldDef, InjectContext ctx)
         {
             var newFieldDef = (FieldDef)ctx.Map[fieldDef];
 
@@ -377,7 +433,7 @@ namespace Clarifier.Core
         /// <param name="typeDef">The origin TypeDef.</param>
         /// <param name="ctx">The injection context.</param>
         /// <param name="copySelf">if set to <c>true</c>, copy information of <paramref name="typeDef" />.</param>
-        static void Copy(TypeDef typeDef, InjectContext ctx, bool copySelf)
+        void Copy(TypeDef typeDef, InjectContext ctx, bool copySelf)
         {
             if (copySelf)
                 CopyTypeDef(typeDef, ctx);
@@ -398,7 +454,7 @@ namespace Clarifier.Core
         /// <param name="typeDef">The source TypeDef.</param>
         /// <param name="target">The target module.</param>
         /// <returns>The injected TypeDef.</returns>
-        public static TypeDef Inject(TypeDef typeDef, ModuleDef target)
+        public TypeDef Inject(TypeDef typeDef, ModuleDef target)
         {
             var ctx = new InjectContext(typeDef.Module, target);
             PopulateContext(typeDef, ctx);
@@ -412,7 +468,7 @@ namespace Clarifier.Core
         /// <param name="methodDef">The source MethodDef.</param>
         /// <param name="target">The target module.</param>
         /// <returns>The injected MethodDef.</returns>
-        public static MethodDef Inject(MethodDef methodDef, ModuleDef target)
+        public MethodDef Inject(MethodDef methodDef, ModuleDef target)
         {
             var ctx = new InjectContext(methodDef.Module, target);
             ctx.Map[methodDef] = Clone(methodDef);
@@ -427,7 +483,7 @@ namespace Clarifier.Core
         /// <param name="newType">The new type.</param>
         /// <param name="target">The target module.</param>
         /// <returns>Injected members.</returns>
-        public static IEnumerable<IDnlibDef> Inject(TypeDef typeDef, TypeDef newType, ModuleDef target, List<MethodDef> filter)
+        public IEnumerable<IDnlibDef> Inject(TypeDef typeDef, TypeDef newType, ModuleDef target, List<MethodDef> filter)
         {
             var ctx = new InjectContext(typeDef.Module, target) { Filter = filter };
             ctx.Map[typeDef] = newType;

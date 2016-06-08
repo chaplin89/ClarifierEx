@@ -1,0 +1,196 @@
+{
+	"AntiDebug": {
+		"Name": "anti debug",
+		"AllowedSettings": {
+			"mode": {
+				"Values": [
+					"safe",
+					"win32",
+					"antinet"
+				],
+				"Type": "Exclusive"
+			}
+		}
+	},
+	"AntiILDasm": {
+		"Name": "anti ildasm",
+		"AllowedSettings": null
+	},	
+	"AntiDump": {
+		"Name": "anti dump",
+		"AllowedSettings": null
+	},
+	"InvalidMetadata": {
+		"Name": "invalid metadata",
+		"AllowedSettings": null
+	},
+	"AntiTamper": {
+		"Name": "anti tamper",
+		"AllowedSettings": {
+			"mode": {
+				"Values": [
+					"normal",
+					"jit"
+				],
+				"Type": "Exclusive"
+			},
+			"key": {
+				"value": [
+					"normal",
+					"dynamic"
+				],
+				"Type": "Exclusive"
+			},
+		}
+	},
+	"Constants": {
+		"Name": "constants",
+		"AllowedSettings": {
+			"mode": {
+				"Values": [
+					"normal",
+					"dynamic",
+					"x86"
+				  ],
+				"Type": "Exclusive"
+			},
+			"decoderCount": {
+				"Values":[],
+				"Type": "Integer"
+			},
+			"elements": {
+				"Values":[
+					"S","N","P","I"
+				],
+				"Type": "Combine"
+			},
+			"cfg": {
+				"Values": [],
+				"Type": "Boolean"
+			}
+		}
+	},
+	"ControlFlow": {
+		"Name": "ctrl flow",
+		"AllowedSettings": {
+			"Type": {
+				"Values": [
+					"switch",
+					"jump"
+				],
+				"Type": "Exclusive"
+			},
+			"predicate": {
+				"Values": [
+					"normal",
+					"expression",
+					"x86"
+				],
+				"Type": "Exclusive"
+			},
+			"intensity": {
+				"Values": [],
+				"Type": "Integer"
+			},
+			"depth": {
+				"Values": [],
+				"Type": "Integer"
+			},
+			"junk": {
+				"Values": [],
+				"Type": "Boolean"
+			}
+		}
+	},
+    "ReferenceProxy": {
+		"Name": "ref proxy",
+		"AllowedSettings": {
+			"mode": {
+				"Values": [
+					"mild",
+					"strong",
+					"ftn"
+				],
+				"Type": "Exclusive"
+			},
+			"encoding": {
+				"Values": [
+					"normal",
+					"expression",
+					"x86"
+				],
+				"Type": "Exclusive"
+			},
+			"internal": {
+				"Values": [],
+				"Type": "Boolean"
+			},
+			"typeErasure": {
+				"Values": [],
+				"Type": "Boolean"
+			},
+			"depth": {
+				"Values": [],
+				"Type": "Integer"
+			},
+			"initCount": {
+				"Values": [],
+				"Type": "Integer"
+			}
+		}
+	},
+    "Resources": {
+		"Name": "resources",
+		"AllowedSettings": {
+			"mode": {
+				"Values": [
+					"normal",
+					"dynamic"
+				],
+				"Type": "Exclusive"
+			}
+		}
+	},
+    "Rename": {
+		"Name": "rename",
+		"AllowedSettings": {
+			"mode": {
+				"Values": [
+					"empty",
+					"unicode",
+					"ascii",
+					"letters",
+					"decodable",
+					"sequential",
+					"reversible",
+					"debug"
+				],
+				"Type": "Exclusive"
+			},
+			"password": {
+				"Values": [],
+				"Type": "String"
+			},
+			"renameArgs": {
+				"Values": [],
+				"Type": "Boolean"
+			},
+			"flatten": {
+				"Values": [],
+				"Type": "Boolean"
+			},
+			"forceRen": {
+				"Values": [],
+				"Type": "Boolean"
+			},
+			"renPublic": {
+				"Values": [],
+				"Type": "Boolean"
+			},
+			"renPdb": {
+				"Values": [],
+				"Type": "Boolean"
+			}
+		}
+	}
+}
