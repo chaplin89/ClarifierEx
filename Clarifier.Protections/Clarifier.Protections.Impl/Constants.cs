@@ -149,6 +149,11 @@ namespace Clarifier.Protection.Impl
                                 else
                                     arrayType = ctx.CurrentModule.CorLibTypes.Double.TypeDefOrRef;
                             }
+                            else if (returnedType.Name == typeof(char[]).Name)
+                            {
+                                elementSize = 2;
+                                arrayType = ctx.CurrentModule.CorLibTypes.Char.TypeDefOrRef;
+                            }
                             else
                             {
                                 Debugger.Break();

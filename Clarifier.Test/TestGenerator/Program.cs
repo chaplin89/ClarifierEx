@@ -36,11 +36,11 @@ namespace Clarifier.Test.TestGenerator
             {
                 protections = new Dictionary<ProtectionType, Dictionary<string, string>>
                 {
-                    {ProtectionType.Constants, new Dictionary<string,string>{ { "mode", "x86" } } },
+                    {ProtectionType.Constants, new Dictionary<string,string>{ { "mode", "dynamic" } } },
                     //{ProtectionType.Rename, new Dictionary<string, string> { { "mode", "debug" } } }
                     //{ ProtectionType.AntiDebug,null },
                     //{ ProtectionType.AntiDump, null},
-                    //{ ProtectionType.ReferenceProxy, null},
+                    { ProtectionType.ReferenceProxy, new Dictionary<string,string>{ { "mode", "strong" } }},
                     //{ ProtectionType.ControlFlow, null}
                 }
             }
@@ -49,7 +49,7 @@ namespace Clarifier.Test.TestGenerator
         static void Main(string[] args)
         {
             //This is reserved for the moment that a well structured test will be needed.
-            ConfuserProtection.MapProtectionType = JsonConvert.DeserializeObject<Dictionary<ProtectionType, ProtectionDescription>>(File.ReadAllText("MannaggiaLaMadonna.json"));
+            ConfuserProtection.MapProtectionType = JsonConvert.DeserializeObject<Dictionary<ProtectionType, ProtectionDescription>>(File.ReadAllText("SettingsDescription.json"));
             
             if (args.Length > 0)
                 confuserPath = Path.Combine(args[0],"Confuser.CLI.exe");

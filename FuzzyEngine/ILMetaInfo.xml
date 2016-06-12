@@ -1,0 +1,971 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<InstructionSet LanguageName="IL">
+  
+  <!-- Start arithmetical -->
+  <Instruction Name="Add">
+    <Group Name="Arithmetical"/>
+  </Instruction>
+  <Instruction Name="Add_Ovf">
+    <Group Name="Arithmetical"/>
+  </Instruction>
+  <Instruction Name="Add_Ovf_Un">
+    <Group Name="Arithmetical"/>
+  </Instruction>
+  <Instruction Name="Sub">
+    <Group Name="Arithmetical"/>
+  </Instruction>
+  <Instruction Name="Sub_Ovf">
+    <Group Name="Arithmetical"/>
+  </Instruction>
+  <Instruction Name="Sub_Ovf_Un">
+    <Group Name="Arithmetical"/>
+  </Instruction>
+  <Instruction Name="Div">
+    <Group Name="Arithmetical"/>
+  </Instruction>
+  <Instruction Name="Div_Un">
+    <Group Name="Arithmetical"/>
+  </Instruction>
+  <Instruction Name="Mul">
+    <Group Name="Arithmetical"/>
+  </Instruction>
+  <Instruction Name="Mul_Ovf">
+    <Group Name="Arithmetical"/>
+  </Instruction>
+  <Instruction Name="Mul_Ovf_Un">
+    <Group Name="Arithmetical"/>
+  </Instruction>
+  <Instruction Name="Rem">
+    <Group Name="Arithmetical"/>
+  </Instruction>
+  <Instruction Name="Rem_Un">
+    <Group Name="Arithmetical"/>
+  </Instruction>
+  <!-- End arithmetical -->
+  
+  <!-- Start logical -->
+  <Instruction Name="And">
+    <Group Name="Logical"/>
+  </Instruction>
+  <Instruction Name="Or">
+    <Group Name="Logical"/>
+  </Instruction>
+  <Instruction Name="Not">
+    <Group Name="Logical"/>
+  </Instruction>
+  <Instruction Name="Xor">
+    <Group Name="Logical"/>
+  </Instruction>
+  <Instruction Name="Neg">
+    <Group Name="Logical"/>
+  </Instruction>
+  <Instruction Name="Shl">
+    <Group Name="Logical"/>
+  </Instruction>
+  <Instruction Name="Shr">
+    <Group Name="Logical"/>
+  </Instruction>
+  <Instruction Name="Shr_Un">
+    <Group Name="Logical"/>
+  </Instruction>
+  <!-- End logical -->
+    
+  <!-- Start branch -->
+  <Instruction Name="Beq">
+    <Group Name="ControlFlow"/>
+    <Group Name="Branch"/>
+  </Instruction>
+  <Instruction Name="Beq_S">
+    <Group Name="ControlFlow"/>
+    <Group Name="Branch"/>
+  </Instruction>
+  <Instruction Name="Bge">
+    <Group Name="ControlFlow"/>
+    <Group Name="Branch"/>
+  </Instruction>
+  <Instruction Name="Bge_S">
+    <Group Name="ControlFlow"/>
+    <Group Name="Branch"/>
+  </Instruction>
+  <Instruction Name="Bge_Un">
+    <Group Name="ControlFlow"/>
+    <Group Name="Branch"/>
+  </Instruction>
+  <Instruction Name="Bge_Un_S">
+    <Group Name="ControlFlow"/>
+    <Group Name="Branch"/>
+  </Instruction>
+  <Instruction Name="Bgt">
+    <Group Name="ControlFlow"/>
+    <Group Name="Branch"/>
+  </Instruction>
+  <Instruction Name="Bgt_S">
+    <Group Name="ControlFlow"/>
+    <Group Name="Branch"/>
+  </Instruction>
+  <Instruction Name="Bgt_Un">
+    <Group Name="ControlFlow"/>
+    <Group Name="Branch"/>
+  </Instruction>
+  <Instruction Name="Bgt_Un_S">
+    <Group Name="ControlFlow"/>
+    <Group Name="Branch"/>
+  </Instruction>
+  <Instruction Name="Ble">
+    <Group Name="ControlFlow"/>
+    <Group Name="Branch"/>
+  </Instruction>
+  <Instruction Name="Ble_S">
+    <Group Name="ControlFlow"/>
+    <Group Name="Branch"/>
+  </Instruction>
+  <Instruction Name="Ble_Un">
+    <Group Name="ControlFlow"/>
+    <Group Name="Branch"/>
+  </Instruction>
+  <Instruction Name="Ble_Un_S">
+    <Group Name="ControlFlow"/>
+    <Group Name="Branch"/>
+  </Instruction>
+  <Instruction Name="Blt">
+    <Group Name="ControlFlow"/>
+    <Group Name="Branch"/>
+  </Instruction>
+  <Instruction Name="Blt_S">
+    <Group Name="ControlFlow"/>
+    <Group Name="Branch"/>
+  </Instruction>
+  <Instruction Name="Blt_Un">
+    <Group Name="ControlFlow"/>
+    <Group Name="Branch"/>
+  </Instruction>
+  <Instruction Name="Blt_Un_S">
+    <Group Name="ControlFlow"/>
+    <Group Name="Branch"/>
+  </Instruction>
+  <Instruction Name="Bne_Un">
+    <Group Name="ControlFlow"/>
+    <Group Name="Branch"/>
+  </Instruction>
+  <Instruction Name="Bne_Un_S">
+    <Group Name="ControlFlow"/>
+    <Group Name="Branch"/>
+  </Instruction>
+  <Instruction Name="Brfalse">
+    <Group Name="ControlFlow"/>
+    <Group Name="Branch"/>
+  </Instruction>
+  <Instruction Name="Brfalse_S">
+    <Group Name="ControlFlow"/>
+    <Group Name="Branch"/>
+  </Instruction>
+  <Instruction Name="Brtrue">
+    <Group Name="ControlFlow"/>
+    <Group Name="Branch"/>
+  </Instruction>
+  <Instruction Name="Brtrue_S">
+    <Group Name="ControlFlow"/>
+    <Group Name="Branch"/>
+  </Instruction>
+  <Instruction Name="Br_S">
+    <Group Name="ControlFlow"/>
+    <Group Name="Branch"/>
+  </Instruction>
+  <Instruction Name="Br">
+    <Group Name="ControlFlow"/>
+    <Group Name="Branch"/>
+  </Instruction>
+  <!-- End branch -->
+
+  <!-- Start other CF -->
+  <Instruction Name="Break">
+    <Group Name="ControlFlow"/>
+  </Instruction>
+  <Instruction Name="Jmp">
+    <Group Name="ControlFlow"/>
+  </Instruction>
+  <Instruction Name="Switch">
+    <Group Name="ControlFlow"/>
+  </Instruction>
+  <!-- End other CF -->
+
+  <!-- Start function related -->
+  <Instruction Name="Call">
+    <Group Name="ControlFlow"/>
+    <Group Name="Call"/>
+    <Group Name="Function"/>
+  </Instruction>
+  <Instruction Name="Calli">
+    <Group Name="ControlFlow"/>
+    <Group Name="Call"/>
+    <Group Name="Function"/>
+  </Instruction>
+  <Instruction Name="Callvirt">
+    <Group Name="ControlFlow"/>
+    <Group Name="Call"/>
+    <Group Name="Function"/>
+  </Instruction>
+  <Instruction Name="Ret">
+    <Group Name="ControlFlow"/>
+    <Group Name="Function"/>
+  </Instruction>
+  <!-- End function related -->
+
+  <!-- Start Exception handling -->
+  <Instruction Name="Throw">
+    <Group Name="ControlFlow"/>
+    <Group Name="ExceptionHandling"/>
+  </Instruction>
+  <Instruction Name="Rethrow">
+    <Group Name="ControlFlow"/>
+    <Group Name="ExceptionHandling"/>
+  </Instruction>
+  <Instruction Name="Endfilter">
+    <Group Name="ExceptionHandling"/>
+  </Instruction>
+  <Instruction Name="Endfinally">
+    <Group Name="ExceptionHandling"/>
+  </Instruction>
+  <!-- End Exception handling -->
+
+  <!-- Start object model -->
+  <Instruction Name="Box">
+    <Group Name="ObjectModel"/>
+  </Instruction>
+  <Instruction Name="Unbox">
+    <Group Name="ObjectModel"/>
+  </Instruction>
+  <Instruction Name="Unbox_Any">
+    <Group Name="ObjectModel"/>
+  </Instruction>
+  <Instruction Name="Castclass">
+    <Group Name="ObjectModel"/>
+  </Instruction>
+  <Instruction Name="Cpobj">
+    <Group Name=""/>
+  </Instruction>
+  <Instruction Name="Initobj">
+    <Group Name="ObjectModel"/>
+  </Instruction>
+  <Instruction Name="Isinst">
+    <Group Name="ObjectModel"/>
+  </Instruction>
+  <!-- End object model -->
+  
+  <!-- Start comparison -->
+  <Instruction Name="Ceq">
+    <Group Name="Comparison"/>
+  </Instruction>
+  <Instruction Name="Cgt">
+    <Group Name="Comparison"/>
+  </Instruction>
+  <Instruction Name="Cgt_Un">
+    <Group Name="Comparison"/>
+  </Instruction>
+  <Instruction Name="Ckfinite">
+    <Group Name="Comparison"/>
+  </Instruction>
+  <Instruction Name="Clt">
+    <Group Name="Comparison"/>
+  </Instruction>
+  <Instruction Name="Clt_Un">
+    <Group Name="Comparison"/>
+  </Instruction>
+  <!-- End comparison -->
+  
+  <!-- Start prefixes -->
+  <Instruction Name="Constrained">
+    <Group Name="Prefix"/>
+  </Instruction>
+  <Instruction Name="Leave">
+    <Group Name="Prefix"/>
+  </Instruction>
+  <Instruction Name="Leave_S">
+    <Group Name="Prefix"/>
+  </Instruction>
+  <Instruction Name="Unaligned">
+    <Group Name="Prefix"/>
+  </Instruction>
+  <Instruction Name="Volatile">
+    <Group Name="Prefix"/>
+  </Instruction>
+  <!-- End prefixes -->
+  
+  <!-- Start number Conversion-->
+  <Instruction Name="Conv_I">
+    <Group Name="NumberConversion"/>
+  </Instruction>
+  <Instruction Name="Conv_I1">
+    <Group Name="NumberConversion"/>
+  </Instruction>
+  <Instruction Name="Conv_I2">
+    <Group Name="NumberConversion"/>
+  </Instruction>
+  <Instruction Name="Conv_I4">
+    <Group Name="NumberConversion"/>
+  </Instruction>
+  <Instruction Name="Conv_I8">
+    <Group Name="NumberConversion"/>
+  </Instruction>
+  <Instruction Name="Conv_Ovf_I">
+    <Group Name="NumberConversion"/>
+  </Instruction>
+  <Instruction Name="Conv_Ovf_I1">
+    <Group Name="NumberConversion"/>
+  </Instruction>
+  <Instruction Name="Conv_Ovf_I1_Un">
+    <Group Name="NumberConversion"/>
+  </Instruction>
+  <Instruction Name="Conv_Ovf_I2">
+    <Group Name="NumberConversion"/>
+  </Instruction>
+  <Instruction Name="Conv_Ovf_I2_Un">
+    <Group Name="NumberConversion"/>
+  </Instruction>
+  <Instruction Name="Conv_Ovf_I4">
+    <Group Name="NumberConversion"/>
+  </Instruction>
+  <Instruction Name="Conv_Ovf_I4_Un">
+    <Group Name="NumberConversion"/>
+  </Instruction>
+  <Instruction Name="Conv_Ovf_I8">
+    <Group Name="NumberConversion"/>
+  </Instruction>
+  <Instruction Name="Conv_Ovf_I8_Un">
+    <Group Name="NumberConversion"/>
+  </Instruction>
+  <Instruction Name="Conv_Ovf_I_Un">
+    <Group Name="NumberConversion"/>
+  </Instruction>
+  <Instruction Name="Conv_Ovf_U">
+    <Group Name="NumberConversion"/>
+  </Instruction>
+  <Instruction Name="Conv_Ovf_U1">
+    <Group Name="NumberConversion"/>
+  </Instruction>
+  <Instruction Name="Conv_Ovf_U1_Un">
+    <Group Name="NumberConversion"/>
+  </Instruction>
+  <Instruction Name="Conv_Ovf_U2">
+    <Group Name="NumberConversion"/>
+  </Instruction>
+  <Instruction Name="Conv_Ovf_U2_Un">
+    <Group Name="NumberConversion"/>
+  </Instruction>
+  <Instruction Name="Conv_Ovf_U4">
+    <Group Name="NumberConversion"/>
+  </Instruction>
+  <Instruction Name="Conv_Ovf_U4_Un">
+    <Group Name="NumberConversion"/>
+  </Instruction>
+  <Instruction Name="Conv_Ovf_U8">
+    <Group Name="NumberConversion"/>
+  </Instruction>
+  <Instruction Name="Conv_Ovf_U8_Un">
+    <Group Name="NumberConversion"/>
+  </Instruction>
+  <Instruction Name="Conv_Ovf_U_Un">
+    <Group Name="NumberConversion"/>
+  </Instruction>
+  <Instruction Name="Conv_R4">
+    <Group Name="NumberConversion"/>
+  </Instruction>
+  <Instruction Name="Conv_R8">
+    <Group Name="NumberConversion"/>
+  </Instruction>
+  <Instruction Name="Conv_R_Un">
+    <Group Name="NumberConversion"/>
+  </Instruction>
+  <Instruction Name="Conv_U">
+    <Group Name="NumberConversion"/>
+  </Instruction>
+  <Instruction Name="Conv_U1">
+    <Group Name="NumberConversion"/>
+  </Instruction>
+  <Instruction Name="Conv_U2">
+    <Group Name="NumberConversion"/>
+  </Instruction>
+  <Instruction Name="Conv_U4">
+    <Group Name="NumberConversion"/>
+  </Instruction>
+  <Instruction Name="Conv_U8">
+    <Group Name="NumberConversion"/>
+  </Instruction>
+  <!-- End number Conversion-->
+  
+  <!-- Start low level memory access -->
+  <Instruction Name="Cpblk">
+    <Group Name="MemoryAccess"/>
+  </Instruction>
+  <Instruction Name="Initblk">
+    <Group Name="MemoryAccess"/>
+  </Instruction>
+  <!-- End low level memory access -->
+  
+  <Instruction Name="Dup">
+    <Group Name="StackManipulator"/>
+  </Instruction>
+
+  <!-- Start argument access -->
+  <Instruction Name="Ldarg">
+    <Group Name="StackManipulator"/>
+    <Group Name="ArgumentAccess"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Ldarga">
+    <Group Name="StackManipulator"/>
+    <Group Name="ArgumentAccess"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Ldarga_S">
+    <Group Name="StackManipulator"/>
+    <Group Name="ArgumentAccess"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Ldarg_0">
+    <Group Name="StackManipulator"/>
+    <Group Name="ArgumentAccess"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Ldarg_1">
+    <Group Name="StackManipulator"/>
+    <Group Name="ArgumentAccess"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Ldarg_2">
+    <Group Name="StackManipulator"/>
+    <Group Name="ArgumentAccess"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Ldarg_3">
+    <Group Name="StackManipulator"/>
+    <Group Name="ArgumentAccess"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Ldarg_S">
+    <Group Name="StackManipulator"/>
+    <Group Name="ArgumentAccess"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Starg">
+    <Group Name="StackManipulator"/>
+    <Group Name="ArgumentAccess"/>
+    <Group Name="Store"/>
+  </Instruction>
+  <Instruction Name="Starg_S">
+    <Group Name="StackManipulator"/>
+    <Group Name="ArgumentAccess"/>
+    <Group Name="Store"/>
+  </Instruction>
+  <!-- End argument access -->
+  
+  <!-- Start constants -->
+  <Instruction Name="Ldc_I4">
+    <Group Name="StackManipulator"/>
+    <Group Name="Constants"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Ldc_I4_0">
+    <Group Name="StackManipulator"/>
+    <Group Name="Constants"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Ldc_I4_1">
+    <Group Name="StackManipulator"/>
+    <Group Name="Constants"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Ldc_I4_2">
+    <Group Name="StackManipulator"/>
+    <Group Name="Constants"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Ldc_I4_3">
+    <Group Name="StackManipulator"/>
+    <Group Name="Constants"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Ldc_I4_4">
+    <Group Name="StackManipulator"/>
+    <Group Name="Constants"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Ldc_I4_5">
+    <Group Name="StackManipulator"/>
+    <Group Name="Constants"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Ldc_I4_6">
+    <Group Name="StackManipulator"/>
+    <Group Name="Constants"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Ldc_I4_7">
+    <Group Name="StackManipulator"/>
+    <Group Name="Constants"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Ldc_I4_8">
+    <Group Name="StackManipulator"/>
+    <Group Name="Constants"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Ldc_I4_M1">
+    <Group Name="StackManipulator"/>
+    <Group Name="Constants"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Ldc_I4_S">
+    <Group Name="StackManipulator"/>
+    <Group Name="Constants"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Ldc_I8">
+    <Group Name="StackManipulator"/>
+    <Group Name="Constants"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Ldc_R4">
+    <Group Name="StackManipulator"/>
+    <Group Name="Constants"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Ldc_R8">
+    <Group Name="StackManipulator"/>
+    <Group Name="Constants"/>
+    <Group Name="Load"/>
+  </Instruction>
+    <Instruction Name="Ldnull">
+    <Group Name="StackManipulator"/>
+    <Group Name="Constants"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <!-- End constants -->
+
+  <!-- Start array access -->
+    <Instruction Name="Ldlen">
+    <Group Name="StackManipulator"/>
+    <Group Name="ArrayAccess"/>
+  </Instruction>
+  <Instruction Name="Ldelem">
+    <Group Name="StackManipulator"/>
+    <Group Name="ArrayAccess"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Ldelema">
+    <Group Name="StackManipulator"/>
+    <Group Name="ArrayAccess"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Ldelem_I">
+    <Group Name="StackManipulator"/>
+    <Group Name="ArrayAccess"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Ldelem_I1">
+    <Group Name="StackManipulator"/>
+    <Group Name="ArrayAccess"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Ldelem_I2">
+    <Group Name="StackManipulator"/>
+    <Group Name="ArrayAccess"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Ldelem_I4">
+    <Group Name="StackManipulator"/>
+    <Group Name="ArrayAccess"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Ldelem_I8">
+    <Group Name="StackManipulator"/>
+    <Group Name="ArrayAccess"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Ldelem_R4">
+    <Group Name="StackManipulator"/>
+    <Group Name="ArrayAccess"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Ldelem_R8">
+    <Group Name="StackManipulator"/>
+    <Group Name="ArrayAccess"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Ldelem_Ref">
+    <Group Name="StackManipulator"/>
+    <Group Name="ArrayAccess"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Ldelem_U1">
+    <Group Name="StackManipulator"/>
+    <Group Name="ArrayAccess"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Ldelem_U2">
+    <Group Name="StackManipulator"/>
+    <Group Name="ArrayAccess"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Ldelem_U4">
+    <Group Name="StackManipulator"/>
+    <Group Name="ArrayAccess"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Stelem">
+    <Group Name="StackManipulator"/>
+    <Group Name="ArrayAccess"/>
+    <Group Name="Store"/>
+  </Instruction>
+  <Instruction Name="Stelem_I">
+    <Group Name="StackManipulator"/>
+    <Group Name="ArrayAccess"/>
+    <Group Name="Store"/>
+  </Instruction>
+  <Instruction Name="Stelem_I1">
+    <Group Name="StackManipulator"/>
+    <Group Name="ArrayAccess"/>
+    <Group Name="Store"/>
+  </Instruction>
+  <Instruction Name="Stelem_I2">
+    <Group Name="StackManipulator"/>
+    <Group Name="ArrayAccess"/>
+    <Group Name="Store"/>
+  </Instruction>
+  <Instruction Name="Stelem_I4">
+    <Group Name="StackManipulator"/>
+    <Group Name="ArrayAccess"/>
+    <Group Name="Store"/>
+  </Instruction>
+  <Instruction Name="Stelem_I8">
+    <Group Name="StackManipulator"/>
+    <Group Name="ArrayAccess"/>
+    <Group Name="Store"/>
+  </Instruction>
+  <Instruction Name="Stelem_R4">
+    <Group Name="StackManipulator"/>
+    <Group Name="ArrayAccess"/>
+    <Group Name="Store"/>
+  </Instruction>
+  <Instruction Name="Stelem_R8">
+    <Group Name="StackManipulator"/>
+    <Group Name="ArrayAccess"/>
+    <Group Name="Store"/>
+  </Instruction>
+  <Instruction Name="Stelem_Ref">
+    <Group Name="StackManipulator"/>
+    <Group Name="ArrayAccess"/>
+    <Group Name="Store"/>
+  </Instruction>
+  <!-- End array access -->
+  
+  <!-- Start member access -->
+  <Instruction Name="Ldfld">
+    <Group Name="StackManipulator"/>
+    <Group Name="ObjectModel"/>
+    <Group Name="FieldAccess"/>
+    <Group Name="Load"/>
+  </Instruction>  
+  <Instruction Name="Ldflda">
+    <Group Name="StackManipulator"/>
+    <Group Name="ObjectModel"/>
+    <Group Name="FieldAccess"/>
+    <Group Name="Load"/>
+  </Instruction>  
+  <Instruction Name="Ldsfld">
+    <Group Name="StackManipulator"/>
+    <Group Name="ObjectModel"/>
+    <Group Name="FieldAccess"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Ldsflda">
+    <Group Name="StackManipulator"/>
+    <Group Name="ObjectModel"/>
+    <Group Name="FieldAccess"/>
+    <Group Name="Load"/>
+  </Instruction>
+    <Instruction Name="Stfld">
+    <Group Name="StackManipulator"/>
+    <Group Name="ObjectModel"/>
+    <Group Name="FieldAccess"/>
+    <Group Name="Store"/>
+  </Instruction>
+  <Instruction Name="Stsfld">
+    <Group Name="ObjectModel"/>
+    <Group Name="FieldAccess"/>
+    <Group Name="Store"/>
+  </Instruction>
+  <Instruction Name="Ldftn">
+    <Group Name="StackManipulator"/>
+    <Group Name="ObjectModel"/>
+    <Group Name="MethodAccess"/>
+    <Group Name="Load"/>
+  </Instruction>
+    <!-- End member access -->
+  
+  <!-- Start IndirectAccess access -->  
+  <Instruction Name="Ldind_I">
+    <Group Name="StackManipulator"/>
+    <Group Name="IndirectAccess"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Ldind_I1">
+    <Group Name="StackManipulator"/>
+    <Group Name="IndirectAccess"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Ldind_I2">
+    <Group Name="StackManipulator"/>
+    <Group Name="IndirectAccess"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Ldind_I4">
+    <Group Name="StackManipulator"/>
+    <Group Name="IndirectAccess"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Ldind_I8">
+    <Group Name="StackManipulator"/>
+    <Group Name="IndirectAccess"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Ldind_R4">
+    <Group Name="StackManipulator"/>
+    <Group Name="IndirectAccess"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Ldind_R8">
+    <Group Name="StackManipulator"/>
+    <Group Name="IndirectAccess"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Ldind_Ref">
+    <Group Name="StackManipulator"/>
+    <Group Name="IndirectAccess"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Ldind_U1">
+    <Group Name="StackManipulator"/>
+    <Group Name="IndirectAccess"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Ldind_U2">
+    <Group Name="StackManipulator"/>
+    <Group Name="IndirectAccess"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Ldind_U4">
+    <Group Name="StackManipulator"/>
+    <Group Name="IndirectAccess"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Stind_I">
+    <Group Name="StackManipulator"/>
+    <Group Name="IndirectAccess"/>
+    <Group Name="Store"/>
+  </Instruction>
+  <Instruction Name="Stind_I1">
+    <Group Name="StackManipulator"/>
+    <Group Name="IndirectAccess"/>
+    <Group Name="Store"/>
+  </Instruction>
+  <Instruction Name="Stind_I2">
+    <Group Name="StackManipulator"/>
+    <Group Name="IndirectAccess"/>
+    <Group Name="Store"/>
+  </Instruction>
+  <Instruction Name="Stind_I4">
+    <Group Name="StackManipulator"/>
+    <Group Name="IndirectAccess"/>
+    <Group Name="Store"/>
+  </Instruction>
+  <Instruction Name="Stind_I8">
+    <Group Name="StackManipulator"/>
+    <Group Name="IndirectAccess"/>
+    <Group Name="Store"/>
+  </Instruction>
+  <Instruction Name="Stind_R4">
+    <Group Name="StackManipulator"/>
+    <Group Name="IndirectAccess"/>
+    <Group Name="Store"/>
+  </Instruction>
+  <Instruction Name="Stind_R8">
+    <Group Name="StackManipulator"/>
+    <Group Name="IndirectAccess"/>
+    <Group Name="Store"/>
+  </Instruction>
+  <Instruction Name="Stind_Ref">
+    <Group Name="StackManipulator"/>
+    <Group Name="IndirectAccess"/>
+    <Group Name="Store"/>
+  </Instruction>
+  <!-- End IndirectAccess access -->
+
+  <!-- Start local access -->
+  <Instruction Name="Ldloc">
+    <Group Name="StackManipulator"/>
+    <Group Name="LocalVariableAccess"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Ldloca">
+    <Group Name="StackManipulator"/>
+    <Group Name="LocalVariableAccess"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Ldloca_S">
+    <Group Name="StackManipulator"/>
+    <Group Name="LocalVariableAccess"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Ldloc_0">
+    <Group Name="StackManipulator"/>
+    <Group Name="LocalVariableAccess"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Ldloc_1">
+    <Group Name="StackManipulator"/>
+    <Group Name="LocalVariableAccess"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Ldloc_2">
+    <Group Name="StackManipulator"/>
+    <Group Name="LocalVariableAccess"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Ldloc_3">
+    <Group Name="StackManipulator"/>
+    <Group Name="LocalVariableAccess"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Ldloc_S">
+    <Group Name="StackManipulator"/>
+    <Group Name="LocalVariableAccess"/>
+    <Group Name="Store"/>
+  </Instruction>
+  <Instruction Name="Stloc">
+    <Group Name="StackManipulator"/>
+    <Group Name="LocalVariableAccess"/>
+    <Group Name="Store"/>
+  </Instruction>
+  <Instruction Name="Stloc_0">
+    <Group Name="StackManipulator"/>
+    <Group Name="LocalVariableAccess"/>
+    <Group Name="Store"/>
+  </Instruction>
+  <Instruction Name="Stloc_1">
+    <Group Name="StackManipulator"/>
+    <Group Name="LocalVariableAccess"/>
+    <Group Name="Store"/>
+  </Instruction>
+  <Instruction Name="Stloc_2">
+    <Group Name="StackManipulator"/>
+    <Group Name="LocalVariableAccess"/>
+    <Group Name="Store"/>
+  </Instruction>
+  <Instruction Name="Stloc_3">
+    <Group Name="StackManipulator"/>
+    <Group Name="LocalVariableAccess"/>
+    <Group Name="Store"/>
+  </Instruction>
+  <Instruction Name="Stloc_S">
+    <Group Name="StackManipulator"/>
+    <Group Name="LocalVariableAccess"/>
+    <Group Name="Store"/>
+  </Instruction>
+  <!-- End local access -->
+
+  <Instruction Name="Ldobj">
+    <Group Name=""/>
+  </Instruction>
+  <Instruction Name="Ldstr">
+    <Group Name="StackManipulator"/>
+    <Group Name="Constants"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Ldtoken">
+    <Group Name="StackManipulator"/>
+    <Group Name="Constants"/>
+    <Group Name="Load"/>
+  </Instruction>
+  <Instruction Name="Ldvirtftn">
+    <Group Name=""/>
+  </Instruction>
+  <Instruction Name="Localloc">
+    <Group Name=""/>
+  </Instruction>
+  <Instruction Name="Mkrefany">
+    <Group Name=""/>
+  </Instruction>
+  
+  <Instruction Name="Newarr">
+    <Group Name="ArrayAccess"/>
+    <Group Name="Allocation"/>
+  </Instruction>
+  <Instruction Name="Newobj">
+    <Group Name="ObjectModel"/>
+    <Group Name="Allocation"/>
+  </Instruction>
+  <Instruction Name="Stobj">
+    <Group Name="ObjectModel"/>
+  </Instruction>
+  
+  <Instruction Name="Nop">
+    <Group Name=""/>
+  </Instruction>
+  <Instruction Name="Pop">
+    <Group Name="StackManipulator"/>
+  </Instruction>
+  <Instruction Name="Arglist">
+    <Group Name="ArgumentManipulation"/>
+  </Instruction>
+  
+  <Instruction Name="Prefix1">
+    <Group Name=""/>
+  </Instruction>
+  <Instruction Name="Prefix2">
+    <Group Name=""/>
+  </Instruction>
+  <Instruction Name="Prefix3">
+    <Group Name=""/>
+  </Instruction>
+  <Instruction Name="Prefix4">
+    <Group Name=""/>
+  </Instruction>
+  <Instruction Name="Prefix5">
+    <Group Name=""/>
+  </Instruction>
+  <Instruction Name="Prefix6">
+    <Group Name=""/>
+  </Instruction>
+  <Instruction Name="Prefix7">
+    <Group Name=""/>
+  </Instruction>
+    
+  <Instruction Name="Prefixref">
+    <Group Name=""/>
+  </Instruction>
+  <Instruction Name="Readonly">
+    <Group Name=""/>
+  </Instruction>
+  <Instruction Name="Refanytype">
+    <Group Name=""/>
+  </Instruction>
+  <Instruction Name="Refanyval">
+    <Group Name=""/>
+  </Instruction>
+
+  <Instruction Name="Sizeof">
+    <Group Name=""/>
+  </Instruction>
+  
+  <Instruction Name="Tailcall">
+    <Group Name=""/>
+  </Instruction>
+
+  <Instruction Name="UNKNOWN1">
+    <Group Name=""/>
+  </Instruction>
+  <Instruction Name="UNKNOWN2">
+    <Group Name=""/>
+  </Instruction>
+</InstructionSet>

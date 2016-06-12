@@ -234,7 +234,7 @@ namespace Clarifier.Core
             // Save the assembly to a memorystream
             using (MemoryStream stream = new MemoryStream())
             {
-                dummyModule.Write(stream, new ModuleWriterOptions(ctx.CurrentModule,ctx.WriterListener));
+                dummyModule.Write(stream);
                 return stream.ToArray();
             }
         }

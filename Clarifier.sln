@@ -30,6 +30,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dnlib", "ConfuserEx\dnlib\s
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clarifier.Test.TestRunner", "Clarifier.Test\TestRunner\Clarifier.Test.TestRunner.csproj", "{6E387375-4086-49B9-809B-41E23266695B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FuzzyEngine", "FuzzyEngine\FuzzyEngine.csproj", "{E3A50E23-AF8A-4523-AD34-92DDB90C5DAE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug_ThreadSafe|Any CPU = Debug_ThreadSafe|Any CPU
@@ -100,6 +102,14 @@ Global
 		{6E387375-4086-49B9-809B-41E23266695B}.Release_ThreadSafe|Any CPU.Build.0 = Release|Any CPU
 		{6E387375-4086-49B9-809B-41E23266695B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E387375-4086-49B9-809B-41E23266695B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3A50E23-AF8A-4523-AD34-92DDB90C5DAE}.Debug_ThreadSafe|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3A50E23-AF8A-4523-AD34-92DDB90C5DAE}.Debug_ThreadSafe|Any CPU.Build.0 = Debug|Any CPU
+		{E3A50E23-AF8A-4523-AD34-92DDB90C5DAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3A50E23-AF8A-4523-AD34-92DDB90C5DAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3A50E23-AF8A-4523-AD34-92DDB90C5DAE}.Release_ThreadSafe|Any CPU.ActiveCfg = Release|Any CPU
+		{E3A50E23-AF8A-4523-AD34-92DDB90C5DAE}.Release_ThreadSafe|Any CPU.Build.0 = Release|Any CPU
+		{E3A50E23-AF8A-4523-AD34-92DDB90C5DAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3A50E23-AF8A-4523-AD34-92DDB90C5DAE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

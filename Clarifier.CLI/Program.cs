@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.IO;
 using System;
 using System.Reflection;
+using FuzzyEngine;
 
 namespace Clarifier.CLI
 {
@@ -13,11 +14,11 @@ namespace Clarifier.CLI
     {
         static void Main(string[] args)
         {
+            Loader loader = new Loader();
+            loader.LoadLanguage();
             Debug.Assert(args.Length > 0);
             ModuleDefMD targetModule = ModuleDefMD.Load(args[0]);
             ModuleDefMD runtimeModule = ModuleDefMD.Load("Confuser.Runtime.dll");
-
-            Assembly wtf = Assembly.Load(File.ReadAllBytes("crackme.exe"));
 
             ClarifierContext ctx = new ClarifierContext {
                 CurrentModule = targetModule,
