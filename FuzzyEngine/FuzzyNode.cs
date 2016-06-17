@@ -3,7 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace FuzzyEngine{
+namespace FuzzyEngine
+{
     public enum NodeType
     {
         Node,
@@ -12,9 +13,9 @@ namespace FuzzyEngine{
 
     public enum ConditionOutcome
     {
-		Matched,
-		NotMatched,
-		Skip
+        Matched,
+        NotMatched,
+        Skip
     }
 
     /// <summary>
@@ -23,48 +24,50 @@ namespace FuzzyEngine{
     /// </summary>
     public class FuzzyNode : ICloneable
     {
-
-        Func<ComparisonContext,FuzzyNode, bool> condition;
+        Func<ComparisonContext, FuzzyNode, bool> condition;
         public Func<ComparisonContext, FuzzyNode, ConditionOutcome> Condition
         {
             get;
             set;
         }
 
-        public object ValueOrChilds { get; set; }
-        public NodeType Type {
-            get
-            {
-                if (ValueOrChilds is List<FuzzyNode>)
-                    return NodeType.Node;
-                return NodeType.Leaf;
-            }
-        }
+        protected object ValueOrChilds { get; set; }
+        public NodeType Type { get; protected set; }
 
         public OpCode Value
         {
             get
             {
-                if (ValueOrChilds != null)
+                if (Type == NodeType.Leaf)
                     return (OpCode)ValueOrChilds;
-                return OpCodes.Nop;
+                throw new InvalidCastException();
+            }
+            set
+            {
+                ValueOrChilds = value;
+                Type = NodeType.Leaf;
             }
         }
         public List<FuzzyNode> Childs
         {
             get
             {
-                if (ValueOrChilds != null)
+                if (Type == NodeType.Node)
                     return (List<FuzzyNode>)ValueOrChilds;
-                return null;
+                throw new InvalidCastException();
+            }
+            set
+            {
+                ValueOrChilds = value;
+                Type = NodeType.Node;
             }
         }
-        public uint  MinNumber { get; set; }
+        public uint MinNumber { get; set; }
         public uint? MaxNumber { get; set; }
         public string Name { get; set; }
         public FuzzyNode()
         {
-            ValueOrChilds = new List<FuzzyNode>();
+            Childs = new List<FuzzyNode>();
             MinNumber = 1;
             MaxNumber = null;
             Name = "";
@@ -72,7 +75,7 @@ namespace FuzzyEngine{
 
         public FuzzyNode(OpCode opcode)
         {
-            ValueOrChilds = opcode;
+            Value = opcode;
             MinNumber = 1;
             MaxNumber = 1;
             Name = opcode.ToString();
@@ -87,8 +90,13 @@ namespace FuzzyEngine{
         {
             get
             {
-                if (Childs.Where(x => x.Name == id).Any())
-                    return Childs.Where(x => x.Name == id).Single();
+                if (Type == NodeType.Leaf)
+                    throw new InvalidOperationException();
+
+                var nodes = Childs.Where(x => x.Name == id);
+
+                if (nodes.Any())
+                    return nodes.Single();
 
                 var retVal = new FuzzyNode { Name = id };
                 Childs.Add(retVal);
@@ -111,11 +119,9 @@ namespace FuzzyEngine{
         {
             yield return this;
 
-            List<FuzzyNode> childs = ValueOrChilds as List<FuzzyNode>;
-
-            if (childs != null)
+            if (Type == NodeType.Node)
             {
-                foreach (var v in childs)
+                foreach (var v in Childs)
                 {
                     foreach (var vv in v.WalkTree())
                         yield return vv;
@@ -123,43 +129,61 @@ namespace FuzzyEngine{
             }
         }
 
-		public ConditionOutcome Test(ComparisonContext ctx)
+        public ConditionOutcome Test(ComparisonContext ctx)
         {
             if (Condition != null)
             {
                 int matchNumber = 0;
-				while(matchNumber < this.MaxNumber)
+
+                ConditionOutcome outcome;
+                do
                 {
-                    ConditionOutcome co = Condition(ctx, this);
-                    if (co != ConditionOutcome.Matched)
-                        return co;
+                    outcome = Condition(ctx, this);
+                    if (outcome != ConditionOutcome.Matched)
+                        break;
+
+                    ++matchNumber;
+                } while (!MaxNumber.HasValue || matchNumber < MaxNumber);
+
+                if (matchNumber < MinNumber)
+                    return ConditionOutcome.NotMatched;
+				else if (outcome == ConditionOutcome.Skip)
+                    return ConditionOutcome.Skip;
+				else
+					return ConditionOutcome.Matched;
+            }
+            else if (Type == NodeType.Leaf)
+            {
+                int matchNumber = 0;
+                do
+                {
+                    if (ctx.InstructionList[ctx.CurrentIndex++].OpCode != this.Value)
+                        break;
 
                     ++ctx.CurrentIndex;
                     ++matchNumber;
-                }
-                if (matchNumber < this.MinNumber)
+                } while (!MaxNumber.HasValue || matchNumber < MaxNumber);
+
+                if (matchNumber < MinNumber)
+                {
+                    ctx.CurrentIndex -= matchNumber;
                     return ConditionOutcome.NotMatched;
-
-                return ConditionOutcome.Matched;
+                }
             }
-
-            if (Type == NodeType.Leaf)
-            {
-                if (ctx.InstructionList[ctx.CurrentIndex++].OpCode == this.Value)
-					return ConditionOutcome.Matched;
-                return ConditionOutcome.NotMatched;
-            }
-
-			if (Type == NodeType.Node)
+			else //if (Type == NodeType.Node)
             {
                 int matchNumber = 0;
-				while (matchNumber < this.MaxNumber)
+                do
                 {
-					foreach (var v in this.Childs)
+                    foreach (var v in Childs)
                     {
-                        ConditionOutcome co = v.Test(ctx);
+                        if (v.Test(ctx) == ConditionOutcome.Matched)
+                            ++matchNumber;
                     }
-                }
+                } while (!MaxNumber.HasValue || matchNumber < MaxNumber);
+
+                if (matchNumber < MinNumber)
+                    return ConditionOutcome.NotMatched;
             }
 
             return ConditionOutcome.Matched;
@@ -167,23 +191,19 @@ namespace FuzzyEngine{
 
         object ICloneable.Clone()
         {
-            return this.Clone();
+            return Clone();
         }
 
         public FuzzyNode Clone()
         {
             if (Type == NodeType.Leaf)
             {
-                OpCode retLeafValue = OpCodes.Nop;
-                retLeafValue = Value;
+                OpCode retLeafValue = Value;
                 return new FuzzyNode(retLeafValue);
             }
 
             FuzzyNode retNodeValue = new FuzzyNode();
-            foreach(var child in Childs)
-            {
-                retNodeValue.Childs.Add((FuzzyNode)child.Clone());
-            }
+            Childs.ForEach(x => retNodeValue.Childs.Add(x.Clone()));
             return retNodeValue;
         }
     }

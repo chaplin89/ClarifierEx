@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Reflection.Emit;
 using System.Xml;
 
 namespace FuzzyEngine
@@ -43,12 +42,10 @@ namespace FuzzyEngine
                 string attrVal = inst.Attributes["Name"].Value;
                 FieldInfo info = opcodesType.GetField(attrVal);
 
-                OpCode currentOpcode = new OpCode();
-
                 if (info == null)
                     continue;
 
-                currentOpcode = (OpCode)info.GetValue(null);
+                OpCode currentOpcode = (OpCode)info.GetValue(null);
 
                 foreach(XmlNode group in inst.ChildNodes)
                 {
