@@ -6,10 +6,10 @@ namespace FuzzyEngine
     public class ComparisonContext
     {
         int currentIndex;
-        List<Instruction> instructionList;
+        IList<Instruction> instructionList;
         bool[] alreadyMatched;
 
-        public List<Instruction> InstructionList
+        public IList<Instruction> InstructionList
         {
             get
             {
@@ -19,6 +19,8 @@ namespace FuzzyEngine
             set
             {
                 instructionList = value;
+                AlreadyMatched = new bool[instructionList.Count];
+                CurrentIndex = 0;
             }
         }
 

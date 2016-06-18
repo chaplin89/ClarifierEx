@@ -51,6 +51,17 @@ namespace Clarifier.Core
 
         public bool PerformComparison(MethodDef method, bool preserveOrder = true, bool allowOtherInstruction = false)
         {
+
+
+
+
+
+
+
+
+
+
+
             int groupIndex = 0;
             for (var i = 0; i < method.GetInstructions().Count; ++i)
             {

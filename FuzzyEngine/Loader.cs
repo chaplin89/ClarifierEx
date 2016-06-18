@@ -14,13 +14,10 @@ namespace FuzzyEngine
         public string LoadILDescription()
         {
             string result = string.Empty;
-            string [] wtf = this.GetType().Assembly.GetManifestResourceNames();
-            using (Stream stream = this.GetType().Assembly.GetManifestResourceStream("FuzzyEngine.ILMetaInfo.xml"))
+            using (Stream stream = GetType().Assembly.GetManifestResourceStream("FuzzyEngine.ILMetaInfo.xml"))
             {
                 using (StreamReader sr = new StreamReader(stream))
-                {
                     result = sr.ReadToEnd();
-                }
             }
             return result;
         }
@@ -65,18 +62,5 @@ namespace FuzzyEngine
 
             return desc;
         }
-
-        public double FuzzyComparison(FuzzyNode node, IEnumerable<Instruction> compareTo)
-        {
-            Stack<FuzzyNode> stack;
-
-            foreach(var v in node.WalkTree())
-            {
-
-            }
-
-            return 0.0;
-        }
-
     }
 }

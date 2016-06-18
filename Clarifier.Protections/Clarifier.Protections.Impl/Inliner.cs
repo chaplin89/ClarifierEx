@@ -1,6 +1,7 @@
 ﻿using Clarifier.Core;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
+using FuzzyEngine;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace Clarifier.Protection.Impl
     {
         BasicStaticProtection staticProtectionsManager = new BasicStaticProtection();
 
-        Dictionary<MethodDef,List<InstructionGroup>> referenceProxyMethods = new Dictionary<MethodDef, List<InstructionGroup>>();
+        Dictionary<MethodDef, List<InstructionGroup>> referenceProxyMethods = new Dictionary<MethodDef, List<InstructionGroup>>();
 
         public void PerformRemoval(ClarifierContext ctx)
         {
@@ -41,7 +42,7 @@ namespace Clarifier.Protection.Impl
                         MethodSpec tempMethod = instruction.Operand as MethodSpec;
                         targetMethod = tempMethod.Method as MethodDef;
                     }
-                    else if(instruction.Operand is MemberRef)
+                    else if (instruction.Operand is MemberRef)
                     {
                         continue;
                     }
@@ -59,19 +60,54 @@ namespace Clarifier.Protection.Impl
         }
         public double PerformIdentification(ClarifierContext ctx)
         {
-            foreach (var method in ctx.CurrentModule.GetMethods())
+            FuzzyNode loadStage = new FuzzyNode(ctx.ILLanguage["ArgumentLoad"].Childs)
             {
-                MacroBodyComparison macroBodyComparison = new MacroBodyComparison()
+                Name = "LoadStage",
+                MaxNumber = null,
+                MinNumber = 1,
+                Mode = TestMode.InRange
+            };
+            FuzzyNode callStage = new FuzzyNode(ctx.ILLanguage["Call"].Childs)
+            {
+                Name = "CallStage",
+                MaxNumber = 1,
+                MinNumber = 1,
+                Mode = TestMode.InRange
+            };
+            FuzzyNode returnStage = new FuzzyNode(ctx.ILLanguage["Return"].Childs)
+            {
+                Name = "ReturnStage",
+                MaxNumber = 1,
+                MinNumber = 1,
+                Mode = TestMode.InRange
+            };
+
+            FuzzyNode proxyCall = new FuzzyNode(new FuzzyNode[] { loadStage, callStage, returnStage })
+            {
+                Name = "ProxyCall",
+                MinNumber = 1,
+                MaxNumber = 1,
+                Mode = TestMode.MatchEverything
+            };
+
+            foreach (var method in ctx.CurrentModule.GetMethods())
+            { 
+                if (!method.HasBody)
                 {
-                    InstructionGroups = new MacroContainer().CallMacro
+                    continue;
+                }
+
+                ComparisonContext compCtx = new ComparisonContext()
+                {
+                    InstructionList = method.Body.Instructions.ToList()
                 };
 
-                if (!method.HasBody)
-                    continue;
-
-                if (macroBodyComparison.PerformComparison(method))
-                    referenceProxyMethods[method] = macroBodyComparison.InstructionGroups;
+                if (proxyCall.Test(compCtx) == ConditionOutcome.Matched)
+                {
+                    referenceProxyMethods[method] = null;
+                }
             }
+
             if (referenceProxyMethods.Count != 0)
                 return 1.0;
             return 0.0;

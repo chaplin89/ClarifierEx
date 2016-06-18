@@ -208,6 +208,7 @@
   <Instruction Name="Ret">
     <Group Name="ControlFlow"/>
     <Group Name="Function"/>
+    <Group Name="Return"/>
   </Instruction>
   <!-- End function related -->
 
@@ -410,51 +411,61 @@
   <Instruction Name="Ldarg">
     <Group Name="StackManipulator"/>
     <Group Name="ArgumentAccess"/>
+    <Group Name="ArgumentLoad"/>
     <Group Name="Load"/>
   </Instruction>
   <Instruction Name="Ldarga">
     <Group Name="StackManipulator"/>
     <Group Name="ArgumentAccess"/>
+    <Group Name="ArgumentLoad"/>
     <Group Name="Load"/>
   </Instruction>
   <Instruction Name="Ldarga_S">
     <Group Name="StackManipulator"/>
     <Group Name="ArgumentAccess"/>
+    <Group Name="ArgumentLoad"/>
     <Group Name="Load"/>
   </Instruction>
   <Instruction Name="Ldarg_0">
     <Group Name="StackManipulator"/>
     <Group Name="ArgumentAccess"/>
+    <Group Name="ArgumentLoad"/>
     <Group Name="Load"/>
   </Instruction>
   <Instruction Name="Ldarg_1">
     <Group Name="StackManipulator"/>
     <Group Name="ArgumentAccess"/>
+    <Group Name="ArgumentLoad"/>
     <Group Name="Load"/>
   </Instruction>
   <Instruction Name="Ldarg_2">
     <Group Name="StackManipulator"/>
     <Group Name="ArgumentAccess"/>
+    <Group Name="ArgumentLoad"/>
     <Group Name="Load"/>
   </Instruction>
   <Instruction Name="Ldarg_3">
     <Group Name="StackManipulator"/>
     <Group Name="ArgumentAccess"/>
+    <Group Name="ArgumentLoad"/>
     <Group Name="Load"/>
   </Instruction>
   <Instruction Name="Ldarg_S">
     <Group Name="StackManipulator"/>
     <Group Name="ArgumentAccess"/>
+    <Group Name="ArgumentLoad"/>
     <Group Name="Load"/>
   </Instruction>
   <Instruction Name="Starg">
     <Group Name="StackManipulator"/>
     <Group Name="ArgumentAccess"/>
+    <Group Name="ArgumentStore"/>
     <Group Name="Store"/>
   </Instruction>
   <Instruction Name="Starg_S">
     <Group Name="StackManipulator"/>
     <Group Name="ArgumentAccess"/>
+    <Group Name="ArgumentStore"/>
     <Group Name="Store"/>
   </Instruction>
   <!-- End argument access -->

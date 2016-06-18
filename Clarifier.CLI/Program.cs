@@ -15,14 +15,16 @@ namespace Clarifier.CLI
         static void Main(string[] args)
         {
             Loader loader = new Loader();
-            loader.LoadLanguage();
+            FuzzyNode il = loader.LoadLanguage();
+
             Debug.Assert(args.Length > 0);
             ModuleDefMD targetModule = ModuleDefMD.Load(args[0]);
             ModuleDefMD runtimeModule = ModuleDefMD.Load("Confuser.Runtime.dll");
 
             ClarifierContext ctx = new ClarifierContext {
                 CurrentModule = targetModule,
-                WriterListener = new MWListener()
+                WriterListener = new MWListener(),
+                ILLanguage = il
             };
 
             AntiDump antiDump = new AntiDump();
@@ -31,8 +33,8 @@ namespace Clarifier.CLI
             AntiTamper antiTamper = new AntiTamper();
             Inliner inliner = new Inliner();
 
-//             inliner.PerformIdentification(ctx);
-//             inliner.PerformRemoval(ctx);
+             inliner.PerformIdentification(ctx);
+             inliner.PerformRemoval(ctx);
 
             //antiTamper.Initialize();
             //antiTamper.PerformIdentification(ctx);
@@ -46,9 +48,9 @@ namespace Clarifier.CLI
 //             antiDebug.PerformIdentification(ctx);
 //             antiDebug.PerformRemoval(ctx);
             
-            constants.Initialize(ctx);
-            constants.PerformIdentification(ctx);
-            constants.PerformRemoval(ctx);
+//             constants.Initialize(ctx);
+//             constants.PerformIdentification(ctx);
+//             constants.PerformRemoval(ctx);
 
             int lastBackslash = args[0].LastIndexOf('\\');
             string targetExecutable = args[0].Substring(lastBackslash+1, args[0].Length-1-lastBackslash);

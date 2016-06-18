@@ -40,7 +40,7 @@ namespace Clarifier.Test.TestGenerator
                     //{ProtectionType.Rename, new Dictionary<string, string> { { "mode", "debug" } } }
                     //{ ProtectionType.AntiDebug,null },
                     //{ ProtectionType.AntiDump, null},
-                    { ProtectionType.ReferenceProxy, new Dictionary<string,string>{ { "mode", "strong" } }},
+                    { ProtectionType.ReferenceProxy, new Dictionary<string,string>{ { "mode", "mild" } }},
                     //{ ProtectionType.ControlFlow, null}
                 }
             }
