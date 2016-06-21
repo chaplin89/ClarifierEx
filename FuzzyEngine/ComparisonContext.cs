@@ -8,6 +8,7 @@ namespace FuzzyEngine
         int currentIndex;
         IList<Instruction> instructionList;
         bool[] alreadyMatched;
+        bool[] lastIterationMatch;
 
         public IList<Instruction> InstructionList
         {

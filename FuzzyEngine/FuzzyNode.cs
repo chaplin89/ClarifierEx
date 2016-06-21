@@ -13,7 +13,8 @@ namespace FuzzyEngine
     public enum TestMode
     {
         InRange,
-        MatchEverything
+        MatchEverything,
+        Fuzzy
     }
 
     public enum ConditionOutcome
@@ -27,7 +28,7 @@ namespace FuzzyEngine
     /// This represent either a single 
     /// instruction or a group of instructions
     /// </summary>
-    public class FuzzyNode : ICloneable
+    public class FuzzyNode : ICloneable, IEquatable<FuzzyNode>
     {
         public Func<ComparisonContext, FuzzyNode, ConditionOutcome> Condition
         {
@@ -50,6 +51,66 @@ namespace FuzzyEngine
                 Type = NodeType.Leaf;
             }
         }
+
+        public FuzzyNode Not(FuzzyNode second)
+        {
+            FuzzyNode toReturn = new FuzzyNode();
+            foreach (var firstChilds in GetLeafs())
+            {
+                bool found = false;
+                foreach (var secondChilds in second.GetLeafs())
+                {
+                    if (firstChilds.Equals(secondChilds))
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (!found)
+                    toReturn.Childs.Add(firstChilds.Clone());
+            }
+            return toReturn;
+        }
+
+        public FuzzyNode Union(FuzzyNode second)
+        {
+            FuzzyNode toReturn = Clone();
+            foreach (var v in second.GetLeafs())
+            {
+                bool found = false;
+                foreach (var vv in GetLeafs())
+                {
+                    if (v.Equals(vv))
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (!found)
+                    toReturn.Childs.Add(v.Clone());
+            }
+            return toReturn;
+        }
+
+        public FuzzyNode Intersect(FuzzyNode second)
+        {
+            FuzzyNode toReturn = new FuzzyNode();
+            foreach (var firstChilds in GetLeafs())
+            {
+                foreach (var secondChilds in second.GetLeafs())
+                {
+                    if (firstChilds.Equals(secondChilds))
+                    {
+                        toReturn.Childs.Add(firstChilds.Clone());
+                        break;
+                    }
+                }
+            }
+            return toReturn;
+        }
+
         public List<FuzzyNode> Childs
         {
             get
@@ -64,6 +125,8 @@ namespace FuzzyEngine
                 Type = NodeType.Node;
             }
         }
+
+        bool [] Matched { get; set; }
         public uint MinNumber { get; set; }
         public uint? MaxNumber { get; set; }
         public string Name { get; set; }
@@ -100,6 +163,8 @@ namespace FuzzyEngine
         {
             return Name;
         }
+
+
 
         public FuzzyNode this[string id]
         {
@@ -144,9 +209,130 @@ namespace FuzzyEngine
             }
         }
 
+        public IEnumerable<FuzzyNode> GetLeafs()
+        {
+            if(Type == NodeType.Leaf)
+            {
+                yield return this;
+                yield break;
+            }
+
+            if (Type == NodeType.Node)
+            {
+                foreach (var v in Childs)
+                {
+                    foreach (var vv in v.GetLeafs())
+                        yield return vv;
+                }
+            }
+        }
+
+        public double FuzzyTest(ComparisonContext ctx)
+        {
+            int totalMatch = 0;
+            int lastChildMatchedIndex = 0;
+            int savedContextIndex = 0;
+            bool contextChangeInProgress = false;
+
+            bool[] currentMatched = new bool[ctx.InstructionList.Count];
+            bool[] lastCurrentMatched = ctx.AlreadyMatched;
+            ctx.AlreadyMatched = currentMatched;
+
+            do
+            {
+                int iterationMatch = 0;
+
+                if (ctx.CurrentIndex >= ctx.InstructionList.Count)
+                    break;
+
+                if (Type == NodeType.Leaf)
+                {
+                    if (ctx.InstructionList[ctx.CurrentIndex].OpCode == this.Value)
+                    {
+                        iterationMatch++;
+                        ctx.AlreadyMatched[ctx.CurrentIndex] = true;
+                    }
+                }
+                else // if (Type == NodeType.Node)
+                {
+                    bool contextChanged = false;
+                    for (; lastChildMatchedIndex < Childs.Count; lastChildMatchedIndex++)
+                    {
+                        var v = Childs[lastChildMatchedIndex];
+
+                        ConditionOutcome outcome = ConditionOutcome.NotMatched;
+
+                        if (Condition != null)
+                            outcome = Condition(ctx, v);
+                        else
+                            outcome = v.Test(ctx);
+
+                        if (outcome == ConditionOutcome.Matched)
+                        {
+                            iterationMatch++;
+                            
+                            if (Mode == TestMode.InRange)
+                                break;
+                        }
+                        else if (Mode == TestMode.MatchEverything)
+                        {
+                            if (!contextChangeInProgress)
+                            {
+                                savedContextIndex = ctx.CurrentIndex;
+                                contextChangeInProgress = true;
+                            }
+                            if (ctx.CurrentIndex+1 >= ctx.InstructionList.Count)
+                            {
+                                ctx.CurrentIndex = savedContextIndex;
+                                lastChildMatchedIndex++;
+                                break;
+                            }
+
+                            ctx.CurrentIndex++;
+                            contextChanged = true;
+                            break;
+                        }
+                    }
+
+                    if (contextChanged)
+                    {
+                        contextChanged = false;
+                        continue;
+                    }
+                }
+
+                if (iterationMatch == 0)
+                    break;
+
+                totalMatch += iterationMatch;
+            } while ((Type == NodeType.Leaf || Mode == TestMode.InRange) &&
+                     (!MaxNumber.HasValue || totalMatch < MaxNumber));
+
+            // Commit eventually current matched position in the master array
+
+
+
+            // Reason for returning NotMatched:
+            // 1. If this is a Leaf:
+            //    1.1: Matched number less than MinNumber
+            // 2. If this is a Node:
+            //    2.1: Comparison mode is InRange and matching number is outside this range
+            //    2.2: Comparison mode is MatchEverything and not everything is matched
+
+            if (((Type == NodeType.Leaf || Mode == TestMode.InRange) && totalMatch < MinNumber) ||
+                (Mode == TestMode.MatchEverything && totalMatch != Childs.Count))
+            {
+                //return ConditionOutcome.NotMatched;
+            }
+            //return ConditionOutcome.Matched;
+            return 0;
+        }
+
+
         public ConditionOutcome Test(ComparisonContext ctx)
         {
             int totalMatch = 0;
+
             do
             {
                 int iterationMatch = 0;
@@ -159,7 +345,7 @@ namespace FuzzyEngine
                     if (ctx.InstructionList[ctx.CurrentIndex].OpCode == this.Value)
                         iterationMatch++;
                 }
-                else
+                else // if (Type == NodeType.Node)
                 {
                     foreach (var v in Childs)
                     {
@@ -190,16 +376,17 @@ namespace FuzzyEngine
             } while ((Type == NodeType.Leaf || Mode == TestMode.InRange) &&
                      (!MaxNumber.HasValue   || totalMatch < MaxNumber));
 
-            if (Type == NodeType.Leaf)
-            {
-                if (totalMatch < MinNumber)
-                    return ConditionOutcome.NotMatched;
-                return ConditionOutcome.Matched;
-            }
+            // Reason for returning NotMatched:
+            // 1. If this is a Leaf:
+            //    1.1: Matched number less than MinNumber
+            // 2. If this is a Node:
+            //    2.1: Comparison mode is InRange and matching number is outside this range
+            //    2.2: Comparison mode is MatchEverything and not everything is matched
 
-            if ((Mode == TestMode.MatchEverything && totalMatch != Childs.Count) ||
-                (Mode == TestMode.InRange && totalMatch < MinNumber))
+            if (((Type == NodeType.Leaf || Mode == TestMode.InRange) && totalMatch < MinNumber) ||
+                (Mode == TestMode.MatchEverything && totalMatch != Childs.Count))
                 return ConditionOutcome.NotMatched;
+
             return ConditionOutcome.Matched;
         }
 
@@ -212,8 +399,7 @@ namespace FuzzyEngine
         {
             if (Type == NodeType.Leaf)
             {
-                OpCode retLeafValue = Value;
-                return new FuzzyNode(retLeafValue)
+                return new FuzzyNode(Value)
                 {
                     Name = Name,
                     MinNumber = MinNumber,
@@ -232,6 +418,40 @@ namespace FuzzyEngine
 
             Childs.ForEach(x => retNodeValue.Childs.Add(x.Clone()));
             return retNodeValue;
+        }
+
+        public bool Equals(FuzzyNode other)
+        {
+            if (!CompareProperties(other))
+                return false;
+
+            if (Type == NodeType.Leaf)
+                return true;
+
+            if (Childs.Count != other.Childs.Count)
+                return false;
+
+            for(int i=0; i<Childs.Count; ++i)
+            {
+                if (!other.Childs[i].Equals(Childs[i]))
+                    return false;
+            }
+            return true;
+        }
+
+        public bool CompareProperties(FuzzyNode other)
+        {
+            if (Type != other.Type)
+                return false;
+            if (this.Mode != other.Mode)
+                return false;
+            if (this.MinNumber != other.MinNumber)
+                return false;
+            if (this.MaxNumber != other.MaxNumber)
+                return false;
+            if (this.Value != other.Value)
+                return false;
+            return true;
         }
     }
 }

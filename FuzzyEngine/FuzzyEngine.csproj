@@ -40,8 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ASTNode.cs" />
     <Compile Include="ComparisonContext.cs" />
+    <Compile Include="Compiler.cs" />
     <Compile Include="Loader.cs" />
+    <Compile Include="Parser.cs" />
+    <Compile Include="ParsingRules.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

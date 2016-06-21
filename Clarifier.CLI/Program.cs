@@ -1,11 +1,8 @@
 ﻿using Clarifier.Core;
 using Clarifier.Protection.Impl;
 using dnlib.DotNet;
-using dnlib.DotNet.Writer;
 using System.Diagnostics;
 using System.IO;
-using System;
-using System.Reflection;
 using FuzzyEngine;
 
 namespace Clarifier.CLI
@@ -14,8 +11,8 @@ namespace Clarifier.CLI
     {
         static void Main(string[] args)
         {
-            Loader loader = new Loader();
-            FuzzyNode il = loader.LoadLanguage();
+            Compiler pr= new Compiler();
+            FuzzyNode node = pr.Compile("(StackManipulator&&Store)||!ArgumentAccess");
 
             Debug.Assert(args.Length > 0);
             ModuleDefMD targetModule = ModuleDefMD.Load(args[0]);
@@ -24,7 +21,7 @@ namespace Clarifier.CLI
             ClarifierContext ctx = new ClarifierContext {
                 CurrentModule = targetModule,
                 WriterListener = new MWListener(),
-                ILLanguage = il
+                //ILLanguage = il
             };
 
             AntiDump antiDump = new AntiDump();

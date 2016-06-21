@@ -11,6 +11,8 @@ namespace FuzzyEngine
 {
     public class Loader
     {
+        FuzzyNode desc;
+
         public string LoadILDescription()
         {
             string result = string.Empty;
@@ -21,10 +23,10 @@ namespace FuzzyEngine
             }
             return result;
         }
-        
+
         public FuzzyNode LoadLanguage()
         {
-            FuzzyNode desc = new FuzzyNode();
+            desc = new FuzzyNode();
             XmlDocument langSpec = new XmlDocument();
             langSpec.LoadXml(LoadILDescription());
 
