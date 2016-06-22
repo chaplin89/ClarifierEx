@@ -49,9 +49,9 @@
     <Compile Include="Compiler\SherlockCompiler.cs" />
     <Compile Include="Compiler\ILexer.cs" />
     <Compile Include="Compiler\SherlockLexer.cs" />
-    <Compile Include="Loader.cs" />
     <Compile Include="Compiler\SherlockParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SherlockLoader.cs" />
     <Compile Include="SherlockNode.cs" />
     <Compile Include="Compiler\SherlockParserState.cs" />
     <Compile Include="Compiler\SherlockToken.cs" />

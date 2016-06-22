@@ -27,7 +27,7 @@ namespace SherlockEngine
             {new Regex(@"^;"), SherlockTokenType.End },
             {new Regex(@"^[a-zA-Z0-9_]+"), SherlockTokenType.Label },
             {new Regex(@"^\$[a-zA-Z0-9_]+"), SherlockTokenType.Variable },
-            //{new Regex(@"[\t\s(\r\n?|\n)]+"), SherlockTokenType.Null }
+            {new Regex(@"[\t\s(\r\n?|\n)]+"), SherlockTokenType.Null }
         };
 
         public bool CanRead
@@ -38,7 +38,7 @@ namespace SherlockEngine
             }
         }
 
-        public void PresetProgram(TextReader toCompile )
+        public void PresetProgram(TextReader toCompile)
         {
             this.toCompile = toCompile;
         }
@@ -72,23 +72,36 @@ namespace SherlockEngine
             }
 
             int startPosition = currentColumn;
-            string currentPart = cachedLine.Substring(currentColumn);
+            bool skip;
 
-            foreach (var v in mapCharType)
+            do
             {
-                Match vv = v.Key.Match(currentPart);
-                if (vv.Success)
+                string currentPart = cachedLine.Substring(currentColumn);
+                skip = false;
+                foreach (var v in mapCharType)
                 {
-                    System.Diagnostics.Debug.Assert(vv.Index == 0);
+                    Match vv = v.Key.Match(currentPart);
+                    if (vv.Success)
+                    {
+                        System.Diagnostics.Debug.Assert(vv.Index == 0);
+                        if (v.Value == SherlockTokenType.Null)
+                        {
+                            if (moveIndex)
+                                currentColumn += vv.Length;
+                            skip = true;
+                            break;
+                        }
 
-                    if (vv.Index != 0)
-                        continue;
-                    if (moveIndex)
-                        currentColumn += vv.Length;
+                        if (vv.Index != 0)
+                            continue;
+                        if (moveIndex)
+                            currentColumn += vv.Length;
 
-                    return new SherlockToken(vv.Value, v.Value, startPosition);
+                        return new SherlockToken(vv.Value, v.Value, startPosition);
+                    }
                 }
-            }
+            } while (skip);
+
             return null;
         }
     }

@@ -61,6 +61,7 @@ namespace SherlockEngine
         Key,
         Comma,
         Value,
+        Null,
         JustStarted,
     }
 }

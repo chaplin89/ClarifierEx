@@ -6,7 +6,7 @@ using System.Xml;
 
 namespace SherlockEngine
 {
-    public class Loader
+    public class SherlockLoader
     {
         SherlockNode desc;
 

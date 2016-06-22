@@ -7,14 +7,8 @@ namespace SherlockEngine
 {
     public class ParsingErrorException : Exception
     {
-        string errorMsg;
-        public ParsingErrorException(string error)
+        public ParsingErrorException(string error) : base(error)
         {
-            errorMsg = error;
-        }
-        public override string ToString()
-        {
-            return errorMsg;
         }
     }
 
@@ -27,13 +21,12 @@ namespace SherlockEngine
         {
         }
 
-        public ASTNode Parse(string toParse, ASTNode parent = null)
+        public ASTNode Parse(string toParse)
         {
             ASTNode currentNode = new ASTNode(null);
             ASTNode toReturn = currentNode;
             ASTNode tempNode = null;
             SherlockToken currentToken = null;
-            state.CurrentColumn = 0;
 
             try
             {

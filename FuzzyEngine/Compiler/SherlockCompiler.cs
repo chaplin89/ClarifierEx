@@ -3,7 +3,7 @@ namespace SherlockEngine
 {
     public class SherlockCompiler
     {
-        Loader loader = new Loader();
+        SherlockLoader loader = new SherlockLoader();
         SherlockParser parser = new SherlockParser();
         SherlockNode language = null;
 
@@ -16,37 +16,39 @@ namespace SherlockEngine
         {
             if (language == null)
                 InitCompiler();
+
             ASTNode rootNode = parser.Parse(toCompile);
-            return MakeFuzzyNode(rootNode);
+            return ToSherlockNode(rootNode);
         }
 
-        SherlockNode MakeFuzzyNode(ASTNode rootNode)
+        SherlockNode ToSherlockNode(ASTNode rootNode)
         {
             if (rootNode.Value != null)
             {
                 return language[rootNode.Value];
             }
+
             else if (rootNode.Operation == ASTOperation.And)
             {
                 SherlockNode first, second;
-                first = MakeFuzzyNode(rootNode.First);
-                second = MakeFuzzyNode(rootNode.Second);
+                first = ToSherlockNode(rootNode.First);
+                second = ToSherlockNode(rootNode.Second);
                 return first.Intersect(second);
             }
             else if (rootNode.Operation == ASTOperation.Not)
             {
-                return language.Not(MakeFuzzyNode(rootNode.First));
+                return language.Not(ToSherlockNode(rootNode.First));
             }
             else if (rootNode.Operation == ASTOperation.Or)
             {
                 SherlockNode first, second;
-                first = MakeFuzzyNode(rootNode.First);
-                second = MakeFuzzyNode(rootNode.Second);
+                first = ToSherlockNode(rootNode.First);
+                second = ToSherlockNode(rootNode.Second);
                 return first.Union(second);
             }
             else if (rootNode.Operation == ASTOperation.Nop)
             {
-                return MakeFuzzyNode(rootNode.First);
+                return ToSherlockNode(rootNode.First);
             }
             return null;
         }

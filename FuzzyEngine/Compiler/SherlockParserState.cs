@@ -107,6 +107,24 @@ namespace SherlockEngine
                 .Permit(SherlockTokenType.Label, SherlockTokenType.Label)
                 .Permit(SherlockTokenType.UnaryOperator, SherlockTokenType.UnaryOperator)
                 .Permit(SherlockTokenType.ParenthesesBegin, SherlockTokenType.ParenthesesBegin);
+
+            stateMachine.Configure(SherlockTokenType.Null)
+                .Ignore(SherlockTokenType.Label)
+                .Ignore(SherlockTokenType.ParenthesesBegin)
+                .Ignore(SherlockTokenType.ParenthesesEnd)
+                .Ignore(SherlockTokenType.BinaryOperator)
+                .Ignore(SherlockTokenType.UnaryOperator)
+                .Ignore(SherlockTokenType.BracesStart)
+                .Ignore(SherlockTokenType.BracesEnd)
+                .Ignore(SherlockTokenType.BracketStart)
+                .Ignore(SherlockTokenType.BracketEnd)
+                .Ignore(SherlockTokenType.Variable)
+                .Ignore(SherlockTokenType.EqualSign)
+                .Ignore(SherlockTokenType.End)
+                .Ignore(SherlockTokenType.Key)
+                .Ignore(SherlockTokenType.Comma)
+                .Ignore(SherlockTokenType.Value)
+                .Ignore(SherlockTokenType.JustStarted);
         }
     }
 }
