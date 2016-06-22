@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace FuzzyEngine
+namespace SherlockEngine
 {
     public enum NodeType
     {
@@ -28,12 +28,13 @@ namespace FuzzyEngine
     /// This represent either a single 
     /// instruction or a group of instructions
     /// </summary>
-    public class FuzzyNode : ICloneable, IEquatable<FuzzyNode>
+    public class SherlockNode : ICloneable, IEquatable<SherlockNode>
     {
-        public Func<ComparisonContext, FuzzyNode, ConditionOutcome> Condition
+        public Func<ComparisonContext, SherlockNode, ConditionOutcome> Condition
         {
             get;set;
         }
+
         protected object ValueOrChilds { get; set; }
         public NodeType Type { get; protected set; }
         public TestMode Mode { get; set; }
@@ -52,9 +53,9 @@ namespace FuzzyEngine
             }
         }
 
-        public FuzzyNode Not(FuzzyNode second)
+        public SherlockNode Not(SherlockNode second)
         {
-            FuzzyNode toReturn = new FuzzyNode();
+            SherlockNode toReturn = new SherlockNode();
             foreach (var firstChilds in GetLeafs())
             {
                 bool found = false;
@@ -73,9 +74,9 @@ namespace FuzzyEngine
             return toReturn;
         }
 
-        public FuzzyNode Union(FuzzyNode second)
+        public SherlockNode Union(SherlockNode second)
         {
-            FuzzyNode toReturn = Clone();
+            SherlockNode toReturn = Clone();
             foreach (var v in second.GetLeafs())
             {
                 bool found = false;
@@ -94,9 +95,9 @@ namespace FuzzyEngine
             return toReturn;
         }
 
-        public FuzzyNode Intersect(FuzzyNode second)
+        public SherlockNode Intersect(SherlockNode second)
         {
-            FuzzyNode toReturn = new FuzzyNode();
+            SherlockNode toReturn = new SherlockNode();
             foreach (var firstChilds in GetLeafs())
             {
                 foreach (var secondChilds in second.GetLeafs())
@@ -111,12 +112,12 @@ namespace FuzzyEngine
             return toReturn;
         }
 
-        public List<FuzzyNode> Childs
+        public List<SherlockNode> Childs
         {
             get
             {
                 if (Type == NodeType.Node)
-                    return (List<FuzzyNode>)ValueOrChilds;
+                    return (List<SherlockNode>)ValueOrChilds;
                 throw new InvalidCastException();
             }
             set
@@ -130,17 +131,17 @@ namespace FuzzyEngine
         public uint MinNumber { get; set; }
         public uint? MaxNumber { get; set; }
         public string Name { get; set; }
-        public FuzzyNode()
+        public SherlockNode()
         {
-            Childs = new List<FuzzyNode>();
+            Childs = new List<SherlockNode>();
             MinNumber = 1;
             MaxNumber = null;
             Name = "";
         }
 
-        public FuzzyNode(IEnumerable<FuzzyNode> childs)
+        public SherlockNode(IEnumerable<SherlockNode> childs)
         {
-            Childs = new List<FuzzyNode>();
+            Childs = new List<SherlockNode>();
             MinNumber = 1;
             MaxNumber = null;
             Name = "";
@@ -151,7 +152,7 @@ namespace FuzzyEngine
             }
         }
 
-        public FuzzyNode(OpCode opcode)
+        public SherlockNode(OpCode opcode)
         {
             Value = opcode;
             MinNumber = 1;
@@ -166,7 +167,7 @@ namespace FuzzyEngine
 
 
 
-        public FuzzyNode this[string id]
+        public SherlockNode this[string id]
         {
             get
             {
@@ -178,7 +179,7 @@ namespace FuzzyEngine
                 if (nodes.Any())
                     return nodes.Single();
 
-                var retVal = new FuzzyNode { Name = id };
+                var retVal = new SherlockNode { Name = id };
                 Childs.Add(retVal);
                 return retVal;
             }
@@ -187,7 +188,7 @@ namespace FuzzyEngine
                 var v = Childs.Where(x => x.Name == id).FirstOrDefault();
                 if (v == null)
                 {
-                    v = new FuzzyNode { Name = id };
+                    v = new SherlockNode { Name = id };
                     Childs.Add(v);
                 }
 
@@ -195,7 +196,7 @@ namespace FuzzyEngine
             }
         }
 
-        public IEnumerable<FuzzyNode> WalkTree()
+        public IEnumerable<SherlockNode> WalkTree()
         {
             yield return this;
 
@@ -209,7 +210,7 @@ namespace FuzzyEngine
             }
         }
 
-        public IEnumerable<FuzzyNode> GetLeafs()
+        public IEnumerable<SherlockNode> GetLeafs()
         {
             if(Type == NodeType.Leaf)
             {
@@ -395,11 +396,11 @@ namespace FuzzyEngine
             return Clone();
         }
 
-        public FuzzyNode Clone()
+        public SherlockNode Clone()
         {
             if (Type == NodeType.Leaf)
             {
-                return new FuzzyNode(Value)
+                return new SherlockNode(Value)
                 {
                     Name = Name,
                     MinNumber = MinNumber,
@@ -408,7 +409,7 @@ namespace FuzzyEngine
                 };
             }
 
-            FuzzyNode retNodeValue = new FuzzyNode()
+            SherlockNode retNodeValue = new SherlockNode()
             {
                 Name = Name,
                 MinNumber = MinNumber,
@@ -420,7 +421,7 @@ namespace FuzzyEngine
             return retNodeValue;
         }
 
-        public bool Equals(FuzzyNode other)
+        public bool Equals(SherlockNode other)
         {
             if (!CompareProperties(other))
                 return false;
@@ -439,7 +440,7 @@ namespace FuzzyEngine
             return true;
         }
 
-        public bool CompareProperties(FuzzyNode other)
+        public bool CompareProperties(SherlockNode other)
         {
             if (Type != other.Type)
                 return false;

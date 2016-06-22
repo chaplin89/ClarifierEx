@@ -30,7 +30,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dnlib", "ConfuserEx\dnlib\s
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clarifier.Test.TestRunner", "Clarifier.Test\TestRunner\Clarifier.Test.TestRunner.csproj", "{6E387375-4086-49B9-809B-41E23266695B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FuzzyEngine", "FuzzyEngine\FuzzyEngine.csproj", "{E3A50E23-AF8A-4523-AD34-92DDB90C5DAE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SherlockEngine", "FuzzyEngine\SherlockEngine.csproj", "{E3A50E23-AF8A-4523-AD34-92DDB90C5DAE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

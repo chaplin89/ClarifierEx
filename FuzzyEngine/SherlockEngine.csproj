@@ -7,8 +7,8 @@
     <ProjectGuid>{E3A50E23-AF8A-4523-AD34-92DDB90C5DAE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FuzzyEngine</RootNamespace>
-    <AssemblyName>FuzzyEngine</AssemblyName>
+    <RootNamespace>SherlockEngine</RootNamespace>
+    <AssemblyName>SherlockEngine</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Stateless, Version=2.5.62.0, Culture=neutral, PublicKeyToken=93038f0927583c9a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Stateless.2.5.62.0\lib\portable-net40+sl50+win+wp80+MonoAndroid10+xamarinios10+MonoTouch10\Stateless.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,13 +44,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ASTNode.cs" />
+    <Compile Include="Compiler\ASTNode.cs" />
     <Compile Include="ComparisonContext.cs" />
-    <Compile Include="Compiler.cs" />
+    <Compile Include="Compiler\SherlockCompiler.cs" />
+    <Compile Include="Compiler\ILexer.cs" />
+    <Compile Include="Compiler\SherlockLexer.cs" />
     <Compile Include="Loader.cs" />
-    <Compile Include="Parser.cs" />
-    <Compile Include="ParsingRules.cs" />
+    <Compile Include="Compiler\SherlockParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SherlockNode.cs" />
+    <Compile Include="Compiler\SherlockParserState.cs" />
+    <Compile Include="Compiler\SherlockToken.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ILMetaInfo.xml">
@@ -54,13 +62,13 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FuzzyNode.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\ConfuserEx\dnlib\src\dnlib.csproj">
       <Project>{FDFC1237-143F-4919-8318-4926901F4639}</Project>
       <Name>dnlib</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,7 +1,7 @@
 ﻿using dnlib.DotNet.Emit;
 using System.Collections.Generic;
 
-namespace FuzzyEngine
+namespace SherlockEngine
 {
     public class ComparisonContext
     {

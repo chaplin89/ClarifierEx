@@ -1,22 +1,19 @@
 ﻿using dnlib.DotNet.Emit;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Xml;
 
-namespace FuzzyEngine
+namespace SherlockEngine
 {
     public class Loader
     {
-        FuzzyNode desc;
+        SherlockNode desc;
 
         public string LoadILDescription()
         {
             string result = string.Empty;
-            using (Stream stream = GetType().Assembly.GetManifestResourceStream("FuzzyEngine.ILMetaInfo.xml"))
+            using (Stream stream = GetType().Assembly.GetManifestResourceStream("SherlockEngine.ILMetaInfo.xml"))
             {
                 using (StreamReader sr = new StreamReader(stream))
                     result = sr.ReadToEnd();
@@ -24,9 +21,9 @@ namespace FuzzyEngine
             return result;
         }
 
-        public FuzzyNode LoadLanguage()
+        public SherlockNode LoadLanguage()
         {
-            desc = new FuzzyNode();
+            desc = new SherlockNode();
             XmlDocument langSpec = new XmlDocument();
             langSpec.LoadXml(LoadILDescription());
 
@@ -52,11 +49,11 @@ namespace FuzzyEngine
                     if (groupName == null || groupName.Length==0)
                         continue;
 
-                    desc[groupName].Childs.Add(new FuzzyNode(currentOpcode));
+                    desc[groupName].Childs.Add(new SherlockNode(currentOpcode));
                 }
             }
 
-            FuzzyNode callDescription = new FuzzyNode();
+            SherlockNode callDescription = new SherlockNode();
             callDescription.Childs.AddRange(desc["NumberConversion"].Clone().Childs);
             callDescription.Childs.AddRange(desc["wtf"].Clone().Childs);
 

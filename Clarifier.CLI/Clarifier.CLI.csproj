@@ -76,9 +76,9 @@
       <Project>{fdfc1237-143f-4919-8318-4926901f4639}</Project>
       <Name>dnlib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FuzzyEngine\FuzzyEngine.csproj">
+    <ProjectReference Include="..\FuzzyEngine\SherlockEngine.csproj">
       <Project>{E3A50E23-AF8A-4523-AD34-92DDB90C5DAE}</Project>
-      <Name>FuzzyEngine</Name>
+      <Name>SherlockEngine</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

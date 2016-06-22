@@ -3,7 +3,7 @@ using Clarifier.Protection.Impl;
 using dnlib.DotNet;
 using System.Diagnostics;
 using System.IO;
-using FuzzyEngine;
+using SherlockEngine;
 
 namespace Clarifier.CLI
 {
@@ -11,8 +11,8 @@ namespace Clarifier.CLI
     {
         static void Main(string[] args)
         {
-            Compiler pr= new Compiler();
-            FuzzyNode node = pr.Compile("(StackManipulator&&Store)||!ArgumentAccess");
+            SherlockCompiler compiler = new SherlockCompiler();
+            SherlockNode node = compiler.Compile("(StackManipulator&&Store)||!ArgumentAccess");
 
             Debug.Assert(args.Length > 0);
             ModuleDefMD targetModule = ModuleDefMD.Load(args[0]);

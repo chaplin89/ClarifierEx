@@ -1,7 +1,7 @@
 ﻿using Clarifier.Core;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
-using FuzzyEngine;
+using SherlockEngine;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -60,21 +60,21 @@ namespace Clarifier.Protection.Impl
         }
         public double PerformIdentification(ClarifierContext ctx)
         {
-            FuzzyNode loadStage = new FuzzyNode(ctx.ILLanguage["ArgumentLoad"].Childs)
+            SherlockNode loadStage = new SherlockNode(ctx.ILLanguage["ArgumentLoad"].Childs)
             {
                 Name = "LoadStage",
                 MaxNumber = null,
                 MinNumber = 1,
                 Mode = TestMode.InRange
             };
-            FuzzyNode callStage = new FuzzyNode(ctx.ILLanguage["Call"].Childs)
+            SherlockNode callStage = new SherlockNode(ctx.ILLanguage["Call"].Childs)
             {
                 Name = "CallStage",
                 MaxNumber = 1,
                 MinNumber = 1,
                 Mode = TestMode.InRange
             };
-            FuzzyNode returnStage = new FuzzyNode(ctx.ILLanguage["Return"].Childs)
+            SherlockNode returnStage = new SherlockNode(ctx.ILLanguage["Return"].Childs)
             {
                 Name = "ReturnStage",
                 MaxNumber = 1,
@@ -82,7 +82,7 @@ namespace Clarifier.Protection.Impl
                 Mode = TestMode.InRange
             };
 
-            FuzzyNode proxyCall = new FuzzyNode(new FuzzyNode[] { loadStage, callStage, returnStage })
+            SherlockNode proxyCall = new SherlockNode(new SherlockNode[] { loadStage, callStage, returnStage })
             {
                 Name = "ProxyCall",
                 MinNumber = 1,
