@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace SherlockEngine
@@ -12,20 +15,116 @@ namespace SherlockEngine
         }
     }
 
-    internal class SherlockParser
+    class SherlockParser
     {
+        [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
+        class SherlockHandlerAttribute : Attribute
+        {
+            public SherlockTokenType Type { get; private set; }
+            public SherlockHandlerAttribute(SherlockTokenType type)
+            {
+                Type = type;
+            }
+        }
+
         SherlockLexer lexer = new SherlockLexer();
         SherlockParserState state = new SherlockParserState();
 
+        Dictionary<SherlockTokenType, Func<ASTNode, SherlockToken, ASTNode>> mapTokenHandler;
+        ASTNode toReturn;
+
+        [SherlockHandler(SherlockTokenType.ParenthesesEnd)]
+        [SherlockHandler(SherlockTokenType.ParenthesesBegin)]
+        ASTNode HandleParentheses(SherlockToken token, ASTNode currentNode)
+        {
+            if (token.TokenType == SherlockTokenType.ParenthesesBegin)
+            {
+                currentNode.First = new ASTNode(currentNode);
+                return currentNode.First;
+            }
+            return currentNode.Parent;
+        }
+
+        [SherlockHandler(SherlockTokenType.BinaryOperator)]
+        ASTNode HandleBinary(SherlockToken token, ASTNode currentNode)
+        {
+            GC.KeepAlive(token);
+            ASTNode tempNode = GetFreeNode(currentNode);
+
+            if (token.Value == "&&")
+                tempNode.Operation = ASTOperation.And;
+            else if (token.Value == "||")
+                tempNode.Operation = ASTOperation.Or;
+
+            if (tempNode.Parent == null)
+                toReturn = tempNode;
+
+            return tempNode.Second;
+        }
+
+        [SherlockHandler(SherlockTokenType.UnaryOperator)]
+        ASTNode HandleUnary(SherlockToken token, ASTNode currentNode)
+        {
+            GC.KeepAlive(token);
+            currentNode.Operation = ASTOperation.Not;
+            currentNode.First = new ASTNode(currentNode);
+            return currentNode.First;
+        }
+
+        [SherlockHandler(SherlockTokenType.BracketEnd)]
+        [SherlockHandler(SherlockTokenType.BracketStart)]
+        ASTNode HandleBracket(SherlockToken token, ASTNode currentNode)
+        {
+            GC.KeepAlive(token);
+            return currentNode;
+        }
+
+        [SherlockHandler(SherlockTokenType.BracesEnd)]
+        [SherlockHandler(SherlockTokenType.BracesStart)]
+        ASTNode HandleBraces(SherlockToken token, ASTNode currentNode)
+        {
+            GC.KeepAlive(token);
+            return currentNode;
+        }
+
+        [SherlockHandler(SherlockTokenType.Value)]
+        ASTNode HandleValues(SherlockToken token, ASTNode currentNode)
+        {
+            currentNode.Value = token.Value;
+            return currentNode;
+        }
+
         public SherlockParser()
         {
+            //File.WriteAllText(".\\DotGraph",state.StateMachine.ToDotGraph());
+            Type thisType = GetType();
+
+            try
+            {
+                foreach (var method in thisType.GetMethods(BindingFlags.Instance & BindingFlags.NonPublic))
+                {
+                    foreach (var attribute in method.CustomAttributes)
+                    {
+                        if (attribute.AttributeType.Name == "SherlockHandlerAttribute")
+                        {
+                            SherlockTokenType type = (SherlockTokenType)attribute.NamedArguments.Single().TypedValue.Value;
+                            Debug.Assert(!mapTokenHandler.ContainsKey(type));
+
+                            mapTokenHandler[(SherlockTokenType)attribute.NamedArguments.Single().TypedValue.Value]
+                                = (Func<ASTNode, SherlockToken, ASTNode>)method.CreateDelegate(typeof(Func<ASTNode, SherlockToken, ASTNode>), this);
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                Debug.Assert(false);
+            }
         }
 
         public ASTNode Parse(string toParse)
         {
             ASTNode currentNode = new ASTNode(null);
-            ASTNode toReturn = currentNode;
-            ASTNode tempNode = null;
             SherlockToken currentToken = null;
 
             try
@@ -36,54 +135,27 @@ namespace SherlockEngine
                 {
                     state.CurrentColumn = currentToken.Column;
                     if (!state.StateMachine.CanFire(currentToken.TokenType))
-                        throw new Exception();
+                        throw new InvalidOperationException();
 
-                    try
-                    {
-                        state.StateMachine.Fire(currentToken.TokenType);
-                    }
-                    catch (InvalidOperationException)
-                    {
-                        throw new ParsingErrorException(string.Format("Unexpected character at position {0}", currentToken.Column));
-                    }
+                    state.StateMachine.Fire(currentToken.TokenType);
 
                     switch (currentToken.TokenType)
                     {
-                        case SherlockTokenType.ParenthesesBegin:
-                            currentNode.First = new ASTNode(currentNode);
-                            currentNode = currentNode.First;
-                            break;
-                        case SherlockTokenType.ParenthesesEnd:
-                            currentNode = currentNode.Parent;
-                            break;
                         case SherlockTokenType.UnaryOperator:
-                            currentNode.Operation = ASTOperation.Not;
-                            currentNode.First = new ASTNode(currentNode);
-                            currentNode = currentNode.First;
+
                             break;
                         case SherlockTokenType.BinaryOperator:
 
-                            tempNode = GetFreeNode(currentNode);
-
-                            if (currentToken.Value == "&&")
-                                tempNode.Operation = ASTOperation.And;
-                            else if (currentToken.Value == "||")
-                                tempNode.Operation = ASTOperation.Or;
-
-                            currentNode = tempNode.Second;
-
-                            if (tempNode.Parent == null)
-                                toReturn = tempNode;
                             break;
                         case SherlockTokenType.Label:
-                            currentNode.Value = currentToken.Value;
+                            
                             break;
                     }
                 }
             }
             catch (ParsingErrorException)
             {
-                throw new ParsingErrorException(string.Format("Unexpected character '{0}' at column {1}.", currentToken.Value?? "", currentToken.Column));
+                throw new ParsingErrorException(string.Format("Unexpected character '{0}' at column {1}.", currentToken.Value ?? "", currentToken.Column));
             }
             return toReturn;
         }
