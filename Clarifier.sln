@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clarifier.CLI", "Clarifier.CLI\Clarifier.CLI.csproj", "{E5F6BFF9-949D-459E-B650-335E81BB096F}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -31,6 +31,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clarifier.Test.TestRunner", "Clarifier.Test\TestRunner\Clarifier.Test.TestRunner.csproj", "{6E387375-4086-49B9-809B-41E23266695B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SherlockEngine", "FuzzyEngine\SherlockEngine.csproj", "{E3A50E23-AF8A-4523-AD34-92DDB90C5DAE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EB895D34-9907-4D46-897F-C8AAB9EEF4D5}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

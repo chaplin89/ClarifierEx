@@ -11,14 +11,12 @@ namespace Clarifier.CLI
     {
         static void Main(string[] args)
         {
-            SherlockCompiler compiler = new SherlockCompiler();
-            SherlockNode node = compiler.Compile("(StackManipulator&&Store)||!ArgumentAccess");
-
             Debug.Assert(args.Length > 0);
             ModuleDefMD targetModule = ModuleDefMD.Load(args[0]);
             ModuleDefMD runtimeModule = ModuleDefMD.Load("Confuser.Runtime.dll");
 
-            ClarifierContext ctx = new ClarifierContext {
+            ClarifierContext ctx = new ClarifierContext
+            {
                 CurrentModule = targetModule,
                 WriterListener = new MWListener(),
                 //ILLanguage = il
@@ -30,24 +28,24 @@ namespace Clarifier.CLI
             AntiTamper antiTamper = new AntiTamper();
             Inliner inliner = new Inliner();
 
-             inliner.PerformIdentification(ctx);
-             inliner.PerformRemoval(ctx);
+            inliner.PerformIdentification(ctx);
+            inliner.PerformRemoval(ctx);
 
-            //antiTamper.Initialize();
-            //antiTamper.PerformIdentification(ctx);
-            //antiTamper.PerformRemoval(ctx);
+            antiTamper.Initialize();
+            antiTamper.PerformIdentification(ctx);
+            antiTamper.PerformRemoval(ctx);
 
-//             antiDump.Initialize(ctx);
-//             antiDump.PerformIdentification(ctx);
-//             antiDump.PerformRemoval(ctx);
-//             
-//             antiDebug.Initialize(ctx);
-//             antiDebug.PerformIdentification(ctx);
-//             antiDebug.PerformRemoval(ctx);
+            antiDump.Initialize(ctx);
+            antiDump.PerformIdentification(ctx);
+            antiDump.PerformRemoval(ctx);
             
-//             constants.Initialize(ctx);
-//             constants.PerformIdentification(ctx);
-//             constants.PerformRemoval(ctx);
+            antiDebug.Initialize(ctx);
+            antiDebug.PerformIdentification(ctx);
+            antiDebug.PerformRemoval(ctx);
+
+            constants.Initialize(ctx);
+            constants.PerformIdentification(ctx);
+            constants.PerformRemoval(ctx);
 
             int lastBackslash = args[0].LastIndexOf('\\');
             string targetExecutable = args[0].Substring(lastBackslash+1, args[0].Length-1-lastBackslash);
@@ -55,7 +53,7 @@ namespace Clarifier.CLI
             parentDir = Path.Combine(parentDir, "Deobfuscated");
 
             string destinationFile = Path.Combine(parentDir, targetExecutable);
-            
+
             targetModule.Write(destinationFile);
             return;
         }
