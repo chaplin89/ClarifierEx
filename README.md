@@ -1,5 +1,6 @@
 # Overview
 
+**This is only a PoC and it needs some major refactoring.**
 ClarifierEx is a deobfuscator for ConfuserEx.
 ConfuserEx is an obfuscator that support the following features:
   - Constants ofbuscation
@@ -13,7 +14,6 @@ ConfuserEx is an obfuscator that support the following features:
   - Resource protection
   - Name obfuscation
   - Packer
-
 
 ## Supported protections
   - Anti-dump
